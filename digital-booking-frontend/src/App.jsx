@@ -1,13 +1,14 @@
 import "./App.scss";
-import Example from './components/Example';
+import AppRouter from "./routes/AppRouter";
 
 const namespace = "app";
 
 function App() {
   return (
     <div className={namespace}>
-      <h1>App</h1>
-      <Example />
+      {/* TODO: Import Navbar component from /components/Navbar */}
+      <AppRouter />
+      {/* TODO: Import Footer component from /components/Footer */}
     </div>
   );
 }
