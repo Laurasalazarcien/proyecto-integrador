@@ -1,13 +1,15 @@
-import './App.scss';
+import "./App.scss";
+import Example from './components/Example';
 
-const namespace = 'app';
+const namespace = "app";
 
 function App() {
   return (
     <div className={namespace}>
-      <p>App</p>
+      <h1>App</h1>
+      <Example />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
