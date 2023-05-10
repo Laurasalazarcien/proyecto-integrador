@@ -4,9 +4,13 @@ import classNames from "classnames";
 
 const namespace = "example";
 
-const Example = ({ text, className }) => {
+const Example = ({ 
+  text, 
+  className 
+}) => {
   const [counter, setCounter] = useState(0);
   const componentClassnames = classNames(namespace, className);
+  
   return (
     <div className={componentClassnames}>
       <h2 className={`${namespace}__text`}>{text}</h2>
