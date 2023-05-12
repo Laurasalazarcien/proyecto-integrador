@@ -1,7 +1,6 @@
-import React from 'react'
 import PropTypes from "prop-types";
 import classNames from 'classnames';
-import logo from '/assets/LogoHeader.svg'
+import logo from '/assets/images/LogoHeader.svg'
 import { useNavigate } from 'react-router-dom';
 
 const namespace = 'header';
@@ -13,19 +12,20 @@ export const Header = ({
 	const componentClassnames = classNames(namespace, className);
 	const navigate = useNavigate();
 
-	const handleLogoClick = () => {
+	const handleLogoClick = async (event) => {
+		event.preventDefault();
 		navigate('/');
 	}
 
 	return (
 		<header className={componentClassnames}>
 			<div className={`${namespace}__logo`}>
-				<img src={logo} alt="logo" onClick={() => handleLogoClick()} />
-				<span className='__slogan'>{slogan}</span>
+				<img src={logo} alt="logo" onClick={(event) => handleLogoClick(event)} />
+				<span className={`${namespace}__slogan`}>{slogan}</span>
 			</div>
 			<div className={`${namespace}__user-actions`}>
-				<button className={`${namespace}__button create-account`}>Crear cuenta</button>
-				<button className={`${namespace}__button login`}>Iniciar sesión</button>
+				<button className={`${namespace}__button ${namespace}__button--create-account`}>Crear cuenta</button>
+				<button className={`${namespace}__button ${namespace}__button--login`}>Iniciar sesión</button>
 			</div>
 		</header>
 	)
