@@ -2,6 +2,7 @@ import "./App.scss";
 import classNames from "classnames";
 import { useApp } from "./context/AppContext";
 import AppRouter from "./routes/AppRouter";
+import Header from "./components/Header";
 
 const namespace = "app";
 
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <div className={componentClassNames}>
-      {/* TODO: Import Navbar component from /components/Navbar */}
+      <Header slogan="Un sitio para encontrar todo lo que necesitas"></Header>
       <AppRouter />
       {/* TODO: Import Footer component from /components/Footer */}
     </div>
