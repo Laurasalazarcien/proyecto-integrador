@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import logo from "/assets/images/LogoHeader.svg";
+import logo from "../../../assets/icons/LogoHeader.svg";
 import { useNavigate } from "react-router-dom";
 
 const namespace = "header";
