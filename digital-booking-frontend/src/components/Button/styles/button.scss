@@ -1,0 +1,86 @@
+.button {
+  display: inline-block;
+  border: none;
+  box-sizing: border-box;
+  font-weight: $font-weight-regular;
+  color: $db-white;
+  background-color: dodgerblue;
+  transition: 0.18s ease-out;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &--small {
+    height: $db-spacing-24;
+    padding: 0 $db-spacing-8;
+    font-size: $font-size-12;
+    line-height: $line-height-12;
+    border-radius: $border-radius-4;
+  }
+
+  &--medium {
+    height: $db-spacing-32;
+    padding: 0 $db-spacing-12;
+    font-size: $font-size-14;
+    line-height: $line-height-14;
+    border-radius: $border-radius-5;
+  }
+
+  &--large {
+    height: $db-spacing-48;
+    padding: 0 $db-spacing-24;
+    font-size: $font-size-16;
+    line-height: $line-height-16;
+    border-radius: $border-radius-6;
+  }
+
+  &--loud {
+    color: $db-white;
+    background-color: #3483fa; // rgba(52, 131, 250, 1)
+    cursor: pointer;
+
+    &:hover {
+      // background-color: rgba(52, 131, 250, 0.8);
+    }
+  }
+
+  &--quiet {
+    color: #3483fa;
+    cursor: pointer;
+    background-color: rgba(65, 137, 230, 0.15);
+  }
+
+  &--neutral {
+    background-color: $db-neutral;
+  }
+
+  &--positive {
+    background-color: $db-positive;
+  }
+
+  &--warning {
+    background-color: $db-warning;
+  }
+
+  &--error {
+    background-color: $db-error;
+  }
+
+  &--transparent {
+    background-color: transparent;
+  }
+
+  &--disabled {
+    background-color: $db-gray-100;
+    color: $db-gray-250;
+  }
+
+  &--full-width {
+    display: block;
+    width: 100%;
+  }
+}

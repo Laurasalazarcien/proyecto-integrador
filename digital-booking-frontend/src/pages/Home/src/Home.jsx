@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import InstrumentContainer from "../../../components/InstrumentContainer";
-import InstrumentCard from "../../../components/InstrumentCard";
+import Container from "../../../components/Container";
+import Image from "../../../components/Image";
+import { Title, Text } from "../../../components/Typography";
+import Card, { CardHeader, CardBody } from "../../../components/Card";
+
 import { productsListMock } from "../../../mocks/mocks";
 
 const namespace = "home-page";
@@ -11,14 +14,35 @@ const Home = ({ title, className }) => {
 
   return (
     <div className={componentClassnames}>
-      <h1 className={`${namespace}__title`}>{ title }</h1>
-      <InstrumentContainer 
-        className="instruments-list"
-      >
+      {title && <Title>{title}</Title>}
+      <Container className="instruments-list">
         {productsListMock.map((product) => (
-          <InstrumentCard key={product.id} {...product} />
+          <Card className="instrument-card" shadow="elevated" key={product.id}>
+            <CardHeader>
+              <Image
+                source={product.image}
+                alternativeText={product.name}
+                maxHeight="220px"
+              />
+            </CardHeader>
+            <CardBody>
+              <Title
+                size="m"
+                element="h2"
+                weight="semibold"
+                alignment="center"
+                transform="uppercase"
+                className="instrument-card__title"
+              >
+                {product.title}
+              </Title>
+              <Text size="s" weight="light" alignment="center">
+                {product.description}
+              </Text>
+            </CardBody>
+          </Card>
         ))}
-      </InstrumentContainer>
+      </Container>
     </div>
   );
 };
@@ -29,7 +53,7 @@ Home.propTypes = {
 };
 
 Home.defaultProps = {
-  title: "Home page",
+  title: "",
   className: "",
 };
 

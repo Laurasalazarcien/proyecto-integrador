@@ -1,0 +1,100 @@
+.typography {
+  line-height: normal;
+
+  &--size-xs {
+    font-size: $font-size-12;
+    line-height: 15px;
+  }
+
+  &--size-s {
+    font-size: $font-size-14;
+    line-height: $line-height-18;
+  }
+
+  &--size-m {
+    font-size: $font-size-16;
+    line-height: $line-height-20;
+  }
+
+  &--size-l {
+    font-size: $font-size-18;
+    line-height: 22px;
+  }
+
+  &--size-xl {
+    font-size: $font-size-20;
+    line-height: $line-height-24;
+  }
+
+  &--color-primary {
+    color: $db-color-primary;
+  }
+
+  &--color-secondary {
+    color: $db-color-secondary;
+  }
+
+  &--color-disabled {
+    color: $db-color-disabled;
+  }
+
+  &--color-link {
+    color: $db-color-link;
+  }
+
+  &--color-positive {
+    color: $db-color-positive;
+  }
+
+  &--color-negative {
+    color: $db-color-negative;
+  }
+
+  &--color-caution {
+    color: $db-color-caution;
+  }
+
+  &--weight-light {
+    font-weight: $font-weight-light;
+  }
+
+  &--weight-regular {
+    font-weight: $font-weight-regular;
+  }
+
+  &--weight-semibold {
+    font-weight: $font-weight-semibold;
+  }
+
+  &--weight-bold {
+    font-weight: $font-weight-bold;
+  }
+
+  &--alignment-left {
+    text-align: left;
+  }
+
+  &--alignment-center {
+    text-align: center;
+  }
+
+  &--alignment-right {
+    text-align: right;
+  }
+
+  &--alignment-justify {
+    text-align: justify;
+  }
+
+  &--transform-uppercase {
+    text-transform: uppercase;
+  }
+
+  &--transform-lowercase {
+    text-transform: lowercase;
+  }
+
+  &--transform-capitalize {
+    text-transform: capitalize;
+  }
+}

@@ -1,0 +1,78 @@
+.card {
+  border-radius: 6px;
+
+  &__header--border {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  }
+
+  &__footer--border {
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    font-weight: $font-weight-light;
+    color: $db-gray-550;
+  }
+
+  &--padding-0 {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: 0;
+    }
+  }
+
+  &--padding-default,
+  &--padding-16 {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: $db-spacing-16;
+    }
+  }
+
+  &--padding-24 {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: $db-spacing-24;
+    }
+  }
+
+  &--padding-32 {
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: $db-spacing-32;
+    }
+  }
+
+  &--shadow-flat {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  &--shadow-outline {
+    border: 1px solid $db-gray-100;
+  }
+
+  &--shadow-elevated {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &--shadow-none {
+    box-shadow: none;
+  }
+
+
+  & > div:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+
+  & > div:last-child {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+}

@@ -1,0 +1,12 @@
+.home-page {
+  margin: 0 auto;
+  max-width: 1200px;
+
+  .instrument-card {
+    &__title {
+      &.typography {
+        margin-bottom: $db-spacing-12;
+      }
+    }
+  }
+}
