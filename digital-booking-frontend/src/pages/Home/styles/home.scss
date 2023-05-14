@@ -1,6 +1,7 @@
 .home-page {
   margin: 0 auto;
   max-width: 1200px;
+  padding: $db-spacing-16;
 
   .instrument-card {
     &__title {
@@ -10,3 +11,18 @@
     }
   }
 }
+
+
+// Media Queries
+
+// @media screen and (min-width: 480px) {
+
+// }
+
+// @media screen and (min-width: 768px) {
+
+// }
+
+// @media screen and (min-width: 1200px) {
+
+// }
