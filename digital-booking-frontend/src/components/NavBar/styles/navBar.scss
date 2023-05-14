@@ -1,0 +1,97 @@
+.navbar {
+  width: 100%;
+  padding: 0 $db-spacing-24;
+  height: 80px;
+  background-color: $db-primary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  &__logo {
+    &.typography--color-primary {
+      color: $db-white;
+    }
+  }
+
+  &__menu {
+    .list__item {
+      .typography--color-primary {
+        color: $db-white;
+      }
+
+      &:hover {
+        cursor: pointer;
+        transition: 0.5s;
+      }
+    }
+  }
+
+  &__toggle {
+    &.button {
+      display: none;
+      color: $db-white;
+    }
+  }
+}
+
+// Media Queies
+@media screen and (max-width: 768px) {
+  .navbar {
+    height: 60px;
+    padding: 0 $db-spacing-20;
+
+    &__menu {
+      height: calc(100vh - 60px);
+      left: 100%;
+      top: 60px;
+      transition: left 0.3s;
+      background-color: $db-white;
+
+      &.list--unordered {
+        padding: $db-spacing-12;
+      }
+
+      &.list--items-row {
+        width: 100%;
+        flex-direction: column;
+        position: fixed;
+      }
+
+      .list__item {
+        width: 100%;
+        border-bottom: 1px solid $db-gray-100;
+
+        .typography--color-primary {
+          color: $db-color-primary;
+        }
+      }
+
+      .list__item:hover {
+        .typography--color-primary {
+          color: $db-primary;
+        }
+      }
+    }
+
+    &__toggle {
+      &.button {
+        display: block;
+      }
+      &.button--medium {
+        padding: 0;
+      }
+    }
+
+    &.navbar--open-menu {
+      .navbar__menu {
+        left: 0;
+      }
+    }
+  }
+}

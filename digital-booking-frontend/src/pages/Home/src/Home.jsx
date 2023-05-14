@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import { Title, Text } from "../../../components/Typography";
@@ -11,33 +13,46 @@ const namespace = "home-page";
 
 const Home = ({ title, className }) => {
   const componentClassnames = classNames(namespace, className);
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    console.log('id: ', id);
+    navigate(`/detail/${id}`);
+  };
 
   return (
     <div className={componentClassnames}>
       {title && <Title>{title}</Title>}
       <Container className="instruments-list">
         {productsListMock.map((product) => (
-          <Card className="instrument-card" shadow="elevated" key={product.id}>
+          <Card
+            key={product.id}
+            shadow="elevated"
+            className="instrument-card"
+            onClick={() => handleClick(product.id)}
+            clickeable
+          >
             <CardHeader>
               <Image
                 source={product.image}
                 alternativeText={product.name}
-                maxHeight="220px"
+                maxHeight="200px"
+                onClick={() => console.log("img click")}
               />
             </CardHeader>
             <CardBody>
               <Title
-                size="m"
+                size="s"
                 element="h2"
                 weight="semibold"
-                alignment="center"
+                alignment="left"
                 transform="uppercase"
-                className="instrument-card__title"
+                marginBottom="4"
               >
                 {product.title}
               </Title>
-              <Text size="s" weight="light" alignment="center">
-                {product.description}
+              <Text size="s" weight="light" alignment="left">
+                {product.price}
               </Text>
             </CardBody>
           </Card>

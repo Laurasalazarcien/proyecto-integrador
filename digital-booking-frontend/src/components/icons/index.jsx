@@ -4,6 +4,7 @@ import CloseCircle from "./src/CloseCircle";
 import Heart from "./src/Heart";
 import HeartFill from "./src/HeartFill";
 import Warning from "./src/Warning";
+import BurguerMenu from "./src/BurguerMenu";
 
 const icons = {
   Check,
@@ -11,7 +12,8 @@ const icons = {
   CloseCircle,
   Warning,
   Heart,
-  HeartFill
+  HeartFill,
+  BurguerMenu,
 };
 
 export default icons;

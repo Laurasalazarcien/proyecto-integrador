@@ -25,4 +25,14 @@
   &--alignment-right {
     justify-content: flex-end;
   }
+
+  &--rounded {
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  &--clickeable {
+    cursor: pointer;
+  }
 }

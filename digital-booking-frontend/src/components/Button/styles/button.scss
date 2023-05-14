@@ -19,7 +19,10 @@
     padding: 0 $db-spacing-8;
     font-size: $font-size-12;
     line-height: $line-height-12;
-    border-radius: $border-radius-4;
+
+    &.button--rounded {
+      border-radius: $border-radius-4;
+    }
   }
 
   &--medium {
@@ -27,7 +30,10 @@
     padding: 0 $db-spacing-12;
     font-size: $font-size-14;
     line-height: $line-height-14;
-    border-radius: $border-radius-5;
+
+    &.button--rounded {
+      border-radius: $border-radius-5;
+    }
   }
 
   &--large {
@@ -35,7 +41,10 @@
     padding: 0 $db-spacing-24;
     font-size: $font-size-16;
     line-height: $line-height-16;
-    border-radius: $border-radius-6;
+
+    &.button--rounded {
+      border-radius: $border-radius-6;
+    }
   }
 
   &--loud {
@@ -52,6 +61,10 @@
     color: #3483fa;
     cursor: pointer;
     background-color: rgba(65, 137, 230, 0.15);
+  }
+
+  &--transparent {
+    background-color: transparent;
   }
 
   &--neutral {

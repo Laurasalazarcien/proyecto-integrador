@@ -12,6 +12,7 @@ const Button = ({
   hierarchy,
   disabled,
   fullWidth,
+  rounded,
   loading,
   onClick,
   className,
@@ -22,7 +23,8 @@ const Button = ({
     [`${namespace}--${modifier}`]: modifier,
     [`${namespace}--${hierarchy}`]: hierarchy,
     [`${namespace}--disabled`]: disabled,
-    [`${namespace}--fullWidth`]: fullWidth,
+    [`${namespace}--full-width`]: fullWidth,
+    [`${namespace}--rounded`]: rounded,
     [`${namespace}--link`]: href,
   });
 
@@ -62,6 +64,7 @@ Button.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  rounded: PropTypes.bool,
   loading: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -76,6 +79,7 @@ Button.defaultProps = {
   className: "",
   disabled: false,
   fullWidth: false,
+  rounded: false,
   loading: false,
   onClick: () => {},
 };

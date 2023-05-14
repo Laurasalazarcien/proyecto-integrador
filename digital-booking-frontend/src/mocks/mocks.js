@@ -89,4 +89,17 @@ const productsListMock = [
   },
 ];
 
-export { productsListMock };
+const productDetailMock = {
+  id: 1,
+  title: "Saxofón Alto Yamaha Profesional",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  category: "Wind instruments",
+  brand: "Yamaha",
+  price: "$4.500.000",
+  stock: 23,
+  image:
+    "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+};
+
+export { productsListMock, productDetailMock };

@@ -1,0 +1,25 @@
+.detail-page {
+  margin: 0 auto;
+  margin-top: 120px;
+  max-width: 1200px;
+  padding: $db-spacing-16;
+}
+
+// Media Queries
+@media screen and (max-width: 768px) {
+  .detail-page {
+    margin-top: 60px;
+
+    .card .product-detail__title {
+      &.typography {
+        text-align: center;
+      }
+    }
+
+    .card .product-detail__price {
+      &.typography {
+        text-align: center;
+      }
+    }
+  }
+}

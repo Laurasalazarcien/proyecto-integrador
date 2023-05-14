@@ -3,20 +3,32 @@ import classNames from "classnames";
 
 const namespace = "card";
 
-const Card = ({ 
-  shadow, 
-  paddingSize, 
-  borderColor, 
-  className, 
-  children 
+const Card = ({
+  shadow,
+  paddingSize,
+  borderColor,
+  className,
+  clickeable,
+  onClick,
+  children,
 }) => {
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--shadow-${shadow}`]: shadow,
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
+    [`${namespace}--clickeable`]: clickeable,
     [`${namespace}--${borderColor}`]: borderColor,
   });
 
-  return <article className={componentClassnames}>{children}</article>;
+  const handleClick = () => {
+    if (!clickeable) return;
+    onClick();
+  };
+
+  return (
+    <article className={componentClassnames} onClick={handleClick}>
+      {children}
+    </article>
+  );
 };
 
 Card.propTypes = {
@@ -30,6 +42,8 @@ Card.propTypes = {
     "error",
   ]),
   className: PropTypes.string,
+  clickeable: PropTypes.bool,
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
 
@@ -37,6 +51,7 @@ Card.defaultProps = {
   shadow: "outline",
   paddingSize: "default",
   borderColor: "default",
+  clickeable: false,
   className: "",
 };
 
