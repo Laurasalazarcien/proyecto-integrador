@@ -30,7 +30,10 @@ const Image = ({
 
   return (
     <div
-      style={{ width: containerWidth, height: containerHeight }}
+      style={{ 
+        width: containerWidth, 
+        height: containerHeight 
+      }}
       className={componentClassNames}
     >
       <img
