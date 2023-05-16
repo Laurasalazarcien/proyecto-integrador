@@ -1,0 +1,57 @@
+.textfield {
+  margin-bottom: $db-spacing-12;
+
+  &--full-width {
+    .textfield__input,
+    .textfield__textarea {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  &--inline {
+    .textfield__input,
+    .textfield__textarea {
+      display: inline-block;
+    }
+  }
+
+  &__input,
+  &__textarea {
+    padding: $db-spacing-12 $db-spacing-16;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    border: 1px solid $db-gray-100;
+
+    &::placeholder {
+      font-family: $font-family-primary;
+      font-size: $font-size-12;
+      color: $db-gray-250;
+    }
+
+    &:focus {
+      outline: 1px solid $db-neutral;
+    }
+  }
+
+  &--error {
+    .textfield__input,
+    .textfield__textarea {
+      border: 1px solid $db-color-negative;
+    }
+  }
+
+  &--success {
+    .textfield__input,
+    .textfield__textarea {
+      border: 1px solid $db-color-positive;
+    }
+  }
+
+  &--textarea {
+    .textfield__textarea {
+      resize: none;
+    }
+  }
+}

@@ -29,8 +29,7 @@ const Text = ({
     [`${namespace}--color-${color}`]: color,
     [`${namespace}--weight-${weight}`]: weight,
     [`${namespace}--alignment-${alignment}`]: alignment,
-    [`${namespace}--letter-spacing-${letterSpacing}`]:
-      letterSpacing && letterSpacing !== "default",
+    [`${namespace}--letter-spacing-${letterSpacing}`]: letterSpacing,
     [`${namespace}--transform-${transform}`]: transform && transform !== "none",
     [`${namespace}--padding-${padding}`]: padding,
     [`${namespace}--margin-${margin}`]: margin,
@@ -61,6 +60,7 @@ const Text = ({
 Text.propTypes = {
   size: PropTypes.oneOf(["xs", "s", "m", "l", "xl"]),
   color: PropTypes.oneOf([
+    "white",
     "primary",
     "secondary",
     "disabled",
@@ -107,7 +107,7 @@ Text.defaultProps = {
   element: "p",
   color: "primary",
   weight: "regular",
-  letterSpacing: "default",
+  letterSpacing: "",
   alignment: "left",
   transform: "none",
   className: "",

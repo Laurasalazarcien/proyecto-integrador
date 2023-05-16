@@ -13,10 +13,21 @@ function App() {
     [`${namespace}--dark`]: theme === "dark",
   });
 
+  const menuOptions = [
+    {
+      name: "Home",
+      target: "/",
+    },
+    {
+      name: "Add product",
+      target: "/add-product",
+    },
+  ];
+
   return (
     <div className={componentClassNames}>
       {/* <Header slogan="Un sitio para encontrar todo lo que necesitas"></Header> */}
-      <NavBar fixed />
+      <NavBar menuOptions={menuOptions} fixed />
       <AppRouter />
       {/* TODO: Import Footer component from /components/Footer */}
     </div>

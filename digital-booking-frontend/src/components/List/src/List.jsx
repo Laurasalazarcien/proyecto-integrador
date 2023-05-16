@@ -33,7 +33,7 @@ const List = ({
 
 List.propTypes = {
   type: PropTypes.oneOf(["ordered", "unordered"]),
-  paddingSize: PropTypes.oneOf(["0", "12", "16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "8", "12", "16", "24", "32"]),
   itemsalignment: PropTypes.oneOf(["row", "column"]),
   rounded: PropTypes.bool,
   showBorder: PropTypes.string,

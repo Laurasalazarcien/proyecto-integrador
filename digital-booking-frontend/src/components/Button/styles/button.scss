@@ -2,10 +2,11 @@
   display: inline-block;
   border: none;
   box-sizing: border-box;
-  font-weight: $font-weight-regular;
   color: $db-white;
-  background-color: dodgerblue;
+  font-weight: $font-weight-regular;
+  background-color: $db-color-neutral;
   transition: 0.18s ease-out;
+  font-weight: $font-weight-semibold;
 
   &__content {
     display: flex;
@@ -49,18 +50,59 @@
 
   &--loud {
     color: $db-white;
-    background-color: #3483fa; // rgba(52, 131, 250, 1)
-    cursor: pointer;
+    background-color: $db-color-neutral; // rgba(52, 131, 250, 1)
 
     &:hover {
-      // background-color: rgba(52, 131, 250, 0.8);
+      cursor: pointer;
+      background-color: dodgerblue;
     }
   }
 
   &--quiet {
-    color: #3483fa;
-    cursor: pointer;
-    background-color: rgba(65, 137, 230, 0.15);
+    color: $db-color-neutral;
+    background-color: $db-white;
+    border: 1px solid $db-color-neutral;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &--rounded-0 {
+    border-radius: 0;
+  }
+
+  &--rounded-4 {
+    border-radius: $db-spacing-4;
+  }
+
+  &--rounded-6 {
+    border-radius: $db-spacing-6;
+  }
+
+  &--rounded-8 {
+    border-radius: $db-spacing-8;
+  }
+
+  &--rounded-12 {
+    border-radius: $db-spacing-12;
+  }
+
+  &--rounded-16 {
+    border-radius: $db-spacing-16;
+  }
+
+  &--rounded-24 {
+    border-radius: $db-spacing-24;
+  }
+
+  &--rounded-32 {
+    border-radius: $db-spacing-32;
   }
 
   &--transparent {
@@ -81,10 +123,6 @@
 
   &--error {
     background-color: $db-error;
-  }
-
-  &--transparent {
-    background-color: transparent;
   }
 
   &--disabled {

@@ -25,6 +25,12 @@
     }
   }
 
+  &--padding-8 {
+    .list__item {
+      padding: $db-spacing-8;
+    }
+  }
+
   &--padding-12 {
     .list__item {
       padding: $db-spacing-12;

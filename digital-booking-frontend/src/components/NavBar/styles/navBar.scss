@@ -21,10 +21,6 @@
 
   &__menu {
     .list__item {
-      .typography--color-primary {
-        color: $db-white;
-      }
-
       &:hover {
         cursor: pointer;
         transition: 0.5s;
@@ -47,11 +43,11 @@
     padding: 0 $db-spacing-20;
 
     &__menu {
-      height: calc(100vh - 60px);
       left: 100%;
       top: 60px;
       transition: left 0.3s;
       background-color: $db-white;
+      height: calc(100vh - 60px);
 
       &.list--unordered {
         padding: $db-spacing-12;
@@ -63,12 +59,24 @@
         position: fixed;
       }
 
+      &.list--padding-8 {
+        .list__item {
+          padding: $db-spacing-12;
+        }
+      }
+
       .list__item {
         width: 100%;
+        padding: 12px;
         border-bottom: 1px solid $db-gray-100;
 
-        .typography--color-primary {
+        .button {
+          font-size: $font-size-16;
           color: $db-color-primary;
+          text-transform: uppercase;
+          background-color: transparent;
+          letter-spacing: 1px;
+          border: none;
         }
       }
 
@@ -83,6 +91,7 @@
       &.button {
         display: block;
       }
+
       &.button--medium {
         padding: 0;
       }

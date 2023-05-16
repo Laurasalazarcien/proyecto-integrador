@@ -6,6 +6,8 @@ const namespace = "image";
 const Image = ({
   containerWidth,
   containerHeight,
+  width,
+  height,
   minWidth,
   maxWidth,
   minHeight,
@@ -45,6 +47,8 @@ const Image = ({
     >
       <img
         style={{
+          width,
+          height,
           minWidth,
           maxWidth,
           minHeight,
@@ -61,6 +65,8 @@ const Image = ({
 Image.propTypes = {
   containerWidth: PropTypes.string.isRequired,
   containerHeight: PropTypes.string.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
   minWidth: PropTypes.string,
   maxWidth: PropTypes.string,
   minHeight: PropTypes.string,

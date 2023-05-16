@@ -1,7 +1,9 @@
 // Pages
 @import "../pages/Home/index";
+@import "../pages/Login/index";
 @import "../pages/Register/index";
 @import "../pages/Detail/index";
+@import "../pages/Admin/index";
 
 // Components
 @import "../components/Example/index";
@@ -17,3 +19,7 @@
 @import "../components/List/index";
 @import "../components/Badge/index";
 @import "../components/Layout/index";
+@import "../components/Form/index";
+@import "../components/TextField/index";
+@import "../components/Dropdown/index";
+@import "../components/CustomDropdown/index";

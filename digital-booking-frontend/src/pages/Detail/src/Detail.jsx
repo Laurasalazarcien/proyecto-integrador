@@ -67,7 +67,7 @@ const Detail = ({ title, className }) => {
                 {/* <input type="number" /> */}
               </LayputColumns>
               <LayputColumns start="3" end="4">
-                <Button fullWidth>AGREGAR AL CARRITO</Button>
+                <Button fullWidth hierarchy="quiet">Agregar al carrito</Button>
               </LayputColumns>
             </Layput>
           </CardFooter>

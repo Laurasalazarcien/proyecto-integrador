@@ -1,0 +1,10 @@
+.dropdown {
+  &__select {
+    width: 100%;
+    padding: $db-spacing-12 $db-spacing-16;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    border: 1px solid $db-gray-100;
+  }
+}
