@@ -3,6 +3,7 @@ import classNames from "classnames";
 import InstrumentContainer from "../../../components/InstrumentContainer";
 import InstrumentCard from "../../../components/InstrumentCard";
 import { productsListMock } from "../../../mocks/mocks";
+import Body from "../../../components/Body";
 
 const namespace = "home-page";
 
@@ -11,6 +12,7 @@ const Home = ({ title, className }) => {
 
   return (
     <div className={componentClassnames}>
+      <Body></Body>
       <h1 className={`${namespace}__title`}>{ title }</h1>
       <InstrumentContainer 
         className="instruments-list"
