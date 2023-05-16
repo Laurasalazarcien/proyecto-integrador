@@ -1,10 +1,16 @@
 .dropdown {
-  &__select {
+  position: relative;
+  font-family: $font-family-primary;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: $db-spacing-8;
+
+  &__mask {
     width: 100%;
-    padding: $db-spacing-12 $db-spacing-16;
-    border: none;
-    outline: none;
-    border-radius: 8px;
-    border: 1px solid $db-gray-100;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background: transparent;
   }
 }

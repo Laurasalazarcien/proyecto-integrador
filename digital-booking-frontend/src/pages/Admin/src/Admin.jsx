@@ -12,7 +12,7 @@ import {
   TextArea,
 } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
-import Dropdown from "../../../components/CustomDropdown";
+import Dropdown from "../../../components/Dropdown";
 
 import {
   productsListMock,
