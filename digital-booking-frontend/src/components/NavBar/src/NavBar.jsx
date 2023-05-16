@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import Button from "../../Button";
 import Image from "../../Image";
+import Container from "../../Container";
 import { Text } from "../../Typography";
 import List, { ListItem } from "../../List";
 import icons from "../../icons";
@@ -47,13 +48,6 @@ const NavBar = ({
 
   return (
     <nav className={componentClassNames}>
-      <Image
-        source={logo}
-        maxHeight={isMobile ? "40px" : "55px"}
-        containerHeight={isMobile ? "40px" : "55px"}
-        onClick={handleClickLogo}
-        clickeable
-      />
       <Button
         hierarchy="transparent"
         className={`${namespace}__toggle`}
@@ -61,14 +55,32 @@ const NavBar = ({
       >
         {openMenu ? <Close /> : <BurguerMenu />}
       </Button>
-      <List
-        paddingSize="8"
-        rounded={false}
-        showBorder={false}
-        itemsalignment="row"
-        className={`${namespace}__menu`}
-      >
-        {/* {menuOptions &&
+      <Container className={`${namespace}__logo`}>
+        <Image
+          source={logo}
+          maxHeight={isMobile ? "40px" : "55px"}
+          containerHeight={isMobile ? "40px" : "55px"}
+          onClick={handleClickLogo}
+          clickeable
+        />
+        <Text
+          size="s"
+          element="span"
+          color="white"
+          className={`${namespace}__slogan`}
+        >
+          ¡La música es tu pasión, nosotros tu tienda en linea!
+        </Text>
+      </Container>
+      <Container className={`${namespace}__options`}>
+        <List
+          paddingSize="8"
+          rounded={false}
+          showBorder={false}
+          itemsalignment="row"
+          className={`${namespace}__menu`}
+        >
+          {/* {menuOptions &&
           menuOptions.map(({ name, target }) => (
             <ListItem 
               key={name} 
@@ -79,29 +91,30 @@ const NavBar = ({
               </Text>
             </ListItem>
           ))} */}
-        {/* <ListItem>Products</ListItem> */}
-        <ListItem>
-          <Button
-            onClick={() => {
-              navigate("/register");
-              setOpenMenu(false);
-            }}
-          >
-            Crear cuenta
-          </Button>
-        </ListItem>
-        <ListItem>
-          <Button
-            hierarchy="quiet"
-            onClick={() => {
-              navigate("/login");
-              setOpenMenu(false);
-            }}
-          >
-            Iniciar sesión
-          </Button>
-        </ListItem>
-      </List>
+          {/* <ListItem>Products</ListItem> */}
+          <ListItem>
+            <Button
+              onClick={() => {
+                navigate("/register");
+                setOpenMenu(false);
+              }}
+            >
+              Crear cuenta
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button
+              hierarchy="quiet"
+              onClick={() => {
+                navigate("/login");
+                setOpenMenu(false);
+              }}
+            >
+              Iniciar sesión
+            </Button>
+          </ListItem>
+        </List>
+      </Container>
     </nav>
   );
 };

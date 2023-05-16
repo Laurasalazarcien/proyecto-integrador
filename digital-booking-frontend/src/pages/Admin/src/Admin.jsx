@@ -45,8 +45,8 @@ const AddProduct = ({ title, className }) => {
                 placeholder="Enter the product title"
                 onChange={() => {}}
                 onBlur={() => {}}
-                helperMessage=""
-                modifier=""
+                helperMessage="Message"
+                modifier="error"
               />
               <NumericInput
                 id="stock"

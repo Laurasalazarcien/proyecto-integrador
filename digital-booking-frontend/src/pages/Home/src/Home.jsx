@@ -58,7 +58,7 @@ const Home = ({ title, className }) => {
           </Card>
         ))}
       </Container>
-      <Title element="h2" weight="light" marginTop="16" marginBottom="16">
+      <Title element="h2" weight="light" marginTop="24" marginBottom="16">
         Products
       </Title>
       <Container className="instruments-list">
@@ -69,6 +69,7 @@ const Home = ({ title, className }) => {
             className="instrument-card"
             onClick={() => handleClick(product.id)}
             clickeable
+            animated
           >
             <CardHeader>
               <Image
