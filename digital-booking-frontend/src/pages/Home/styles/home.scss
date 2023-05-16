@@ -9,6 +9,7 @@
 // Media Queries
 @media screen and (max-width: 768px) {
   .home-page {
+    margin: $db-spacing-8;
     margin-top: 100px;
   }
 }

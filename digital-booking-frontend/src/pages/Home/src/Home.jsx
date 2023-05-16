@@ -58,9 +58,12 @@ const Home = ({ title, className }) => {
           </Card>
         ))}
       </Container>
-      <Title element="h2" weight="light" marginTop="24" marginBottom="16">
+      <Title element="h2" weight="light" marginTop="24" marginBottom="8">
         Products
       </Title>
+      <Text size="m" weight="light" marginBottom="16">
+          Te listamos algunos productos que te pueden interesar
+      </Text>
       <Container className="instruments-list">
         {productsListMock.map((product) => (
           <Card
