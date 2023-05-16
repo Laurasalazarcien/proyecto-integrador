@@ -1,6 +1,7 @@
 .card {
   border-radius: 6px;
   background-color: $db-white;
+  transition: all 0.5s;
 
   &__header--border {
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
@@ -62,8 +63,16 @@
     border-radius: 0;
   }
 
+  &--rounded-4 {
+    border-radius: $db-spacing-4;
+  }
+
   &--rounded-6 {
     border-radius: $db-spacing-6;
+  }
+
+  &--rounded-8 {
+    border-radius: $db-spacing-8;
   }
 
   &--rounded-12 {
@@ -110,5 +119,11 @@
   & > div:last-child {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+  }
+
+  &--animated {
+    &.card:hover {
+      transform: scale(1.05);
+    }
   }
 }

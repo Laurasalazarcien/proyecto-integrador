@@ -105,33 +105,45 @@ const productDetailMock = {
 const categoriesMock = [
   {
     id: 1,
-    image: "",
+    image:
+      "https://www.tiendacompensar.com/ccstore/v1/images/?source=/file/v2106446387901685731/products/id1413.manos-de-hombre-tocan-guitarra-acustica.jpg&height=350&width=350",
     name: "Guitarras y Bajos",
+    stock: 30,
   },
   {
     id: 2,
-    image: "",
+    image:
+      "https://eldiariony.com/wp-content/uploads/sites/2/2022/06/saxofon-campan%CC%83a-gofundme-shutterstock_600775652.jpg?quality=75&strip=all&w=1200",
     name: "Instrumentos de viento",
+    stock: 20,
   },
   {
     id: 3,
-    image: "",
+    image:
+      "https://buscaunmusico.com/wp-content/uploads/2020/01/drums-2599508_640.jpg",
     name: "Percusión",
+    stock: 5,
   },
   {
     id: 4,
-    image: "",
+    image:
+      "https://t2.uc.ltmcdn.com/es/posts/9/8/2/cuales_son_los_mejores_pianistas_del_mundo_17289_orig.jpg",
     name: "Pianos",
+    stock: 10,
   },
   {
     id: 5,
-    image: "",
+    image:
+      "https://djpmusicschool.com/wp-content/uploads/sintetizador-djp-music-school.png",
     name: "Sintetizadores",
+    stock: 8,
   },
   {
     id: 6,
-    image: "",
+    image:
+      "https://belmusic.com.co/wp-content/uploads/2018/09/Teclados-Belmusic-2.jpg",
     name: "Teclados electrónicos",
+    stock: 10,
   },
 ];
 
@@ -214,9 +226,9 @@ const brandsDropdownMock = [
 ];
 
 export {
-  productsListMock, 
-  productDetailMock, 
+  productsListMock,
+  productDetailMock,
   categoriesMock,
   categoriesDropdownMock,
-  brandsDropdownMock
+  brandsDropdownMock,
 };

@@ -12,12 +12,14 @@ const Image = ({
   maxWidth,
   minHeight,
   maxHeight,
+  borderRadius,
+  borderTopRadius,
+  borderBottomRadius,
   source,
   paddingSize,
   alignment,
   alternativeText,
   figcaption,
-  borderRadius,
   border,
   rounded,
   clickeable,
@@ -29,19 +31,25 @@ const Image = ({
     [`${namespace}--clickeable`]: clickeable,
     [`${namespace}--alignment-${alignment}`]: alignment,
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
+    [`${namespace}--rounded-${borderRadius}`]: borderRadius,
+    [`${namespace}--rounded-top-${borderTopRadius}`]: borderTopRadius,
+    [`${namespace}--rounded-bottom-${borderBottomRadius}`]: borderBottomRadius,
   });
-
 
   const handleClick = () => {
     if (!clickeable) return;
-   onClick();
-  }
- 
+    onClick();
+  };
+
   return (
     <div
-      style={{ 
-        width: containerWidth, 
-        height: containerHeight 
+      style={{
+        width: containerWidth,
+        height: containerHeight,
+        borderTopLeftRadius: borderTopRadius,
+        borderTopRightRadius: borderTopRadius,
+        borderBottomLeftRadius: borderBottomRadius,
+        borderBottomRightRadius: borderBottomRadius,
       }}
       className={componentClassNames}
     >
@@ -53,6 +61,10 @@ const Image = ({
           maxWidth,
           minHeight,
           maxHeight,
+          borderTopLeftRadius: `${borderTopRadius}px`,
+          borderTopRightRadius: `${borderTopRadius}px`,
+          borderBottomLeftRadius: `${borderBottomRadius}px`,
+          borderBottomRightRadius: `${borderBottomRadius}px`,
         }}
         src={source}
         alt={alternativeText}
@@ -72,16 +84,18 @@ Image.propTypes = {
   minHeight: PropTypes.string,
   maxHeight: PropTypes.string,
   source: PropTypes.string.isRequired,
-  paddingSize: PropTypes.oneOf([ "16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["16", "24", "32"]),
   alignment: PropTypes.objectOf(["left", "center", "right"]),
+  borderRadius: PropTypes.oneOf(["0", "6", "12", "16", "24", "32"]),
+  borderTopRadius: PropTypes.oneOf(["0", "6", "12", "16", "24", "32"]),
+  borderBottomRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "20"]),
   alternativeText: PropTypes.string.isRequired,
   figcaption: PropTypes.string,
-  borderRadius: PropTypes.string,
   border: PropTypes.string,
   rounded: PropTypes.bool,
   clickeable: PropTypes.bool,
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 Image.defaultProps = {

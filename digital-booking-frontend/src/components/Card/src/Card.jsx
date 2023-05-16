@@ -10,6 +10,7 @@ const Card = ({
   borderRadius,
   className,
   clickeable,
+  animated,
   onClick,
   children,
 }) => {
@@ -17,6 +18,7 @@ const Card = ({
     [`${namespace}--shadow-${shadow}`]: shadow,
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
     [`${namespace}--clickeable`]: clickeable,
+    [`${namespace}--animated`]: animated,
     [`${namespace}--rounded-${borderRadius}`]: borderRadius,
     [`${namespace}--${borderColor}`]: borderColor,
   });
@@ -36,7 +38,7 @@ const Card = ({
 Card.propTypes = {
   shadow: PropTypes.oneOf(["none", "flat", "outline", "elevated"]),
   paddingSize: PropTypes.oneOf(["0", "12", "16", "24", "32"]),
-  borderRadius: PropTypes.oneOf(["0", "6", "12", "16", "24", "32"]),
+  borderRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "24", "32"]),
   borderColor: PropTypes.oneOf([
     "default",
     "neutral",
@@ -46,6 +48,7 @@ Card.propTypes = {
   ]),
   className: PropTypes.string,
   clickeable: PropTypes.bool,
+  animated: PropTypes.bool,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
@@ -55,6 +58,7 @@ Card.defaultProps = {
   paddingSize: "default",
   borderColor: "default",
   borderRadius: "6",
+  animated: false,
   clickeable: false,
   className: "",
 };

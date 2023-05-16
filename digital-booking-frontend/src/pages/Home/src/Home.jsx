@@ -7,7 +7,7 @@ import Image from "../../../components/Image";
 import { Title, Text } from "../../../components/Typography";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 
-import { productsListMock } from "../../../mocks/mocks";
+import { productsListMock, categoriesMock } from "../../../mocks/mocks";
 
 const namespace = "home-page";
 
@@ -16,13 +16,51 @@ const Home = ({ title, className }) => {
   const navigate = useNavigate();
 
   const handleClick = (id) => {
-    console.log('id: ', id);
+    console.log("id: ", id);
     navigate(`/detail/${id}`);
   };
 
   return (
     <div className={componentClassnames}>
-      {title && <Title>{title}</Title>}
+      <Title weight="light" marginBottom="16">
+        Categories
+      </Title>
+      <Container className="categories-list">
+        {categoriesMock.map((category) => (
+          <Card
+            key={category.id}
+            shadow="elevated"
+            className="category-card"
+            paddingSize="0"
+            borderRadius="8"
+            clickeable
+            animated
+          >
+            <CardHeader paddingSize="0">
+              <Image
+                source={category.image}
+                alternativeText={category.name}
+                width="100%"
+                height="180px"
+                paddingSize="0"
+                borderTopRadius="8"
+                onClick={() => console.log("img click")}
+              />
+            </CardHeader>
+            <CardBody paddingSize="16">
+              <Title element="h2" size="m" weight="regular" marginBottom="4">
+                {category.name}
+              </Title>
+              <Text size="s" weight="light">
+                {category.stock} productos
+              </Text>
+            </CardBody>
+          </Card>
+        ))}
+      </Container>
+      <Title element="h2" weight="light" marginTop="16" marginBottom="16">
+        Products
+      </Title>
       <Container className="instruments-list">
         {productsListMock.map((product) => (
           <Card

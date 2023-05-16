@@ -6,11 +6,13 @@ const namespace = "card";
 const CardHeader = ({ 
   title,
   borderHeader, 
+  paddingSize, 
   className, 
   children 
 }) => {
   const componentClassnames = classNames(`${namespace}__header`, className, {
     [`${namespace}__header--border`]: borderHeader,
+    [`${namespace}__header--padding-${paddingSize}`]: paddingSize,
   });
 
   return (
@@ -24,6 +26,7 @@ const CardHeader = ({
 CardHeader.propTypes = {
   title: PropTypes.string,
   borderHeader: PropTypes.bool,
+  paddingSize: PropTypes.oneOf(["0", "12", "16", "24", "32"]),
   className: PropTypes.string,
   children: PropTypes.node,
 };
@@ -32,6 +35,7 @@ CardHeader.defaultProps = {
   title: "",
   className: "",
   borderHeader: true,
+  paddingSize: "16"
 };
 
 export default CardHeader;
