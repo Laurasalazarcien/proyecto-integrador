@@ -18,16 +18,19 @@
 
   &__search {
     font-size: 2.5vw;
+    height: 30vh;
     /* Estilos para la sección de buscador */
   }
 
   &__categories {
+    height: 50vh;
     font-size: 2vw;
     background-color: white;
     /* Estilos para la sección de categorías */
   }
 
   &__recommendations {
+    height: 50vh;
     font-size: 1.5vw;
     background-color: lightgrey;
     /* Estilos para la sección de recomendaciones de productos */
