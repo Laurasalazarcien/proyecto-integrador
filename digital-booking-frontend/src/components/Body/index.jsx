@@ -1,2 +1,2 @@
-import { Body } from "./src/Body";
+import Body from "./src/Body";
 export default Body;
