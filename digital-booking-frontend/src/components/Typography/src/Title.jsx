@@ -102,7 +102,7 @@ Title.propTypes = {
 };
 
 Title.defaultProps = {
-  size: "default",
+  size: "m",
   element: "h1",
   color: "primary",
   weight: "default",

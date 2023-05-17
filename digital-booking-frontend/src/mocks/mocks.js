@@ -4,7 +4,7 @@ const productsListMock = [
     title: "Saxofón Alto Yamaha Profesional",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
+    category: "Instrumentos de viento",
     brand: "Yamaha",
     price: "$4.500.000",
     stock: 23,
@@ -13,99 +13,123 @@ const productsListMock = [
   },
   {
     id: 2,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "GUITARRA ELEC IBANEZ AS53-TF",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
-    stock: 23,
+    category: "Guitarras y Bajos",
+    brand: "Ibanez",
+    price: "$1.670.000",
+    stock: 18,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05.png?v=1657644013&width=700",
   },
   {
     id: 3,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "TROMPETA PARA ESTUDIANTE BACH TR500DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
-    stock: 23,
+    category: "Instrumemtos de viento",
+    brand: "Bach",
+    price: "$3.850.000",
+    stock: 20,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/VT4001-01_1100x.png?v=1559162975",
   },
   {
     id: 4,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "TROMPETA BACH TR655DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
-    stock: 23,
+    category: "Instrumentos de viento",
+    brand: "Bach",
+    price: "$2.210.000",
+    stock: 218,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/TR655-650x650_1100x.jpg?v=1676472454",
   },
   {
     id: 5,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "BAJO ELECTRICO FENDER SQUIRE- Classic Vibe 70 JAZZ BASS -NATURAL",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
+    category: "Guitarras y Bajos",
+    brand: "Fender",
+    price: "$2.300.000",
     stock: 23,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/530c8dd7-3531-4e6c-96f8-2e80508b1085_1100x.jpg?v=1584731253",
   },
   {
     id: 6,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "BATERIA LUDWIG EVOLUTION OUTFIT 22 CON HARD & ZBT PACK NEGRA",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
+    category: "Baterias",
+    brand: "Ludwing",
+    price: "$5.950.000",
     stock: 23,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/Captura_de_pantalla_2019-02-18_a_las_10.26.58_a.m._1100x.png?v=1678308427",
   },
   {
     id: 7,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "VIOLIN 4/4 SOLIDO VERONA HXTQ09FR NATURAL",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
-    stock: 23,
+    category: "Instrumentos de viento",
+    brand: "Verona",
+    price: "$650.000",
+    stock: 28,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/cv3727_1100x.jpg?v=1663178236",
   },
   {
     id: 8,
-    title: "Saxofón Alto Yamaha Profesional",
+    title: "CLARINETE SIb SELMER 1400B",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Wind instruments",
-    brand: "Yamaha",
-    price: "$4.500.000",
+    category: "Instrumentos de viento",
+    brand: "Selmer",
+    price: "$5.000.000",
     stock: 23,
     image:
-      "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/1Captura_de_pantalla_2019-10-09_a_las_3.19.40_p.m._600x.png?v=1570652452",
+  },
+  {
+    id: 9,
+    title: "GUITARRA ACUSTICA MARTIN 11LX1",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+    category: "Guitarras",
+    brand: "Martin",
+    price: "$3.100.000",
+    stock: 33,
+    image:
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/LX1-Little-Martin-11LX1_1100x.jpg?v=1662395594",
+  },
+  {
+    id: 10,
+    title: "GUITARRA ACUSTICA MARTIN 11LX1",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+    category: "Guitarras",
+    brand: "Martin",
+    price: "$3.100.000",
+    stock: 33,
+    image:
+      "https://cdn.shopify.com/s/files/1/2235/9983/products/VG4942_-_SAXOFON_TENOR_TS651_-_FRONTAL_copia_1100x.jpg?v=1501976099",
   },
 ];
 
 const productDetailMock = {
   id: 1,
-  title: "Saxofón Alto Yamaha Profesional",
+  title: "SAXOFON TENOR CONN tS651DIR",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  category: "Wind instruments",
-  brand: "Yamaha",
-  price: "$4.500.000",
-  stock: 23,
+  category: "Instrumentos de viento",
+  brand: "Conn",
+  price: "$5.950.000",
+  stock: 28,
   image:
     "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
 };

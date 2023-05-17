@@ -58,8 +58,8 @@ const NavBar = ({
       <Container className={`${namespace}__logo`}>
         <Image
           source={logo}
-          maxHeight={isMobile ? "40px" : "55px"}
-          containerHeight={isMobile ? "40px" : "55px"}
+          maxHeight={isMobile ? "45px" : "50px"}
+          containerHeight={isMobile ? "45px" : "50px"}
           onClick={handleClickLogo}
           clickeable
         />

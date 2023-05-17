@@ -6,14 +6,15 @@ import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import { Title, Text } from "../../../components/Typography";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
-
 import { productsListMock, categoriesMock } from "../../../mocks/mocks";
+import { useMobile } from "../../../hooks/useMobile";
 
 const namespace = "home-page";
 
 const Home = ({ title, className }) => {
   const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
+  const isMobile = useMobile();
 
   const handleClick = (id) => {
     console.log("id: ", id);
@@ -22,14 +23,27 @@ const Home = ({ title, className }) => {
 
   return (
     <div className={componentClassnames}>
-      <Title weight="light" marginBottom="8">
+      <Title weight="light" size={isMobile ? "xl" : "xxl"}>
         Home
       </Title>
-      <Text weight="light" marginBottom="32" color="secondary">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, accusantium! Quaerat impedit veniam, odio assumenda ut nostrum dolorem laudantium et, itaque perferendis atque saepe sequi nulla minus voluptatem recusandae optio?
+      <Text
+        weight="light"
+        color="secondary"
+        marginBottom="32"
+        size={isMobile ? "s" : "m"}
+      >
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur,
+        accusantium! Quaerat impedit veniam, odio assumenda ut nostrum dolorem
+        laudantium et, itaque perferendis atque saepe sequi nulla minus
+        voluptatem recusandae optio?
       </Text>
       <Container element="section" className="categories">
-        <Title element="h2" weight="light" marginBottom="16">
+        <Title
+          element="h2"
+          weight="light"
+          marginBottom="16"
+          size={isMobile ? "l" : "xl"}
+        >
           ¿Qué estás buscando?
         </Title>
         <Container className="categories-list">
@@ -49,6 +63,8 @@ const Home = ({ title, className }) => {
                   alternativeText={category.name}
                   width="100%"
                   height="180px"
+                  containerWidth="100%"
+                  containerHeight="180px"
                   paddingSize="0"
                   borderTopRadius="8"
                   onClick={() => console.log("img click")}
@@ -67,10 +83,21 @@ const Home = ({ title, className }) => {
         </Container>
       </Container>
       <Container element="section" className="products">
-        <Title element="h2" weight="light" marginTop="24" marginBottom="8">
+        <Title
+          element="h2"
+          weight="light"
+          marginTop="24"
+          marginBottom="8"
+          size={isMobile ? "l" : "l"}
+        >
           Nuestros productos
         </Title>
-        <Text weight="light" marginBottom="16" color="secondary">
+        <Text
+          weight="light"
+          color="secondary"
+          marginBottom="16"
+          size={isMobile ? "s" : "m"}
+        >
           Te listamos algunos productos que te pueden interesar
         </Text>
         <Container className="instruments-list">
@@ -87,7 +114,9 @@ const Home = ({ title, className }) => {
                 <Image
                   source={product.image}
                   alternativeText={product.name}
-                  maxHeight="200px"
+                  containerHeight={isMobile ? "150px": "200px"}
+                  maxHeight={isMobile ? "150px": "200px"}
+                  maxWidth={isMobile ? "150px": "200px"}
                   onClick={() => console.log("img click")}
                 />
               </CardHeader>
