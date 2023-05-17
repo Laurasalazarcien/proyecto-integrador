@@ -43,41 +43,6 @@ const AddProduct = ({ title, className }) => {
       <Text weight="light" marginBottom="16">
         Desde aqui vas a poder gestionar tus productos.
       </Text>
-      <Container display="flex" justifyContent="center">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading>#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData>{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.title}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData>{product.stock}</TableData>
-                <TableData>
-                  <Button>Edit</Button>
-                  <Button modifier="error">Delete</Button>
-                </TableData>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Container>
       <Container margin="auto" className="add-product-form">
         <Card shadow="elevated">
           <CardHeader>
@@ -93,8 +58,8 @@ const AddProduct = ({ title, className }) => {
                 placeholder="Enter the product title"
                 onChange={() => {}}
                 onBlur={() => {}}
-                helperMessage="Message"
-                modifier="error"
+                helperMessage=""
+                modifier=""
               />
               <NumericInput
                 id="stock"
@@ -152,6 +117,41 @@ const AddProduct = ({ title, className }) => {
             <Button fullWidth>CREATE</Button>
           </CardBody>
         </Card>
+      </Container>
+      <Container display="flex" justifyContent="center">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeading>#</TableHeading>
+              <TableHeading>Image</TableHeading>
+              <TableHeading>Name</TableHeading>
+              <TableHeading>Description</TableHeading>
+              <TableHeading>Stock</TableHeading>
+              <TableHeading>Actions</TableHeading>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {productsListMock.map((product) => (
+              <TableRow key={product.id}>
+                <TableData>{product.id}</TableData>
+                <TableData>
+                  <Image
+                    source={product.image}
+                    maxHeight="50px"
+                    paddingSize="0"
+                  />
+                </TableData>
+                <TableData>{product.title}</TableData>
+                <TableData>{product.description}</TableData>
+                <TableData>{product.stock}</TableData>
+                <TableData>
+                  <Button>Edit</Button>
+                  <Button modifier="error">Delete</Button>
+                </TableData>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Container>
     </div>
   );
