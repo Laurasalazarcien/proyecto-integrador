@@ -10,6 +10,7 @@ const DropdownContainer = ({
   modifier,
   fullWidth,
   helperMessage,
+  searchPlaceholder,
   selectedOption,
   onSelectOption,
   className,
@@ -36,6 +37,7 @@ const DropdownContainer = ({
         modifier={modifier}
         fullWidth={fullWidth}
         helperMessage={helperMessage}
+        searchPlaceholder={searchPlaceholder}
         className={className}
       />
     </DropdownProvider>
@@ -55,6 +57,7 @@ DropdownContainer.propTypes = {
   modifier: PropTypes.string,
   fullWidth: PropTypes.bool,
   helperMessage: PropTypes.string,
+  searchPlaceholder: PropTypes.string,
   selectedOption: PropTypes.shape({
     label: PropTypes.string,
     value: PropTypes.string,

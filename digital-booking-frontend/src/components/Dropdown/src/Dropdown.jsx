@@ -14,13 +14,14 @@ const VariantsDropdown = ({
   modifier,
   fullWidth,
   helperMessage,
+  searchPlaceholder,
   className,
 }) => {
   const componentClassnames = classNames(namespace, className, {
-    [`${namespace}--full-width`]: fullWidth
+    [`${namespace}--full-width`]: fullWidth,
   });
   const { isOpen, setDropdownVisibility, setDropdownSearch } = useDropdown();
-  
+
   const handleCloseDropdown = () => {
     setDropdownVisibility(false);
     setDropdownSearch(false);
@@ -35,7 +36,7 @@ const VariantsDropdown = ({
         fullWidth={fullWidth}
         helperMessage={helperMessage}
       />
-      {isOpen && <DropdownContent />}
+      {isOpen && <DropdownContent searchPlaceholder={searchPlaceholder} />}
       {isOpen && (
         <div
           role="button"
@@ -56,6 +57,7 @@ VariantsDropdown.propTypes = {
   modifier: PropTypes.string,
   fullWidth: PropTypes.bool,
   helperMessage: PropTypes.string,
+  searchPlaceholder: PropTypes.string,
   className: PropTypes.string,
 };
 

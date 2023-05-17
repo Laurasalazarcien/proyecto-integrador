@@ -1,8 +1,8 @@
 .dropdown-search-box {
-  padding: $andes-spacing-16;
+  padding: $db-spacing-16;
 
   &__container {
-    height: $andes-spacing-32;
+    height: $db-spacing-32;
     position: relative;
   }
 
@@ -10,14 +10,14 @@
     display: flex;
     position: absolute;
     top: calc(50% - 8px);
-    left: $andes-spacing-8;
+    left: $db-spacing-8;
   }
 
   &__close-icon {
     display: flex;
     position: absolute;
-    top: calc(50% - $andes-spacing-8);
-    right: $andes-spacing-8;
+    top: calc(50% - $db-spacing-8);
+    right: $db-spacing-8;
   }
 
   &__close-button {
@@ -33,13 +33,13 @@
 
   &__input {
     width: 100%;
-    height: $andes-spacing-32;
-    padding: 6px $andes-spacing-28;
+    height: $db-spacing-32;
+    padding: $db-spacing-6 $db-spacing-28;
     border: none;
-    border-radius: $andes-spacing-16;
+    border-radius: $db-spacing-16;
     background-color: rgba(0, 0, 0, 0.04);
     outline: none;
-    font-size: $andes-spacing-12;
+    font-size: $db-spacing-12;
     line-height: 18px;
     font-family: inherit;
     box-sizing: border-box;
@@ -49,11 +49,5 @@
       box-shadow: none;
       outline: 1.5px solid rgba(65, 137, 230, 0.4);
     }
-  }
-
-  .andes-progress-indicator-circular {
-    position: absolute;
-    top: calc(50% - 8px);
-    right: $andes-spacing-8;
   }
 }

@@ -6,10 +6,10 @@ import icons from "../../icons";
 
 const namespace = "dropdown-search-box";
 
-const DropdownSearchBox = ({ valueSearch }) => {
+const DropdownSearchBox = ({ searchValue, searchPlaceholder }) => {
   const { Close, Search } = icons;
   const { setDropdownSearch, isLoading } = useDropdown();
-  const [searchTerm, setSearchTerm] = useState(valueSearch || "");
+  const [searchTerm, setSearchTerm] = useState(searchValue || "");
 
   const moveUpScroll = () => {
     const divScroll = document.querySelector(
@@ -39,10 +39,10 @@ const DropdownSearchBox = ({ valueSearch }) => {
           type="text"
           value={searchTerm}
           className={`${namespace}__input`}
-          placeholder="Buscar ..."
+          placeholder={searchPlaceholder}
           onChange={handleSearch}
         />
-        {!isLoading && searchTerm && (
+        {searchTerm && (
           <button
             tabIndex="0"
             aria-hidden="true"
@@ -59,11 +59,12 @@ const DropdownSearchBox = ({ valueSearch }) => {
 };
 
 DropdownSearchBox.propTypes = {
-  valueSearch: PropTypes.string,
+  searchValue: PropTypes.string,
+  searchPlaceholder: PropTypes.string,
 };
 
 DropdownSearchBox.defaultProps = {
-  valueSearch: "",
+  searchValue: "",
 };
 
 export default DropdownSearchBox;

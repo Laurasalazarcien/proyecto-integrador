@@ -74,6 +74,7 @@ const AddProduct = ({ title, className }) => {
                 id="category"
                 name="category"
                 label="Category"
+                searchPlaceholder="Search a category"
                 options={categoriesDropdownMock}
                 modifier=""
                 helperMessage=""
@@ -87,6 +88,7 @@ const AddProduct = ({ title, className }) => {
                 id="brand"
                 name="brand"
                 label="Brand"
+                searchPlaceholder="Search a brand"
                 options={brandsDropdownMock}
                 modifier=""
                 helperMessage=""
