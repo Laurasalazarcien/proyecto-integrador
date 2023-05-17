@@ -123,13 +123,35 @@ const productsListMock = [
 
 const productDetailMock = {
   id: 1,
-  title: "SAXOFON TENOR CONN tS651DIR",
+  title: "GUITARRA ELEC IBANEZ AS53-TF",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  category: "Instrumentos de viento",
-  brand: "Conn",
-  price: "$5.950.000",
+  category: "Guitarras y Bajos",
+  brand: "Ibanez",
+  price: "$1.670.000",
   stock: 28,
+  images: [
+    {
+      id: 1,
+      url: "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05.png?v=1657644013&width=700",
+    },
+    {
+      id: 2,
+      url: "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05_sub_1.jpg?v=1657644013&width=700",
+    },
+    {
+      id: 3,
+      url: "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05_sub_4.jpg?v=1657644013&width=700",
+    },
+    {
+      id: 4,
+      url: "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05_sub_3.jpg?v=1657644013&width=700",
+    },
+    {
+      id: 5,
+      url: "https://cdn.shopify.com/s/files/1/0512/9116/0767/products/p_region_AS53_TF_5B_05_sub_2.jpg?v=1657644013&width=700",
+    },
+  ],
   image:
     "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
 };

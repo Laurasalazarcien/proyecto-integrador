@@ -5,6 +5,7 @@ const namespace = "card";
 
 const Card = ({
   shadow,
+  marginSize,
   paddingSize,
   borderColor,
   borderRadius,
@@ -16,6 +17,7 @@ const Card = ({
 }) => {
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--shadow-${shadow}`]: shadow,
+    [`${namespace}--margin-${marginSize}`]: paddingSize,
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
     [`${namespace}--clickeable`]: clickeable,
     [`${namespace}--animated`]: animated,
@@ -37,7 +39,8 @@ const Card = ({
 
 Card.propTypes = {
   shadow: PropTypes.oneOf(["none", "flat", "outline", "elevated"]),
-  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "24", "32"]),
+  marginSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
   borderRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "24", "32"]),
   borderColor: PropTypes.oneOf([
     "default",
@@ -55,6 +58,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   shadow: "outline",
+  marginSize: "0",
   paddingSize: "default",
   borderColor: "default",
   borderRadius: "6",
