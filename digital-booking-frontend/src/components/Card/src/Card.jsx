@@ -37,7 +37,7 @@ const Card = ({
 
 Card.propTypes = {
   shadow: PropTypes.oneOf(["none", "flat", "outline", "elevated"]),
-  paddingSize: PropTypes.oneOf(["0", "12", "16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "24", "32"]),
   borderRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "24", "32"]),
   borderColor: PropTypes.oneOf([
     "default",

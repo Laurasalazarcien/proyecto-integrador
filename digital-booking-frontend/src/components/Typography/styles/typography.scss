@@ -300,6 +300,10 @@
     padding: $db-spacing-24;
   }
 
+  &--margin-32 {
+    padding: $db-spacing-32;
+  }
+
   // Margin left
   &--margin-left-2 {
     margin-left: $db-spacing-2;
@@ -329,6 +333,10 @@
     padding-left: $db-spacing-24;
   }
 
+  &--margin--left-32 {
+    padding-left: $db-spacing-32;
+  }
+
   // Margin right
   &--margin-right-2 {
     margin-right: $db-spacing-2;
@@ -352,6 +360,10 @@
 
   &--margin-right-20 {
     margin-right: $db-spacing-20;
+  }
+
+  &--margin-right-32 {
+    margin-right: $db-spacing-32;
   }
 
   &--margin--right-24 {
@@ -387,6 +399,10 @@
     padding-top: $db-spacing-24;
   }
 
+  &--margin-top-32 {
+    padding-top: $db-spacing-32;
+  }
+
   // Margin bottom
   &--margin-bottom-2 {
     margin-bottom: $db-spacing-2;
@@ -412,7 +428,11 @@
     margin-bottom: $db-spacing-20;
   }
 
-  &--margin--bottom-24 {
-    padding-bottom: $db-spacing-24;
+  &--margin-bottom-24 {
+    margin-bottom: $db-spacing-24;
+  }
+
+  &--margin-bottom-32 {
+    margin-bottom: $db-spacing-32;
   }
 }

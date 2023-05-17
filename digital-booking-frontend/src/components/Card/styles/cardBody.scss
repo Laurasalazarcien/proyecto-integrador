@@ -4,6 +4,14 @@
       padding: 0;
     }
 
+    &--padding-4 {
+      padding: $db-spacing-4;
+    }
+
+    &--padding-8 {
+      padding: $db-spacing-8;
+    }
+
     &--padding-12 {
       padding: $db-spacing-12;
     }

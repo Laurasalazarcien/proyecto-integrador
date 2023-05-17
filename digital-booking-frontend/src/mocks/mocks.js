@@ -7,6 +7,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -18,6 +19,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -29,6 +31,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -40,6 +43,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -51,6 +55,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -62,6 +67,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -73,6 +79,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },
@@ -84,6 +91,7 @@ const productsListMock = [
     category: "Wind instruments",
     brand: "Yamaha",
     price: "$4.500.000",
+    stock: 23,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/AS650.jpg?v=1581698765",
   },

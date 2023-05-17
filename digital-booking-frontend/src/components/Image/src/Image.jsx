@@ -84,7 +84,7 @@ Image.propTypes = {
   minHeight: PropTypes.string,
   maxHeight: PropTypes.string,
   source: PropTypes.string.isRequired,
-  paddingSize: PropTypes.oneOf(["16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "24", "32"]),
   alignment: PropTypes.objectOf(["left", "center", "right"]),
   borderRadius: PropTypes.oneOf(["0", "6", "12", "16", "24", "32"]),
   borderTopRadius: PropTypes.oneOf(["0", "6", "12", "16", "24", "32"]),

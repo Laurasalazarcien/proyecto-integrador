@@ -16,7 +16,7 @@ const CardBody = ({
 
 CardBody.propTypes = {
   className: PropTypes.string,
-  paddingSize: PropTypes.oneOf(["0", "12", "16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "24", "32"]),
   children: PropTypes.node,
 };
 
