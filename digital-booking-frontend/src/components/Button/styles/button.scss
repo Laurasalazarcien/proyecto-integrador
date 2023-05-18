@@ -1,0 +1,145 @@
+.button {
+  display: inline-block;
+  border: none;
+  box-sizing: border-box;
+  color: $db-white;
+  font-weight: $font-weight-regular;
+  background-color: $db-color-neutral;
+  transition: 0.18s ease-out;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &--small {
+    height: $db-spacing-24;
+    padding: 0 $db-spacing-8;
+    font-size: $font-size-12;
+    line-height: $line-height-12;
+
+    &.button--rounded {
+      border-radius: $border-radius-4;
+    }
+  }
+
+  &--medium {
+    height: $db-spacing-32;
+    padding: 0 $db-spacing-12;
+    font-size: $font-size-14;
+    line-height: $line-height-14;
+
+    &.button--rounded {
+      border-radius: $border-radius-5;
+    }
+  }
+
+  &--large {
+    height: $db-spacing-48;
+    padding: 0 $db-spacing-24;
+    font-size: $font-size-16;
+    line-height: $line-height-16;
+
+    &.button--rounded {
+      border-radius: $border-radius-6;
+    }
+  }
+
+  &--loud {
+    color: $db-white;
+    background-color: $db-color-neutral; // rgba(52, 131, 250, 1)
+
+    // &:hover {
+    //   cursor: pointer;
+    //   background-color: dodgerblue;
+    // }
+  }
+
+  &--success {
+    background-color: $db-color-positive;
+  }
+
+  &--quiet {
+    color: $db-color-neutral;
+    background-color: $db-white;
+    border: 1px solid $db-color-neutral;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &--rounded-0 {
+    border-radius: 0;
+  }
+
+  &--rounded-4 {
+    border-radius: $db-spacing-4;
+  }
+
+  &--rounded-6 {
+    border-radius: $db-spacing-6;
+  }
+
+  &--rounded-8 {
+    border-radius: $db-spacing-8;
+  }
+
+  &--rounded-12 {
+    border-radius: $db-spacing-12;
+  }
+
+  &--rounded-16 {
+    border-radius: $db-spacing-16;
+  }
+
+  &--rounded-24 {
+    border-radius: $db-spacing-24;
+  }
+
+  &--rounded-32 {
+    border-radius: $db-spacing-32;
+  }
+
+  &--transparent {
+    background-color: transparent;
+  }
+
+  &--neutral {
+    background-color: $db-neutral;
+  }
+
+  &--positive {
+    background-color: $db-positive;
+  }
+
+  &--warning {
+    background-color: $db-warning;
+  }
+
+  &--error {
+    background-color: $db-error;
+  }
+
+  &--disabled {
+    background-color: $db-gray-100;
+    color: $db-gray-250;
+  }
+
+  &--full-width {
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,0 +1,13 @@
+.register-page {
+  margin: 0 auto;
+  margin-top: 80px;
+  max-width: 1200px;
+  padding: $db-spacing-16;
+}
+
+// Media Queries
+@media screen and (max-width: 768px) {
+  .register-page {
+    margin-top: 60px;
+  }
+}

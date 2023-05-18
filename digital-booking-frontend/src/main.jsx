@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.scss";
 import "./styles/app.scss";
+import 'react-slideshow-image/dist/styles.css'
 
 // Context
 import { ContextProvider } from "./context/AppContext";

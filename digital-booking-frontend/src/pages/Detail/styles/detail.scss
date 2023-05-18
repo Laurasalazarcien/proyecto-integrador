@@ -1,0 +1,14 @@
+.detail-page {
+  margin: 0 auto;
+  margin-top: 120px;
+  margin-bottom: 40px;
+  max-width: 1200px;
+  padding: $db-spacing-20;
+}
+
+// Media Queries
+@media screen and (max-width: 768px) {
+  .detail-page {
+    margin-top: 100px;
+  }
+}

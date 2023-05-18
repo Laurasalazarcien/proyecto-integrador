@@ -1,10 +1,43 @@
-import React  from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+
 const namespace = "spinner";
 
-const Spinner = ({ width, height }) => {
+const Spinner = ({ 
+  width, 
+  height, 
+  borderWidth, 
+  borderColor, 
+  className 
+}) => {
+  const componentClassNames = classNames(namespace, className);
   return (
-    <div className={namespace} style={{ width, height }}></div>
+    <div
+      className={componentClassNames}
+      style={{
+        width,
+        height,
+        border: `${borderWidth} solid ${borderColor}`,
+        borderLeftColor: 'transparent'
+      }}
+    />
   );
+};
+
+Spinner.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  borderWidth: PropTypes.string,
+  borderColor: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Spinner.defaultProps = {
+  width: "16px",
+  height: "16px",
+  className: "",
+  borderWidth: "1px",
+  borderColor: "#fff",
 };
 
 export default Spinner;

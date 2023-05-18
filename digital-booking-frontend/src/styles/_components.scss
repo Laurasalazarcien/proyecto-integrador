@@ -1,11 +1,28 @@
 // Pages
 @import "../pages/Home/index";
+@import "../pages/Login/index";
 @import "../pages/Register/index";
 @import "../pages/Detail/index";
+@import "../pages/Admin/index";
 
 // Components
 @import "../components/Example/index";
-@import "../components/Header/index.scss";
-@import "../components/InstrumentContainer/index";
-@import "../components/InstrumentCard/index";
-
+@import "../components/Header/index";
+@import "../components/Footer/index";
+@import "../components/Dropdown/index";
+@import "../components/NavBar/index";
+@import "../components/Container/index";
+@import "../components/Spinner/index";
+@import "../components/Button/index";
+@import "../components/Card/index";
+@import "../components/Typography/index";
+@import "../components/Image/index";
+@import "../components/List/index";
+@import "../components/Badge/index";
+@import "../components/Layout/index";
+@import "../components/Form/index";
+@import "../components/TextField/index";
+@import "../components/Table/index";
+@import "../components/Slider/index.scss";
+@import "../components/ImageViewer/index.scss";
+@import "../components/Modal/index.scss";
