@@ -16,6 +16,29 @@
     padding: $db-spacing-16;
   }
 
+  &__data {
+    &--actions {
+      text-align: center;
+
+      .button--medium {
+        padding: 0;
+
+        .bi-pencil-square {
+          color: $db-color-caution;
+          margin-right: $db-spacing-4;
+        }
+  
+        .bi-trash-fill {
+          color: $db-color-negative;
+        }
+      }
+    }
+
+    &--stock {
+      text-align: center;
+    }
+  }
+
   &__data,
   &__heading {
     border: 1px solid $db-gray-100;

@@ -8,6 +8,10 @@
   transition: 0.18s ease-out;
   font-weight: $font-weight-semibold;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &__content {
     display: flex;
     align-items: center;
@@ -52,10 +56,14 @@
     color: $db-white;
     background-color: $db-color-neutral; // rgba(52, 131, 250, 1)
 
-    &:hover {
-      cursor: pointer;
-      background-color: dodgerblue;
-    }
+    // &:hover {
+    //   cursor: pointer;
+    //   background-color: dodgerblue;
+    // }
+  }
+
+  &--success {
+    background-color: $db-color-positive;
   }
 
   &--quiet {
