@@ -6,18 +6,34 @@ import Image from "../../Image";
 import Button from "../../Button";
 import ImageViewerItem from "./ImageViewerItem";
 import { useMobile } from "../../../hooks/useMobile";
+import icons from "../../icons";
 
 const namespace = "image-viewer";
 
 const ImageViewer = ({ images, imageSelected, className }) => {
   const isMobile = useMobile();
+  const { ChevronLeft, ChevronRight } = icons;
   const componentClassnames = classNames(namespace, className);
   const [currentImage, setCurrentImage] = useState(
     images.find((img) => img.id === imageSelected)
   );
 
-  const handleImageClick = (imgId) => {
+  const handleClickImage = (imgId) => {
     setCurrentImage(images.find((img) => img.id === imgId));
+  };
+
+  const handleClickPrevButton = () => {
+    const image = images.find((img) => img.id === currentImage.id - 1);
+    if (image) {
+      setCurrentImage(image);
+    }
+  };
+
+  const handleClickNextButton = () => {
+    const image = images.find((img) => img.id === currentImage.id + 1);
+    if (image) {
+      setCurrentImage(image);
+    }
   };
 
   return (
@@ -33,12 +49,18 @@ const ImageViewer = ({ images, imageSelected, className }) => {
             containerHeight="80px"
             imageWidth="100%"
             selected={id === currentImage.id}
-            onClick={handleImageClick}
+            onClick={handleClickImage}
           />
         ))}
       </div>
       <div className={`${namespace}__current`}>
-        {/* <Button className={`${namespace}__prev-button`}>Prev</Button> */}
+        <Button
+          hierarchy="transparent"
+          className={`${namespace}__prev-button`}
+          onClick={handleClickPrevButton}
+        >
+          <ChevronLeft />
+        </Button>
         <Image
           source={currentImage.url}
           containerWidth="100%"
@@ -46,7 +68,13 @@ const ImageViewer = ({ images, imageSelected, className }) => {
           width="100%"
           maxHeight={isMobile ? "175px" : ""}
         />
-        {/* <Button className={`${namespace}__next-button`}>Next</Button> */}
+        <Button
+          hierarchy="transparent"
+          className={`${namespace}__next-button`}
+          onClick={handleClickNextButton}
+        >
+          <ChevronRight />
+        </Button>
       </div>
     </div>
   );

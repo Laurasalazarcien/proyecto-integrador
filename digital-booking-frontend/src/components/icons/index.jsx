@@ -11,6 +11,8 @@ import Trash from "./src/Trash";
 import TrashPill from "./src/TrashPill";
 import PencilSquare from "./src/PencilSquare";
 import PencilPill from "./src/PencilPill";
+import ChevronLeft from "./src/ChevronLeft";
+import ChevronRight from "./src/ChevronRight";
 
 const icons = {
   Check,
@@ -25,7 +27,9 @@ const icons = {
   Trash,
   TrashPill,
   PencilSquare,
-  PencilPill
+  PencilPill,
+  ChevronLeft,
+  ChevronRight
 };
 
 export default icons;
