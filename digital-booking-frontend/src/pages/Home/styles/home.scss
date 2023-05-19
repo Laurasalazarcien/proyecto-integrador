@@ -4,7 +4,19 @@
   margin-right: auto;
   margin-bottom: 40px;
   max-width: 1200px;
-  padding: $db-spacing-20
+  padding: $db-spacing-20;
+
+  .search {
+    margin-bottom: 40px;
+    .textfield {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .button {
+      margin-left: $db-spacing-8;
+    }
+  }
 }
 
 

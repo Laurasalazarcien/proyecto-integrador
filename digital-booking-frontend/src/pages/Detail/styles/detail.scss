@@ -4,6 +4,23 @@
   margin-bottom: 40px;
   max-width: 1200px;
   padding: $db-spacing-20;
+  position: relative;
+
+  .product-detail__back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.button--medium {
+      padding: $db-spacing-6 $db-spacing-12;
+
+      .bi-arrow-left-short {
+        width: $db-spacing-32;
+        height: $db-spacing-32;
+        color: $db-gray-450;
+      }
+    }
+  }
 }
 
 // Media Queries

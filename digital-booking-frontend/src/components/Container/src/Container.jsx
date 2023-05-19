@@ -4,23 +4,23 @@ import classNames from "classnames";
 
 const namespace = "container";
 
-const Container = ({ 
+const Container = ({
   width,
   height,
   display,
-  alightItems,
+  alignItems,
   justifyContent,
   element,
   margin,
   padding,
-  children, 
-  className 
+  children,
+  className,
 }) => {
   const componentClassNames = classNames(namespace, className, {
     [`${namespace}--margin-${margin}`]: margin,
     [`${namespace}--padding-${padding}`]: padding,
     [`${namespace}--display-${display}`]: display,
-    [`${namespace}--align-items-${alightItems}`]: padding,
+    [`${namespace}--align-items-${alignItems}`]: alignItems,
     [`${namespace}--justify-content-${justifyContent}`]: justifyContent,
   });
 
@@ -34,7 +34,7 @@ const Container = ({
         return <div className={componentClassNames}>{children}</div>;
     }
   };
-  
+
   return getContainerElement(element);
 };
 
@@ -42,13 +42,13 @@ Container.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   display: PropTypes.string,
-  alightItems: PropTypes.string,
+  alignItems: PropTypes.string,
   justifyContent: PropTypes.string,
   margin: PropTypes.string,
   element: PropTypes.string,
   padding: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 Container.defaultProps = {
