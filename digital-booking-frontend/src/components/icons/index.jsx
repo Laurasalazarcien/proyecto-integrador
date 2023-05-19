@@ -13,6 +13,7 @@ import PencilSquare from "./src/PencilSquare";
 import PencilPill from "./src/PencilPill";
 import ChevronLeft from "./src/ChevronLeft";
 import ChevronRight from "./src/ChevronRight";
+import ArrowLeftShort from "./src/ArrrowLeftShort";
 
 const icons = {
   Check,
@@ -29,7 +30,8 @@ const icons = {
   PencilSquare,
   PencilPill,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ArrowLeftShort
 };
 
 export default icons;

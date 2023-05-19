@@ -23,6 +23,7 @@ import {
 } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 import Dropdown from "../../../components/Dropdown";
+import ImageLoader from "../../../components/ImageLoader";
 import Modal from "../../../components/Modal";
 import icons from "../../../components/icons";
 
@@ -34,7 +35,7 @@ import {
 } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 
-const namespace = "add-product-page";
+const namespace = "admin-page";
 
 const AddProduct = ({ title, className }) => {
   const isMobile = useMobile();
@@ -74,84 +75,9 @@ const AddProduct = ({ title, className }) => {
         Desde aqui vas a poder gestionar tus productos.
       </Text>
       <Button modifier="success" onClick={handleOpenModal}>
-        Agregar
+        Agregar producto
       </Button>
-      {/* <Container margin="auto" className="add-product-form">
-        <Card shadow="elevated">
-          <CardHeader>
-            <Title weight="light">Agregar producto</Title>
-          </CardHeader>
-          <CardBody>
-            <Form shadow="none" onSubmit={() => {}}>
-              <TextInput
-                id="title"
-                name="title"
-                label="Title"
-                value="Hola"
-                placeholder="Enter the product title"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <NumericInput
-                id="stock"
-                name="stock"
-                label="Stock"
-                value="Hola"
-                placeholder="Enter the product stock"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <TextArea
-                id="descriptiom"
-                name="description"
-                label="Description"
-                value=""
-                placeholder="Enter the product description"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <Dropdown
-                id="category"
-                name="category"
-                label="Category"
-                searchPlaceholder="Search a category"
-                options={categoriesDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-              <Dropdown
-                id="brand"
-                name="brand"
-                label="Brand"
-                searchPlaceholder="Search a brand"
-                options={brandsDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-            </Form>
-          </CardBody>
-          <CardBody>
-            <Button fullWidth>CREATE</Button>
-          </CardBody>
-        </Card>
-      </Container> */}
-      <Container display="flex" justifyContent="center">
+      <Container>
         <Table>
           <TableHead>
             <TableRow>
@@ -268,6 +194,17 @@ const AddProduct = ({ title, className }) => {
                   console.log("Option ---> ", option);
                 }}
                 fullWidth
+              />
+              <ImageLoader
+                id="image"
+                name="image"
+                label="Image"
+                value=""
+                placeholder="Enter the product image"
+                onChange={() => {}}
+                onBlur={() => {}}
+                helperMessage=""
+                modifier=""
               />
             </Form>
           </CardBody>

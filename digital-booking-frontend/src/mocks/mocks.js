@@ -109,13 +109,13 @@ const productsListMock = [
   },
   {
     id: 10,
-    title: "GUITARRA ACUSTICA MARTIN 11LX1",
+    title: "SAXOFON TENOR CONN tS651DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    category: "Guitarras",
-    brand: "Martin",
-    price: "$3.100.000",
-    stock: 33,
+    category: "Instrumentos de viento",
+    brand: "Conn",
+    price: "$9.950.000",
+    stock: 28,
     image:
       "https://cdn.shopify.com/s/files/1/2235/9983/products/VG4942_-_SAXOFON_TENOR_TS651_-_FRONTAL_copia_1100x.jpg?v=1501976099",
   },

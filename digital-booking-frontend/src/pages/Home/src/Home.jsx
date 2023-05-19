@@ -4,7 +4,9 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import Container from "../../../components/Container";
 import Image from "../../../components/Image";
+import Button from "../../../components/Button";
 import { Title, Text } from "../../../components/Typography";
+import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 import { productsListMock, categoriesMock } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
@@ -23,29 +25,25 @@ const Home = ({ title, className }) => {
 
   return (
     <div className={componentClassnames}>
-      <Title weight="light" size={isMobile ? "xl" : "xxl"}>
-        Home
-      </Title>
-      <Text
-        weight="light"
-        color="secondary"
-        marginBottom="32"
-        size={isMobile ? "s" : "m"}
+      <Container
+        element="section"
+        display="flex"
+        alignItems="center"
+        className="search"
       >
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur,
-        accusantium! Quaerat impedit veniam, odio assumenda ut nostrum dolorem
-        laudantium et, itaque perferendis atque saepe sequi nulla minus
-        voluptatem recusandae optio?
-      </Text>
+        <TextInput
+          id="title"
+          name="title"
+          value="Hola"
+          placeholder=" ¿Qué estás buscando?"
+          onChange={() => {}}
+          onBlur={() => {}}
+          helperMessage=""
+          modifier=""
+        />
+        <Button>Buscar</Button>
+      </Container>
       <Container element="section" className="categories">
-        <Title
-          element="h2"
-          weight="light"
-          marginBottom="16"
-          size={isMobile ? "l" : "xl"}
-        >
-          ¿Qué estás buscando?
-        </Title>
         <Container className="categories-list">
           {categoriesMock.map((category) => (
             <Card
@@ -114,9 +112,9 @@ const Home = ({ title, className }) => {
                 <Image
                   source={product.image}
                   alternativeText={product.name}
-                  containerHeight={isMobile ? "150px": "200px"}
-                  maxHeight={isMobile ? "150px": "200px"}
-                  maxWidth={isMobile ? "150px": "200px"}
+                  containerHeight={isMobile ? "150px" : "200px"}
+                  maxHeight={isMobile ? "150px" : "200px"}
+                  maxWidth={isMobile ? "150px" : "200px"}
                   onClick={() => console.log("img click")}
                 />
               </CardHeader>

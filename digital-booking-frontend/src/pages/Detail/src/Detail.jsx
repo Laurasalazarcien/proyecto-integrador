@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 import Image from "../../../components/Image";
 import ImageViewer from "../../../components/ImageViewer";
 import Badge from "../../../components/Badge";
@@ -16,18 +17,34 @@ import List, { ListItem } from "../../../components/List";
 import { Layput, LayputColumns, LayputRows } from "../../../components/Layout";
 import { productDetailMock, productsListMock } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
+import icons from "../../../components/icons";
+
 
 const namespace = "detail-page";
 
 const Detail = ({ title, className }) => {
   const isMobile = useMobile();
+  const navigate = useNavigate();
+  const { ArrowLeftShort } = icons;
   const componentClassnames = classNames(namespace, className);
+
+  const handleBackButton = () => {
+    navigate(-1);
+  }
 
   return (
     <div className={componentClassnames}>
       {title && <Title>{title}</Title>}
       <Container element="section" className="product-detail">
         {/* <Image maxHeight="450px" source={productDetailMock.image} /> */}
+        <Button
+          hierarchy="transparent"
+          paddingSize="0"
+          className="product-detail__back-button"
+          onClick={handleBackButton}
+        >
+          <ArrowLeftShort />
+        </Button>
         <ImageViewer images={productDetailMock.images} />
         <Card shadow="none" marginSize={isMobile ? "0" : "20"}>
           <CardHeader>
