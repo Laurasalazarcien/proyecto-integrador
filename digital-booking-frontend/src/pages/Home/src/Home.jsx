@@ -25,7 +25,12 @@ const Home = ({ title, className }) => {
 
   return (
     <div className={componentClassnames}>
-      <Container element="section" className="search" display="flex" alignItems="center">
+      <Container
+        element="section"
+        display="flex"
+        alignItems="center"
+        className="search"
+      >
         <TextInput
           id="title"
           name="title"
@@ -36,9 +41,7 @@ const Home = ({ title, className }) => {
           helperMessage=""
           modifier=""
         />
-        <Button>
-          Buscar
-        </Button>
+        <Button>Buscar</Button>
       </Container>
       <Container element="section" className="categories">
         <Container className="categories-list">
