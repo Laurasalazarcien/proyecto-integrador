@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import classNames from "classnames";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
@@ -59,12 +59,12 @@ const AddProduct = ({ title, className }) => {
       text: "¿Estás seguro de eliminar este producto?",
       icon: "error",
       showCancelButton: true,
-    }).then(resp => {
+    }).then((resp) => {
       if (resp.isConfirmed) {
-        console.log('Delete product ...');
+        console.log("Delete product ...");
       }
     });
-  }
+  };
 
   return (
     <div className={componentClassnames}>
@@ -81,7 +81,7 @@ const AddProduct = ({ title, className }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeading>#</TableHeading>
+              <TableHeading alignment="center">#</TableHeading>
               <TableHeading>Image</TableHeading>
               <TableHeading>Name</TableHeading>
               <TableHeading>Description</TableHeading>
@@ -92,7 +92,7 @@ const AddProduct = ({ title, className }) => {
           <TableBody>
             {productsListMock.map((product) => (
               <TableRow key={product.id}>
-                <TableData>{product.id}</TableData>
+                <TableData alignment="center">{product.id}</TableData>
                 <TableData>
                   <Image
                     source={product.image}
@@ -102,10 +102,8 @@ const AddProduct = ({ title, className }) => {
                 </TableData>
                 <TableData>{product.title}</TableData>
                 <TableData>{product.description}</TableData>
-                <TableData className="table__data--stock">
-                  {product.stock}
-                </TableData>
-                <TableData className="table__data--actions">
+                <TableData alignment="center">{product.stock}</TableData>
+                <TableData alignment="center" className="table__data--actions">
                   <Button
                     paddingSize="0"
                     hierarchy="transparent"
