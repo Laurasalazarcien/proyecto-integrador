@@ -279,10 +279,32 @@ const brandsDropdownMock = [
   },
 ];
 
+const breadCrumbMock = [
+  {
+    id: 1,
+    text: 'Home',
+    title: 'Ir a Home',
+    href: '/home'
+  },
+  {
+    id: 2,
+    text: 'Guitarras y Bajos',
+    title: 'Ir a Guitarras y Bajos',
+    href: '/home'
+  },
+  {
+    id: 3,
+    text: 'GUITARRA ELEC IBANEZ AS53-TF',
+    title: '',
+    href: ''
+  },
+];
+
 export {
   productsListMock,
   productDetailMock,
   categoriesMock,
   categoriesDropdownMock,
   brandsDropdownMock,
+  breadCrumbMock
 };

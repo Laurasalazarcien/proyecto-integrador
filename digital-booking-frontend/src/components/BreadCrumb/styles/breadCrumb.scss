@@ -1,0 +1,33 @@
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+
+  &__level {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-14;
+    line-height: 14px;
+    font-weight: $font-weight-light;
+  }
+
+  &__link {
+    color: $db-color-neutral;
+    text-decoration: none;
+  }
+
+  &__label {
+    color: $db-gray-900;
+  }
+
+  &__chevron {
+    padding-left: $db-spacing-12;
+    padding-right: $db-spacing-12;
+
+    .bi-chevron-right {
+      width: $db-spacing-12;
+      height: $db-spacing-12;
+    }
+  }
+}

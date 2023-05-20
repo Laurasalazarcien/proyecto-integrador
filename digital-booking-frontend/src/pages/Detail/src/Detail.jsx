@@ -15,10 +15,14 @@ import Card, {
 import { Title, Text } from "../../../components/Typography";
 import List, { ListItem } from "../../../components/List";
 import { Layput, LayputColumns, LayputRows } from "../../../components/Layout";
-import { productDetailMock, productsListMock } from "../../../mocks/mocks";
+import BreadCrumb, { BreadCrumbLevel } from "../../../components/BreadCrumb";
+import {
+  productDetailMock,
+  productsListMock,
+  breadCrumbMock,
+} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import icons from "../../../components/icons";
-
 
 const namespace = "detail-page";
 
@@ -30,11 +34,16 @@ const Detail = ({ title, className }) => {
 
   const handleBackButton = () => {
     navigate(-1);
-  }
+  };
 
   return (
     <div className={componentClassnames}>
       {title && <Title>{title}</Title>}
+      <BreadCrumb ariaLabel="Product detail">
+        {breadCrumbMock.map((level) => (
+          <BreadCrumbLevel key={level.id} {...level} />
+        ))}
+      </BreadCrumb>
       <Container element="section" className="product-detail">
         {/* <Image maxHeight="450px" source={productDetailMock.image} /> */}
         <Button
