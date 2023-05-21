@@ -39,11 +39,11 @@ const Detail = ({ title, className }) => {
   return (
     <div className={componentClassnames}>
       {title && <Title>{title}</Title>}
-      <BreadCrumb ariaLabel="Product detail">
+      {/* <BreadCrumb ariaLabel="Product detail">
         {breadCrumbMock.map((level) => (
           <BreadCrumbLevel key={level.id} {...level} />
         ))}
-      </BreadCrumb>
+      </BreadCrumb> */}
       <Container element="section" className="product-detail">
         {/* <Image maxHeight="450px" source={productDetailMock.image} /> */}
         <Button
