@@ -39,8 +39,6 @@ const Home = ({ title, className }) => {
     navigate(`/detail/${id}`);
   };
 
-  console.log(categories);
-
   return (
     <div className={componentClassnames}>
       <Container
