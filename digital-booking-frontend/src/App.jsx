@@ -27,7 +27,6 @@ function App() {
 
   return (
     <div className={componentClassNames}>
-      {/* <Header slogan="Un sitio para encontrar todo lo que necesitas"></Header> */}
       <NavBar menuOptions={menuOptions} fixed />
       <AppRouter />
       <Footer/>

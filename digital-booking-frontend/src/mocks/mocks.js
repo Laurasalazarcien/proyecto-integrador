@@ -159,6 +159,7 @@ const productDetailMock = {
 const categoriesMock = [
   {
     id: 1,
+    urlLabel: "guitarras-y-bajos",
     image:
       "https://www.tiendacompensar.com/ccstore/v1/images/?source=/file/v2106446387901685731/products/id1413.manos-de-hombre-tocan-guitarra-acustica.jpg&height=350&width=350",
     name: "Guitarras y Bajos",
@@ -166,6 +167,7 @@ const categoriesMock = [
   },
   {
     id: 2,
+    urlLabel: "instrumentos-de-viento",
     image:
       "https://eldiariony.com/wp-content/uploads/sites/2/2022/06/saxofon-campan%CC%83a-gofundme-shutterstock_600775652.jpg?quality=75&strip=all&w=1200",
     name: "Instrumentos de viento",
@@ -173,6 +175,7 @@ const categoriesMock = [
   },
   {
     id: 3,
+    urlLabel: "percusion",
     image:
       "https://buscaunmusico.com/wp-content/uploads/2020/01/drums-2599508_640.jpg",
     name: "Percusión",
@@ -180,6 +183,7 @@ const categoriesMock = [
   },
   {
     id: 4,
+    urlLabel: "pianos",
     image:
       "https://t2.uc.ltmcdn.com/es/posts/9/8/2/cuales_son_los_mejores_pianistas_del_mundo_17289_orig.jpg",
     name: "Pianos",
@@ -187,6 +191,7 @@ const categoriesMock = [
   },
   {
     id: 5,
+    urlLabel: "sintetizadores",
     image:
       "https://djpmusicschool.com/wp-content/uploads/sintetizador-djp-music-school.png",
     name: "Sintetizadores",
@@ -194,6 +199,7 @@ const categoriesMock = [
   },
   {
     id: 6,
+    urlLabel: "teclados-electronicos",
     image:
       "https://belmusic.com.co/wp-content/uploads/2018/09/Teclados-Belmusic-2.jpg",
     name: "Teclados electrónicos",

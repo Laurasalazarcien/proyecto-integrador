@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -42,6 +43,10 @@ const Home = ({ title, className }) => {
     navigate(`/detail/${id}`);
   };
 
+  const handleClickCategory = (categoryName) => {
+    navigate(`/categories/${categoryName}`);
+  };
+
   return (
     <div className={componentClassnames}>
       <Container
@@ -63,64 +68,90 @@ const Home = ({ title, className }) => {
         <Button>Buscar</Button>
       </Container>
       <Container element="section" className="categories">
-        <Swiper
-          spaceBetween={20}
-          slidesPerView={4}
-          className="categories-carousel"
-          modules={[Navigation]}
-          breakpoints={{
-            380: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            600: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            920: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            1200: {
-              slidesPerView: 4,
-              spaceBetween: 20,
-            },
-          }}
-          navigation
-        >
-          {categoriesMock.map((category) => (
-            <SwiperSlide key={category.id}>
-              <Card paddingSize="0" borderRadius="8" clickeable>
+        {loadingCategories && (
+          <Container
+            display="grid"
+            columns="4"
+            spaceBetweenItems="20"
+            className="categories-list-skeleton"
+          >
+            {generateArray(4).map((index, item) => (
+              <Card key={`category-${index}`}>
                 <CardHeader paddingSize="0">
-                  <Image
-                    width="100%"
-                    height="180px"
-                    containerWidth="100%"
-                    containerHeight="180px"
-                    borderTopRadius="8"
-                    paddingSize="0"
-                    source={category.image}
-                    alternativeText={category.name}
-                    onClick={() => console.log("img click")}
-                  />
+                  <Skeleton height="186px" />
                 </CardHeader>
                 <CardBody>
-                  <Title
-                    element="h2"
-                    size="m"
-                    weight="regular"
-                    marginBottom="4"
-                  >
-                    {category.name}
-                  </Title>
-                  <Text size="s" weight="light">
-                    {category.stock} productos
-                  </Text>
+                  <Skeleton />
+                  <Skeleton width="50%" />
                 </CardBody>
               </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            ))}
+          </Container>
+        )}
+        {categories && !loadingCategories && (
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={4}
+            className="categories-carousel"
+            modules={[Navigation]}
+            breakpoints={{
+              380: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              600: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              920: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1200: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+              },
+            }}
+            navigation
+          >
+            {categoriesMock.map((category) => (
+              <SwiperSlide key={category.id}>
+                <Card
+                  borderRadius="8"
+                  onClick={() => handleClickCategory(category.urlLabel)}
+                  clickeable
+                >
+                  <CardHeader paddingSize="0">
+                    <Image
+                      width="100%"
+                      height="180px"
+                      containerWidth="100%"
+                      containerHeight="180px"
+                      borderTopRadius="8"
+                      paddingSize="0"
+                      source={category.image}
+                      alternativeText={category.name}
+                      onClick={() => console.log("img click")}
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <Title
+                      element="h2"
+                      size="m"
+                      weight="regular"
+                      marginBottom="4"
+                    >
+                      {category.name}
+                    </Title>
+                    <Text size="s" weight="light">
+                      {category.stock} productos
+                    </Text>
+                  </CardBody>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </Container>
       <Container element="section" className="products">
         <Title
@@ -140,10 +171,17 @@ const Home = ({ title, className }) => {
         >
           Te listamos algunos productos que te pueden interesar
         </Text>
-        <Container className="instruments-list">
+        <Container
+          display="grid"
+          spaceBetweenItems="20"
+          columnsInSmallDevices="1"
+          columnsInMediumDevices="2"
+          columnsInLargeDevices="3"
+          columnsInExtraLargeDevices="4"
+        >
           {loadingProducts &&
             generateArray(10).map((index, item) => (
-              <Card key={index}>
+              <Card key={`product-${index}`}>
                 <CardHeader>
                   <Skeleton height="200px" />
                 </CardHeader>
