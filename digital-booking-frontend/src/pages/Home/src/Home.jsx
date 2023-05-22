@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import Button from "../../../components/Button";
@@ -10,12 +12,13 @@ import Skeleton from "../../../components/Skeleton";
 import { Title, Text } from "../../../components/Typography";
 import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
-import { productsListMock, categoriesMock } from "../../../mocks/mocks";
+
 import { useMobile } from "../../../hooks/useMobile";
+import { generateArray } from "../../../helpers";
 import useProducts from "../../../hooks/useProducts";
 import useCategories from "../../../hooks/useCategories";
+
+import { productsListMock, categoriesMock } from "../../../mocks/mocks";
 
 const namespace = "home-page";
 
@@ -63,26 +66,27 @@ const Home = ({ title, className }) => {
         <Swiper
           spaceBetween={20}
           slidesPerView={4}
+          className="categories-carousel"
           modules={[Navigation]}
-          navigation
           breakpoints={{
             380: {
               slidesPerView: 1,
-              spaceBetween: 20
+              spaceBetween: 20,
             },
             600: {
               slidesPerView: 2,
-              spaceBetween: 20
+              spaceBetween: 20,
             },
             920: {
               slidesPerView: 3,
-              spaceBetween: 20
+              spaceBetween: 20,
             },
             1200: {
               slidesPerView: 4,
-              spaceBetween: 20
-            }
+              spaceBetween: 20,
+            },
           }}
+          navigation
         >
           {categoriesMock.map((category) => (
             <SwiperSlide key={category.id}>
@@ -137,6 +141,18 @@ const Home = ({ title, className }) => {
           Te listamos algunos productos que te pueden interesar
         </Text>
         <Container className="instruments-list">
+          {loadingProducts &&
+            generateArray(10).map((index, item) => (
+              <Card key={index}>
+                <CardHeader>
+                  <Skeleton height="200px" />
+                </CardHeader>
+                <CardBody>
+                  <Skeleton />
+                  <Skeleton width="50%" />
+                </CardBody>
+              </Card>
+            ))}
           {products &&
             products.map((product) => (
               <Card

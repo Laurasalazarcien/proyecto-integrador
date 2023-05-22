@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import ProductsService from "../services/products";
+import { useApp } from '././../context/AppContext';
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
