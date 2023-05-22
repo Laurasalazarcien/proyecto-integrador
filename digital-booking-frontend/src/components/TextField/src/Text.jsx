@@ -38,7 +38,7 @@ const Text = ({
         // value={value}
         className={`${namespace}__input`}
         placeholder={placeholder}
-        // onChange={onChange}
+        onChange={onChange}
         // onBlur={onBlur}
       />
       {helperMessage && (

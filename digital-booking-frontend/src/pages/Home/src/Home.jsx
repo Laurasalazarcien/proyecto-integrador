@@ -10,6 +10,7 @@ import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import Button from "../../../components/Button";
 import Skeleton from "../../../components/Skeleton";
+import SearchBox from "../../../components/SearchBox";
 import { Title, Text } from "../../../components/Typography";
 import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
@@ -47,25 +48,22 @@ const Home = ({ title, className }) => {
     navigate(`/categories/${categoryName}`);
   };
 
+  const handleSearch = (searchTerm) => {
+    console.log("Search ---> ", searchTerm);
+  };
+
+  const handleClickSearch = (searchTerm) => {
+    console.log("Search ---> ", searchTerm);
+  };
+
   return (
-    <div className={componentClassnames}>
-      <Container
-        element="section"
-        display="flex"
-        alignItems="center"
-        className="search"
-      >
-        <TextInput
-          id="title"
-          name="title"
-          value="Hola"
-          placeholder=" ¿Qué estás buscando?"
-          onChange={() => {}}
-          onBlur={() => {}}
-          helperMessage=""
-          modifier=""
+    <Container className={componentClassnames}>
+      <Container element="section" className="finder" marginBottom="20">
+        <SearchBox
+          searchPlaceholder="¿Qué estás buscando?"
+          onChange={handleSearch}
+          onClick={handleClickSearch}
         />
-        <Button>Buscar</Button>
       </Container>
       <Container element="section" className="categories">
         {loadingCategories && (
@@ -230,7 +228,7 @@ const Home = ({ title, className }) => {
             ))}
         </Container>
       </Container>
-    </div>
+    </Container>
   );
 };
 

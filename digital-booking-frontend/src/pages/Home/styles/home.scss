@@ -6,19 +6,6 @@
   max-width: 1200px;
   padding: $db-spacing-20;
 
-  .search {
-    margin-bottom: $db-spacing-20;
-
-    .textfield {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    .button {
-      margin-left: $db-spacing-8;
-    }
-  }
-
   .categories {
     .swiper.categories-carousel {
       .swiper-button-next,
