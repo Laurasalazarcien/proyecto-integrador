@@ -13,6 +13,16 @@ import { useState } from "react";
 
 const namespace = "login-page";
 
+const validateEmail = (email) => {
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+};
+
+const validatePassword = (password) => {
+  return password.length > 5;
+};
+
 const Login = ({ title, className }) => {
   const componentClassnames = classNames(namespace, className);
 
@@ -20,12 +30,23 @@ const Login = ({ title, className }) => {
 
   const handlePasswordValidate = (e) => {
     setData({ ...data, password: e.target.value });
-    console.log(e.target.value);
+    // TODO: No continue porque el hangleSubmit no me agarra el evento
+    console.log(validatePassword(data.password));
   };
-  const {
-    handleSubmit,
-  } = (e) => {
-    console.log(e);
+
+  const handleEmailValidate = (e) => {
+    setData({ ...data, email: e.target.value });
+    // TODO: No continue porque el hangleSubmit no me agarra el evento
+    console.log(validateEmail(data.email));
+  };
+
+  const handleSubmitLogin = (e) => {
+    console.log(data);
+    console.log(!validateEmail(data.email));
+    if (!validateEmail(data.email)) {
+      console.log("No valido");
+      console.log(e);
+    }
   };
 
   return (
@@ -43,14 +64,14 @@ const Login = ({ title, className }) => {
       </Title>
       <Card shadow="none" paddingSize="0">
         <CardBody paddingSize="0">
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmitLogin}>
             <TextInput
               id="email"
               name="email"
               label="Email"
               value={data.email}
               placeholder="Ingresa el correo electronico"
-              onChange={() => {}}
+              onChange={handleEmailValidate}
               onBlur={() => {}}
               helperMessage=""
               modifier=""
