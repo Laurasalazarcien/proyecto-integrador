@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Container from "../../../components/Container";
@@ -75,10 +76,9 @@ const Login = ({ title, className }) => {
               onBlur={() => {}}
               helperMessage=""
               modifier=""
-            ></TextInput>
+            />
             <PasswordInput
               id="password"
-              type="password"
               name="password"
               label="Password"
               value={data.password}
@@ -87,7 +87,7 @@ const Login = ({ title, className }) => {
               onBlur={() => {}}
               helperMessage=""
               modifier=""
-            ></PasswordInput>
+            />
             <Button>Ingresar</Button>
           </Form>
         </CardBody>
