@@ -6,6 +6,8 @@ import { actionTypes } from "../reducer/actionTypes";
 export const initialState = {
   theme: "light",
   loading: false,
+  errors: null,
+  data: []
 };
 
 export const AppContext = createContext();
@@ -27,10 +29,26 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
+  const setErrors = (errors) => {
+    dispatch({
+      type: actionTypes.SET_ERRORS,
+      payload: errors,
+    });
+  };
+
+  const setData = (data) => {
+    dispatch({
+      type: actionTypes.SET_DATA,
+      payload: data,
+    });
+  };
+
   const value = {
     ...appState,
     setAppTheme,
     setLoading,
+    setErrors,
+    setData
   };
 
   return (

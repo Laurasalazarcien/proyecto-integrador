@@ -11,6 +11,7 @@ import Image from "../../../components/Image";
 import Button from "../../../components/Button";
 import Skeleton from "../../../components/Skeleton";
 import SearchBox from "../../../components/SearchBox";
+import Pagination from "../../../components/Pagination";
 import { Title, Text } from "../../../components/Typography";
 import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
@@ -151,7 +152,7 @@ const Home = ({ title, className }) => {
           </Swiper>
         )}
       </Container>
-      <Container element="section" className="products">
+      <Container element="section" className="products" marginBottom="32">
         <Title
           element="h2"
           weight="light"
@@ -227,6 +228,19 @@ const Home = ({ title, className }) => {
               </Card>
             ))}
         </Container>
+      </Container>
+      <Container
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        element="section"
+        className="pagination"
+      >
+        <Pagination
+          prevButtonLabel="Anterior"
+          nextButtonLabel="Siguiente"
+          nummerOfPages={5}
+        />
       </Container>
     </Container>
   );

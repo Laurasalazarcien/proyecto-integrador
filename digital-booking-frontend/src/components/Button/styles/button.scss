@@ -140,6 +140,10 @@
   &--disabled {
     background-color: $db-gray-100;
     color: $db-gray-250;
+
+    &:hover {
+      cursor: initial;
+    }
   }
 
   &--full-width {

@@ -1,18 +1,23 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import ProductsService from "../services/products";
-import { useApp } from '././../context/AppContext';
+import { useApp } from "././../context/AppContext";
 
 const useProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState(null);
+  const {
+    data: products,
+    loading,
+    errors,
+    setLoading,
+    setErrors,
+    setData,
+  } = useApp();
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const data = await ProductsService.getAllProducts();
-      setProducts(data.products);
+      setData(data.products);
       setLoading(false);
     } catch (error) {
       setErrors(error);
