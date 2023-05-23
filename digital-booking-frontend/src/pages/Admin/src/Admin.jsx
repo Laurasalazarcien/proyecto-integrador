@@ -67,7 +67,7 @@ const AddProduct = ({ title, className }) => {
   };
 
   return (
-    <div className={componentClassnames}>
+    <Container className={componentClassnames}>
       <Title size={isMobile ? "xl" : "xxl"} weight="light" marginBottom="8">
         Panel de administración
       </Title>
@@ -208,7 +208,7 @@ const AddProduct = ({ title, className }) => {
           </CardBody>
         </Card>
       </Modal>
-    </div>
+    </Container>
   );
 };
 
