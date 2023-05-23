@@ -5,7 +5,7 @@ import { Label, HelperMessage } from "../../Form";
 
 const namespace = "textfield";
 
-const TextField = ({
+const Password = ({
   id,
   type,
   name,
@@ -27,7 +27,7 @@ const TextField = ({
       [`${namespace}--${type}`]: type,
     }
   );
-
+  
   return (
     <div className={componentClassNames}>
       {label && <Label id={id} label={label} />}
@@ -39,7 +39,7 @@ const TextField = ({
         className={`${namespace}__input`}
         placeholder={placeholder}
         onChange={onChange}
-        onBlur={onBlur}
+        // onBlur={onBlur}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />
@@ -48,7 +48,7 @@ const TextField = ({
   );
 };
 
-TextField.propTypes = {
+Password.propTypes = {
   id: PropTypes.string,
   type: PropTypes.oneOf(["full-width", "inline"]),
   name: PropTypes.string.isRequired,
@@ -62,7 +62,7 @@ TextField.propTypes = {
   className: PropTypes.string,
 };
 
-TextField.defaultProps = {
+Password.defaultProps = {
   type: "full-width",
   modifier: "",
   placeholder: "",
@@ -70,4 +70,4 @@ TextField.defaultProps = {
   className: "",
 };
 
-export default TextField;
+export default Password;

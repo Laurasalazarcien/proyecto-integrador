@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Label, HelperMessage } from '../../Form';
+import { Label, HelperMessage } from "../../Form";
 
 const namespace = "textfield";
 
