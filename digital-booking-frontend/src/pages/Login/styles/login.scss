@@ -1,10 +1,20 @@
 .login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 82.3vh;
   margin: 0 auto;
   margin-top: 80px;
   max-width: 1200px;
   padding: $db-spacing-16;
-}
 
+  .form {
+    width: 70%;
+    margin: 0 auto;
+    max-width: 35rem;
+  }
+}
 
 // Media Queries
 @media screen and (max-width: 768px) {
@@ -12,4 +22,3 @@
     margin-top: 60px;
   }
 }
-

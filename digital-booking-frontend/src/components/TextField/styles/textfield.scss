@@ -35,6 +35,10 @@
     }
   }
 
+  #password ~ input {
+    width: 100%;
+  }
+
   &--error {
     .textfield__input,
     .textfield__textarea {

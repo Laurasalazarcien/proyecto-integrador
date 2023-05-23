@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Label, HelperMessage } from '../../Form';
+import { Label, HelperMessage } from "../../Form";
 
 const namespace = "textfield";
 
@@ -24,18 +24,18 @@ const TextField = ({
   return (
     <div className={componentClassNames}>
       {label && (
-        <label htmlFor={id} className={`${namespace}__label`}>
+        <label id={id} className={`label`}>
           {label}
         </label>
       )}
       <input
-        type="text"
+        type="password"
         name={name}
         value={value}
         className={`${namespace}__input`}
         placeholder={placeholder}
         onChange={onChange}
-        onBlur={onBlur}
+        // onBlur={onBlur}
       />
       {helperMessage && (
         <span className={`${namespace}__helper-message`}>{helperMessage}</span>
