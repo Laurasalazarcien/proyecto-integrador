@@ -1,6 +1,6 @@
 package grupo9.demo.model.DTO;
 
-import grupo9.demo.model.*;
+import grupo9.demo.model.entities.*;
 
 import java.util.Set;
 

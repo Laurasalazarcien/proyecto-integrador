@@ -1,8 +1,8 @@
 package grupo9.demo.model.DTO;
 
-import grupo9.demo.model.Estado;
-import grupo9.demo.model.Instrumentos;
-import grupo9.demo.model.Usuario;
+import grupo9.demo.model.entities.Estado;
+import grupo9.demo.model.entities.Instrumentos;
+import grupo9.demo.model.entities.Usuario;
 
 import java.util.Date;
 

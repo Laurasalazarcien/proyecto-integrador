@@ -1,30 +1,14 @@
 package grupo9.demo.model;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
-import javax.persistence.*;
-
-@Entity
-@Table (name="Reservas")
 public class Reservas {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    private  Long id;
     private Date fechaInicio;
     private Date fechaFinal;
-
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
     private Usuario usuario;
-    @ManyToOne
-    @JoinColumn(name = "instrumento_id")
-    private Instrumentos instrumento;
-
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
+    private Instrumentos instrumentos;
     private Estado estado;
 
     public Long getId() {
@@ -60,11 +44,11 @@ public class Reservas {
     }
 
     public Instrumentos getInstrumentos() {
-        return instrumento;
+        return instrumentos;
     }
 
-    public void setInstrumentos(Instrumentos instrumento) {
-        this.instrumento = instrumento;
+    public void setInstrumentos(Instrumentos instrumentos) {
+        this.instrumentos = instrumentos;
     }
 
     public Estado getEstado() {

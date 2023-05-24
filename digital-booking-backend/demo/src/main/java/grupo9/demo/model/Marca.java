@@ -1,9 +1,21 @@
-package grupo9.demo.model.DTO;
+package grupo9.demo.model;
 
-public class EstadoDTO {
+import java.util.Set;
+
+public class Marca {
 
     private Long id;
     private String nombre;
+
+    private Set<Marca> marcas;
+
+    public Set<Marca> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(Set<Marca> marcas) {
+        this.marcas = marcas;
+    }
 
     public Long getId() {
         return id;

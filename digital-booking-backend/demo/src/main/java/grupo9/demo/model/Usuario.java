@@ -1,31 +1,15 @@
 package grupo9.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Set;
 
-
-import javax.persistence.*;
-
-@Entity
-@Table (name="Usuario")
 public class Usuario {
-
-    @Id
-    @GeneratedValue
     private Long id;
     private String nombre;
     private String apellido;
     private String DNI;
     private String contraseña;
-
-
-    @ManyToOne
-    @JoinColumn(name = "rol_id")
     private  Rol rol;
 
-    @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
     private Set<Reservas> reservas;
 
     public Set<Reservas> getReservas() {
