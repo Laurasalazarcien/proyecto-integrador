@@ -15,6 +15,7 @@ import Card, { CardHeader, CardBody } from "../../../components/Card";
 import { Title, Text } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
+import logo from "../../../assets/icons/logo-no-background-inverted.svg";
 
 const namespace = "login-page";
 
@@ -65,16 +66,24 @@ const Login = ({ title, className }) => {
   return (
     <Container className={componentClassnames}>
       <Container>
-        <Title
-          size="xl"
-          element="h2"
-          weight="semibold"
-          alignment="center"
-          paddingBottom="20"
-        >
-          Iniciar sesión
-        </Title>
         <Card shadow="elevated" className={`${namespace}__card`}>
+          <CardHeader borderHeader={false}>
+            <Image
+              source={logo}
+              maxHeight={isMobile ? "45px" : "50px"}
+              containerHeight={isMobile ? "45px" : "50px"}
+              paddingSize="0"
+            />
+            <Title
+              size="l"
+              element="h2"
+              weight="light"
+              alignment="center"
+              marginTop="20"
+            >
+              Iniciar sesión
+            </Title>
+          </CardHeader>
           <CardBody paddingSize="20">
             <Form
               shadow="none"
