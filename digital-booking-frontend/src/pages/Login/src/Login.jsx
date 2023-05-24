@@ -67,7 +67,7 @@ const Login = ({ title, className }) => {
     <Container className={componentClassnames}>
       <Container>
         <Card shadow="elevated" className={`${namespace}__card`}>
-          <CardHeader borderHeader={false}>
+          <CardHeader>
             <Image
               source={logo}
               maxHeight={isMobile ? "45px" : "50px"}
