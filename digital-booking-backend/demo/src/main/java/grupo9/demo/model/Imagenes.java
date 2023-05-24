@@ -1,24 +1,9 @@
 package grupo9.demo.model;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-
-import javax.persistence.*;
-
-@Entity
-@Table (name="Imagenes")
-
 public class Imagenes {
-
-    @Id
-    @GeneratedValue
     private Long id;
     private String URL;
-
-    @ManyToOne
-    @JoinColumn(name = "instrumento_id")
-    private Instrumentos instrumento;
+    private Instrumentos instrumentos;
 
     public Long getId() {
         return id;
@@ -37,10 +22,10 @@ public class Imagenes {
     }
 
     public Instrumentos getInstrumentos() {
-        return instrumento;
+        return instrumentos;
     }
 
-    public void setInstrumentos(Instrumentos instrumento) {
-        this.instrumento = instrumento;
+    public void setInstrumentos(Instrumentos instrumentos) {
+        this.instrumentos = instrumentos;
     }
 }

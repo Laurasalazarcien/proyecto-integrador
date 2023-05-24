@@ -1,7 +1,5 @@
-package grupo9.demo.model.DTO;
-
-public class DetalleInstrumentoDTO {
-
+package grupo9.demo.model;
+public class DetalleInstrumento {
     private Long id;
     private String descripcion;
 

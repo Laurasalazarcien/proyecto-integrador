@@ -1,43 +1,20 @@
 package grupo9.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Set;
 
-import javax.persistence.*;
-
-@Entity
-@Table (name="Instrumentos")
 public class Instrumentos {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String nombre;
     private Double precio;
     private String descripcion;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id",nullable = false)
     private Categoria categoria;
-    @ManyToOne
-    @JoinColumn(name = "marca_id")
     private Marca marca;
-    @ManyToOne
-    @JoinColumn(name = "detalle_instrumento_id")
     private DetalleInstrumento detalleInstrumento;
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
     private Estado estado;
 
-    @OneToMany(mappedBy = "instrumento")
-    @JsonIgnore
     private Set<Reservas> reservas;
 
-    @OneToMany(mappedBy = "instrumento")
-    @JsonIgnore
     private Set<Imagenes> imagenes;
 
     public void setImagenes(Set<Imagenes> imagenes) {

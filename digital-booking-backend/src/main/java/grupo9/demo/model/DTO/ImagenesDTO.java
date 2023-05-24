@@ -1,6 +1,6 @@
 package grupo9.demo.model.DTO;
 
-import grupo9.demo.model.Instrumentos;
+import grupo9.demo.model.entities.Instrumentos;
 
 public class ImagenesDTO {
 

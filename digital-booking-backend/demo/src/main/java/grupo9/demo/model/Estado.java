@@ -1,27 +1,15 @@
 package grupo9.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Set;
-import javax.persistence.*;
 
-@Entity
-@Table (name="Estados")
 public class Estado {
-
-    @Id
-    @GeneratedValue
+    
     private Long id;
     private String nombre;
 
-
-    @OneToMany(mappedBy = "estado")
-    @JsonIgnore
     private Set<Reservas> reservas;
 
-    @OneToMany(mappedBy = "estado")
-    @JsonIgnore
-    private  Set<Instrumentos> instrumento;
+    private  Set<Instrumentos> instrumentos;
 
     public Set<Reservas> getReservas() {
         return reservas;
@@ -32,11 +20,11 @@ public class Estado {
     }
 
     public Set<Instrumentos> getInstrumentos() {
-        return instrumento;
+        return instrumentos;
     }
 
     public void setInstrumentos(Set<Instrumentos> instrumentos) {
-        this.instrumento = instrumentos;
+        this.instrumentos = instrumentos;
     }
 
     public Long getId() {

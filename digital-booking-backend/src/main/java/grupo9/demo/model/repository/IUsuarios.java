@@ -1,7 +1,6 @@
 package grupo9.demo.model.repository;
 
-import grupo9.demo.model.Rol;
-import grupo9.demo.model.Usuario;
+import grupo9.demo.model.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package grupo9.demo.model.DTO;
 
-import grupo9.demo.model.Rol;
+import grupo9.demo.model.entities.Rol;
 
 public class UsuarioDTO {
 

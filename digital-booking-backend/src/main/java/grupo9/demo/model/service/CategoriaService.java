@@ -1,18 +1,20 @@
 package grupo9.demo.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import grupo9.demo.model.Categoria;
+import grupo9.demo.model.entities.Categoria;
 import grupo9.demo.model.DTO.CategoriaDTO;
 import grupo9.demo.model.repository.ICategoria;
+import grupo9.demo.model.service.InterfacesService.ICategoriaServicie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public class CategoriaService implements ICategoriaServicie{
+@Service
+public class CategoriaService implements ICategoriaServicie {
 
     @Autowired
     private ICategoria categoriaRepository;
