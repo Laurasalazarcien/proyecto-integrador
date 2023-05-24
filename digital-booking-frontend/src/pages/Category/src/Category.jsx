@@ -53,14 +53,15 @@ const Category = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Container element="section" className="finder" marginBottom="20">
-        <SearchBox
-          searchPlaceholder="¿Qué estás buscando?"
-          onChange={handleSearch}
-          onClick={handleClickSearch}
-        />
+      <Container className={`${namespace}__container`}>
+        <Container element="section" className="finder" marginBottom="20">
+          <SearchBox
+            searchPlaceholder="¿Qué estás buscando?"
+            onChange={handleSearch}
+            onClick={handleClickSearch}
+          />
+        </Container>
       </Container>
-      Category Page
     </Container>
   );
 };

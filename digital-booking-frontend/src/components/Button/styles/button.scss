@@ -29,6 +29,10 @@
     font-size: $font-size-12;
     line-height: $line-height-12;
 
+    &.button--padding-0 {
+      padding: 0;
+    }
+
     &.button--rounded {
       border-radius: $border-radius-4;
     }
@@ -40,6 +44,10 @@
     font-size: $font-size-14;
     line-height: $line-height-14;
 
+    &.button--padding-0 {
+      padding: 0;
+    }
+
     &.button--rounded {
       border-radius: $border-radius-5;
     }
@@ -50,6 +58,10 @@
     padding: 0 $db-spacing-24;
     font-size: $font-size-16;
     line-height: $line-height-16;
+
+    &.button--padding-0 {
+      padding: 0;
+    }
 
     &.button--rounded {
       border-radius: $border-radius-6;

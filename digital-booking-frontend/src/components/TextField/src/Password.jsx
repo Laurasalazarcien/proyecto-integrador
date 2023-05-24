@@ -39,7 +39,7 @@ const Password = ({
         className={`${namespace}__input`}
         placeholder={placeholder}
         onChange={onChange}
-        // onBlur={onBlur}
+        onBlur={onBlur}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />

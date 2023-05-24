@@ -1,97 +1,146 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../components/Button";
+import Image from "../../../components/Image";
 import Container from "../../../components/Container";
-import Card, { CardBody } from "../../../components/Card";
 import Form from "../../../components/Form";
-import { Title } from "../../../components/Typography";
 import {
   Text as TextInput,
   Password as PasswordInput,
 } from "../../../components/TextField";
-import Button from "../../../components/Button";
-import { useState } from "react";
+import Card, { CardHeader, CardBody } from "../../../components/Card";
+import { Title, Text } from "../../../components/Typography";
+import { useMobile } from "../../../hooks/useMobile";
+import useForm from "../../../hooks/useForm";
 
 const namespace = "login-page";
 
-const validateEmail = (email) => {
-  const regex =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regex.test(email);
-};
+const valideteForm = (form) => {
+  let errors = {};
+  const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
 
-const validatePassword = (password) => {
-  return password.length > 5;
+  if (!emailRegex.test(form.email)) {
+    errors.email = "El correo electrónico no tiene un formato válido.";
+  }
+
+  if (form.password.trim().length < 8) {
+    errors.password = "La contraseña debe tener almenos 8 caracteres.";
+  }
+
+  return errors;
 };
 
 const Login = ({ title, className }) => {
+  const isMobile = useMobile();
+  const navigate = useNavigate();
   const componentClassnames = classNames(namespace, className);
+  const { form, email, password, errors, handleChange, handleBlur, setErrors } =
+    useForm(
+      {
+        email: "",
+        password: "",
+      },
+      valideteForm
+    );
 
-  const [data, setData] = useState({ email: "", password: "" });
-
-  const handlePasswordValidate = (e) => {
-    setData({ ...data, password: e.target.value });
-    // TODO: No continue porque el hangleSubmit no me agarra el evento
-    console.log(validatePassword(data.password));
+  const handleClickLink = () => {
+    navigate("/register");
   };
 
-  const handleEmailValidate = (e) => {
-    setData({ ...data, email: e.target.value });
-    // TODO: No continue porque el hangleSubmit no me agarra el evento
-    console.log(validateEmail(data.email));
-  };
-
-  const handleSubmitLogin = (e) => {
-    console.log(data);
-    console.log(!validateEmail(data.email));
-    if (!validateEmail(data.email)) {
-      console.log("No valido");
-      console.log(e);
+  const handleSubmit = () => {
+    const errors = valideteForm(form);
+    if (Object.entries(errors).length > 0) {
+      setErrors(errors);
+      return;
     }
+    console.log("submit", {
+      email,
+      password,
+    });
   };
 
   return (
-    <Container element="div" className={componentClassnames} height={"82.3vh"}>
-      <Title
-        element="h2"
-        weight="semibold"
-        marginTop="16"
-        alignment="center"
-        letterSpacing="default"
-        size="xl"
-        paddingBottom="20"
-      >
-        Iniciar sesión
-      </Title>
-      <Card shadow="none" paddingSize="0">
-        <CardBody paddingSize="0">
-          <Form onSubmit={handleSubmitLogin}>
-            <TextInput
-              id="email"
-              name="email"
-              label="Email"
-              value={data.email}
-              placeholder="Ingresa el correo electronico"
-              onChange={handleEmailValidate}
-              onBlur={() => {}}
-              helperMessage=""
-              modifier=""
-            />
-            <PasswordInput
-              id="password"
-              name="password"
-              label="Password"
-              value={data.password}
-              placeholder="Ingresa contraseña"
-              onChange={handlePasswordValidate}
-              onBlur={() => {}}
-              helperMessage=""
-              modifier=""
-            />
-            <Button>Ingresar</Button>
-          </Form>
-        </CardBody>
-      </Card>
+    <Container className={componentClassnames}>
+      <Container>
+        <Title
+          size="xl"
+          element="h2"
+          weight="semibold"
+          alignment="center"
+          paddingBottom="20"
+        >
+          Iniciar sesión
+        </Title>
+        <Card shadow="elevated" className={`${namespace}__card`}>
+          <CardBody paddingSize="20">
+            <Form
+              shadow="none"
+              paddingSize="0"
+              onSubmit={handleSubmit}
+              className={`${namespace}__form`}
+            >
+              <TextInput
+                id="email"
+                name="email"
+                label="Correo electónico"
+                value={email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.email}
+                modifier={errors.email && "error"}
+              />
+              <PasswordInput
+                id="password"
+                name="password"
+                label="Contraseña"
+                value={password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.password}
+                modifier={errors.password && "error"}
+              />
+              <Container marginTop="20">
+                <Button
+                  type="submit"
+                  disabled={Object.entries(errors).length > 0}
+                  fullWidth
+                >
+                  Ingresar
+                </Button>
+              </Container>
+              <Container
+                marginTop="20"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Text size="xs" weight="light">
+                  ¿No tienes cuenta?
+                  <Button
+                    paddingSize="0"
+                    hierarchy="transparent"
+                    onClick={handleClickLink}
+                    className={`${namespace}__button-link`}
+                  >
+                    <Text
+                      size="xs"
+                      element="span"
+                      weight="light"
+                      color="link"
+                      marginLeft="4"
+                    >
+                      Registrate
+                    </Text>
+                  </Button>
+                </Text>
+              </Container>
+            </Form>
+          </CardBody>
+        </Card>
+      </Container>
     </Container>
   );
 };
@@ -102,7 +151,7 @@ Login.propTypes = {
 };
 
 Login.defaultProps = {
-  title: "Login page",
+  title: "Register page",
   className: "",
 };
 

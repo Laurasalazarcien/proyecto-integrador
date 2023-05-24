@@ -68,146 +68,151 @@ const AddProduct = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Title size={isMobile ? "xl" : "xxl"} weight="light" marginBottom="8">
-        Panel de administración
-      </Title>
-      <Text weight="light" marginBottom="16">
-        Desde aqui vas a poder gestionar tus productos.
-      </Text>
-      <Button modifier="success" onClick={handleOpenModal}>
-        Agregar producto
-      </Button>
-      <Container>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading alignment="center">#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData alignment="center">{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.title}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData alignment="center">{product.stock}</TableData>
-                <TableData alignment="center" className="table__data--actions">
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleOpenModal}
-                  >
-                    <PencilSquare />
-                  </Button>
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleDeleteProduct}
-                  >
-                    <TrashPill />
-                  </Button>
-                </TableData>
+      <Container className={`${namespace}__container`}>
+        <Title size={isMobile ? "xl" : "xxl"} weight="light" marginBottom="8">
+          Panel de administración
+        </Title>
+        <Text weight="light" marginBottom="16">
+          Desde aqui vas a poder gestionar tus productos.
+        </Text>
+        <Button modifier="success" onClick={handleOpenModal}>
+          Agregar producto
+        </Button>
+        <Container>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeading alignment="center">#</TableHeading>
+                <TableHeading>Image</TableHeading>
+                <TableHeading>Name</TableHeading>
+                <TableHeading>Description</TableHeading>
+                <TableHeading>Stock</TableHeading>
+                <TableHeading>Actions</TableHeading>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {productsListMock.map((product) => (
+                <TableRow key={product.id}>
+                  <TableData alignment="center">{product.id}</TableData>
+                  <TableData>
+                    <Image
+                      source={product.image}
+                      maxHeight="50px"
+                      paddingSize="0"
+                    />
+                  </TableData>
+                  <TableData>{product.title}</TableData>
+                  <TableData>{product.description}</TableData>
+                  <TableData alignment="center">{product.stock}</TableData>
+                  <TableData
+                    alignment="center"
+                    className="table__data--actions"
+                  >
+                    <Button
+                      paddingSize="0"
+                      hierarchy="transparent"
+                      onClick={handleOpenModal}
+                    >
+                      <PencilSquare />
+                    </Button>
+                    <Button
+                      paddingSize="0"
+                      hierarchy="transparent"
+                      onClick={handleDeleteProduct}
+                    >
+                      <TrashPill />
+                    </Button>
+                  </TableData>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Container>
+        <Modal
+          title="Agregar producto"
+          isOpen={openModal}
+          onCancel={handleCloseModal}
+        >
+          <Card shadow="none" paddingSize="0">
+            <CardBody paddingSize="0">
+              <Form shadow="none" paddingSize="0" onSubmit={() => {}}>
+                <TextInput
+                  id="title"
+                  name="title"
+                  label="Title"
+                  value="Hola"
+                  placeholder="Enter the product title"
+                  onChange={() => {}}
+                  onBlur={() => {}}
+                  helperMessage=""
+                  modifier=""
+                />
+                <NumericInput
+                  id="stock"
+                  name="stock"
+                  label="Stock"
+                  value="Hola"
+                  placeholder="Enter the product stock"
+                  onChange={() => {}}
+                  onBlur={() => {}}
+                  helperMessage=""
+                  modifier=""
+                />
+                <TextArea
+                  id="descriptiom"
+                  name="description"
+                  label="Description"
+                  value=""
+                  placeholder="Enter the product description"
+                  onChange={() => {}}
+                  onBlur={() => {}}
+                  helperMessage=""
+                  modifier=""
+                />
+                <Dropdown
+                  id="category"
+                  name="category"
+                  label="Category"
+                  searchPlaceholder="Search a category"
+                  options={categoriesDropdownMock}
+                  modifier=""
+                  helperMessage=""
+                  selectedOption="3"
+                  onSelectOption={(option) => {
+                    console.log("Option ---> ", option);
+                  }}
+                  fullWidth
+                />
+                <Dropdown
+                  id="brand"
+                  name="brand"
+                  label="Brand"
+                  searchPlaceholder="Search a brand"
+                  options={brandsDropdownMock}
+                  modifier=""
+                  helperMessage=""
+                  selectedOption="3"
+                  onSelectOption={(option) => {
+                    console.log("Option ---> ", option);
+                  }}
+                  fullWidth
+                />
+                <ImageLoader
+                  id="image"
+                  name="image"
+                  label="Image"
+                  value=""
+                  placeholder="Enter the product image"
+                  onChange={() => {}}
+                  onBlur={() => {}}
+                  helperMessage=""
+                  modifier=""
+                />
+              </Form>
+            </CardBody>
+          </Card>
+        </Modal>
       </Container>
-      <Modal
-        title="Agregar producto"
-        isOpen={openModal}
-        onCancel={handleCloseModal}
-      >
-        <Card shadow="none" paddingSize="0">
-          <CardBody paddingSize="0">
-            <Form shadow="none" paddingSize="0" onSubmit={() => {}}>
-              <TextInput
-                id="title"
-                name="title"
-                label="Title"
-                value="Hola"
-                placeholder="Enter the product title"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <NumericInput
-                id="stock"
-                name="stock"
-                label="Stock"
-                value="Hola"
-                placeholder="Enter the product stock"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <TextArea
-                id="descriptiom"
-                name="description"
-                label="Description"
-                value=""
-                placeholder="Enter the product description"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <Dropdown
-                id="category"
-                name="category"
-                label="Category"
-                searchPlaceholder="Search a category"
-                options={categoriesDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-              <Dropdown
-                id="brand"
-                name="brand"
-                label="Brand"
-                searchPlaceholder="Search a brand"
-                options={brandsDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-              <ImageLoader
-                id="image"
-                name="image"
-                label="Image"
-                value=""
-                placeholder="Enter the product image"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-            </Form>
-          </CardBody>
-        </Card>
-      </Modal>
     </Container>
   );
 };

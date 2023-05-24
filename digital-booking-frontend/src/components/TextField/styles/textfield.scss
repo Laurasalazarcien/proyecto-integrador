@@ -40,10 +40,10 @@
   }
 
   &--error {
-    .textfield__input,
-    .textfield__textarea {
-      border: 1px solid $db-color-negative;
-    }
+    // .textfield__input,
+    // .textfield__textarea {
+    //   border: 1px solid $db-color-negative;
+    // }
   }
 
   &--success {

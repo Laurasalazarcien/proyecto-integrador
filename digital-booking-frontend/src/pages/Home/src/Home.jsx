@@ -59,188 +59,190 @@ const Home = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Container element="section" className="finder" marginBottom="20">
-        <SearchBox
-          searchPlaceholder="¿Qué estás buscando?"
-          onChange={handleSearch}
-          onClick={handleClickSearch}
-        />
-      </Container>
-      <Container element="section" className="categories">
-        {loadingCategories && (
+      <Container className={`${namespace}__container`}>
+        <Container element="section" className="finder" marginBottom="20">
+          <SearchBox
+            searchPlaceholder="¿Qué estás buscando?"
+            onChange={handleSearch}
+            onClick={handleClickSearch}
+          />
+        </Container>
+        <Container element="section" className="categories">
+          {loadingCategories && (
+            <Container
+              display="grid"
+              columns="4"
+              spaceBetweenItems="20"
+              className="categories-list-skeleton"
+            >
+              {generateArray(4).map((index, item) => (
+                <Card key={`category-${index}`}>
+                  <CardHeader paddingSize="0">
+                    <Skeleton height="186px" />
+                  </CardHeader>
+                  <CardBody>
+                    <Skeleton />
+                    <Skeleton width="50%" />
+                  </CardBody>
+                </Card>
+              ))}
+            </Container>
+          )}
+          {categories && !loadingCategories && (
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={4}
+              className="categories-carousel"
+              modules={[Navigation]}
+              breakpoints={{
+                380: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                600: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                920: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 20,
+                },
+              }}
+              navigation
+            >
+              {categoriesMock.map((category) => (
+                <SwiperSlide key={category.id}>
+                  <Card
+                    borderRadius="8"
+                    onClick={() => handleClickCategory(category.urlLabel)}
+                    clickeable
+                  >
+                    <CardHeader paddingSize="0">
+                      <Image
+                        width="100%"
+                        height="180px"
+                        containerWidth="100%"
+                        containerHeight="180px"
+                        borderTopRadius="8"
+                        paddingSize="0"
+                        source={category.image}
+                        alternativeText={category.name}
+                        onClick={() => console.log("img click")}
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <Title
+                        element="h2"
+                        size="m"
+                        weight="regular"
+                        marginBottom="4"
+                      >
+                        {category.name}
+                      </Title>
+                      <Text size="s" weight="light">
+                        {category.stock} productos
+                      </Text>
+                    </CardBody>
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </Container>
+        <Container element="section" className="products" marginBottom="32">
+          <Title
+            element="h2"
+            weight="light"
+            marginTop="24"
+            marginBottom="8"
+            size={isMobile ? "l" : "l"}
+          >
+            Nuestros productos
+          </Title>
+          <Text
+            weight="light"
+            color="secondary"
+            marginBottom="16"
+            size={isMobile ? "s" : "m"}
+          >
+            Te listamos algunos productos que te pueden interesar
+          </Text>
           <Container
             display="grid"
-            columns="4"
             spaceBetweenItems="20"
-            className="categories-list-skeleton"
+            columnsInSmallDevices="1"
+            columnsInMediumDevices="2"
+            columnsInLargeDevices="3"
+            columnsInExtraLargeDevices="4"
           >
-            {generateArray(4).map((index, item) => (
-              <Card key={`category-${index}`}>
-                <CardHeader paddingSize="0">
-                  <Skeleton height="186px" />
-                </CardHeader>
-                <CardBody>
-                  <Skeleton />
-                  <Skeleton width="50%" />
-                </CardBody>
-              </Card>
-            ))}
-          </Container>
-        )}
-        {categories && !loadingCategories && (
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={4}
-            className="categories-carousel"
-            modules={[Navigation]}
-            breakpoints={{
-              380: {
-                slidesPerView: 1,
-                spaceBetween: 20,
-              },
-              600: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              920: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              1200: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-            }}
-            navigation
-          >
-            {categoriesMock.map((category) => (
-              <SwiperSlide key={category.id}>
+            {loadingProducts &&
+              generateArray(10).map((index, item) => (
+                <Card key={`product-${index}`}>
+                  <CardHeader>
+                    <Skeleton height="200px" />
+                  </CardHeader>
+                  <CardBody>
+                    <Skeleton />
+                    <Skeleton width="50%" />
+                  </CardBody>
+                </Card>
+              ))}
+            {products &&
+              products.map((product) => (
                 <Card
-                  borderRadius="8"
-                  onClick={() => handleClickCategory(category.urlLabel)}
+                  key={product.id}
+                  shadow="elevated"
+                  className="instrument-card"
+                  onClick={() => handleClick(product.id)}
                   clickeable
+                  animated
                 >
-                  <CardHeader paddingSize="0">
+                  <CardHeader>
                     <Image
-                      width="100%"
-                      height="180px"
-                      containerWidth="100%"
-                      containerHeight="180px"
-                      borderTopRadius="8"
-                      paddingSize="0"
-                      source={category.image}
-                      alternativeText={category.name}
+                      source={product.images[0]}
+                      alternativeText={product.title}
+                      containerHeight={isMobile ? "150px" : "200px"}
+                      maxHeight={isMobile ? "150px" : "200px"}
+                      maxWidth={isMobile ? "150px" : "200px"}
                       onClick={() => console.log("img click")}
                     />
                   </CardHeader>
                   <CardBody>
                     <Title
+                      size="s"
                       element="h2"
-                      size="m"
-                      weight="regular"
+                      weight="semibold"
+                      alignment="left"
+                      transform="uppercase"
                       marginBottom="4"
                     >
-                      {category.name}
+                      {product.title}
                     </Title>
-                    <Text size="s" weight="light">
-                      {category.stock} productos
+                    <Text size="s" weight="light" alignment="left">
+                      $ {product.price}
                     </Text>
                   </CardBody>
                 </Card>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
-      </Container>
-      <Container element="section" className="products" marginBottom="32">
-        <Title
-          element="h2"
-          weight="light"
-          marginTop="24"
-          marginBottom="8"
-          size={isMobile ? "l" : "l"}
-        >
-          Nuestros productos
-        </Title>
-        <Text
-          weight="light"
-          color="secondary"
-          marginBottom="16"
-          size={isMobile ? "s" : "m"}
-        >
-          Te listamos algunos productos que te pueden interesar
-        </Text>
-        <Container
-          display="grid"
-          spaceBetweenItems="20"
-          columnsInSmallDevices="1"
-          columnsInMediumDevices="2"
-          columnsInLargeDevices="3"
-          columnsInExtraLargeDevices="4"
-        >
-          {loadingProducts &&
-            generateArray(10).map((index, item) => (
-              <Card key={`product-${index}`}>
-                <CardHeader>
-                  <Skeleton height="200px" />
-                </CardHeader>
-                <CardBody>
-                  <Skeleton />
-                  <Skeleton width="50%" />
-                </CardBody>
-              </Card>
-            ))}
-          {products &&
-            products.map((product) => (
-              <Card
-                key={product.id}
-                shadow="elevated"
-                className="instrument-card"
-                onClick={() => handleClick(product.id)}
-                clickeable
-                animated
-              >
-                <CardHeader>
-                  <Image
-                    source={product.images[0]}
-                    alternativeText={product.title}
-                    containerHeight={isMobile ? "150px" : "200px"}
-                    maxHeight={isMobile ? "150px" : "200px"}
-                    maxWidth={isMobile ? "150px" : "200px"}
-                    onClick={() => console.log("img click")}
-                  />
-                </CardHeader>
-                <CardBody>
-                  <Title
-                    size="s"
-                    element="h2"
-                    weight="semibold"
-                    alignment="left"
-                    transform="uppercase"
-                    marginBottom="4"
-                  >
-                    {product.title}
-                  </Title>
-                  <Text size="s" weight="light" alignment="left">
-                    $ {product.price}
-                  </Text>
-                </CardBody>
-              </Card>
-            ))}
+              ))}
+          </Container>
         </Container>
-      </Container>
-      <Container
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        element="section"
-        className="pagination"
-      >
-        <Pagination
-          prevButtonLabel="Anterior"
-          nextButtonLabel="Siguiente"
-          nummerOfPages={5}
-        />
+        <Container
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          element="section"
+          className="pagination"
+        >
+          <Pagination
+            prevButtonLabel="Anterior"
+            nextButtonLabel="Siguiente"
+            nummerOfPages={5}
+          />
+        </Container>
       </Container>
     </Container>
   );
