@@ -65,91 +65,89 @@ const Login = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Container>
-        <Card shadow="elevated" className={`${namespace}__card`}>
-          <CardHeader>
-            <Image
-              source={logo}
-              maxHeight={isMobile ? "45px" : "50px"}
-              containerHeight={isMobile ? "45px" : "50px"}
-              paddingSize="0"
+      <Card shadow="elevated" className={`${namespace}__card`}>
+        <CardHeader>
+          <Image
+            source={logo}
+            maxHeight={isMobile ? "45px" : "50px"}
+            containerHeight={isMobile ? "45px" : "50px"}
+            paddingSize="0"
+          />
+          <Title
+            size="l"
+            element="h2"
+            weight="light"
+            alignment="center"
+            marginTop="20"
+          >
+            Iniciar sesión
+          </Title>
+        </CardHeader>
+        <CardBody paddingSize="20">
+          <Form
+            shadow="none"
+            paddingSize="0"
+            onSubmit={handleSubmit}
+            className={`${namespace}__form`}
+          >
+            <TextInput
+              id="email"
+              name="email"
+              label="Correo electónico"
+              value={email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.email}
+              modifier={errors.email && "error"}
             />
-            <Title
-              size="l"
-              element="h2"
-              weight="light"
-              alignment="center"
-              marginTop="20"
-            >
-              Iniciar sesión
-            </Title>
-          </CardHeader>
-          <CardBody paddingSize="20">
-            <Form
-              shadow="none"
-              paddingSize="0"
-              onSubmit={handleSubmit}
-              className={`${namespace}__form`}
-            >
-              <TextInput
-                id="email"
-                name="email"
-                label="Correo electónico"
-                value={email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.email}
-                modifier={errors.email && "error"}
-              />
-              <PasswordInput
-                id="password"
-                name="password"
-                label="Contraseña"
-                value={password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.password}
-                modifier={errors.password && "error"}
-              />
-              <Container marginTop="20">
-                <Button
-                  type="submit"
-                  disabled={Object.entries(errors).length > 0}
-                  fullWidth
-                >
-                  Ingresar
-                </Button>
-              </Container>
-              <Container
-                marginTop="20"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+            <PasswordInput
+              id="password"
+              name="password"
+              label="Contraseña"
+              value={password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.password}
+              modifier={errors.password && "error"}
+            />
+            <Container marginTop="20">
+              <Button
+                type="submit"
+                disabled={Object.entries(errors).length > 0}
+                fullWidth
               >
-                <Text size="xs" weight="light">
-                  ¿No tienes cuenta?
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleClickLink}
-                    className={`${namespace}__button-link`}
+                Ingresar
+              </Button>
+            </Container>
+            <Container
+              marginTop="20"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text size="xs" weight="light">
+                ¿No tienes cuenta?
+                <Button
+                  paddingSize="0"
+                  hierarchy="transparent"
+                  onClick={handleClickLink}
+                  className={`${namespace}__button-link`}
+                >
+                  <Text
+                    size="xs"
+                    element="span"
+                    weight="light"
+                    color="link"
+                    marginLeft="4"
                   >
-                    <Text
-                      size="xs"
-                      element="span"
-                      weight="light"
-                      color="link"
-                      marginLeft="4"
-                    >
-                      Registrate
-                    </Text>
-                  </Button>
-                </Text>
-              </Container>
-            </Form>
-          </CardBody>
-        </Card>
-      </Container>
+                    Registrate
+                  </Text>
+                </Button>
+              </Text>
+            </Container>
+          </Form>
+        </CardBody>
+      </Card>
     </Container>
   );
 };

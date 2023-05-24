@@ -94,121 +94,119 @@ const Register = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Container>
-        <Card shadow="elevated" className={`${namespace}__card`}>
-          <CardHeader>
-            <Image
-              source={logo}
-              maxHeight={isMobile ? "45px" : "50px"}
-              containerHeight={isMobile ? "45px" : "50px"}
-              paddingSize="0"
+      <Card shadow="elevated" className={`${namespace}__card`}>
+        <CardHeader>
+          <Image
+            source={logo}
+            maxHeight={isMobile ? "45px" : "50px"}
+            containerHeight={isMobile ? "45px" : "50px"}
+            paddingSize="0"
+          />
+          <Title
+            size="l"
+            element="h2"
+            weight="light"
+            alignment="center"
+            marginTop="20"
+          >
+            Crear cuenta
+          </Title>
+        </CardHeader>
+        <CardBody paddingSize="20">
+          <Form
+            shadow="none"
+            paddingSize="0"
+            onSubmit={handleSubmit}
+            className={`${namespace}__form`}
+          >
+            <TextInput
+              id="name"
+              name="name"
+              label="Nombre"
+              value={name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.name}
+              modifier={errors.name && "error"}
             />
-            <Title
-              size="l"
-              element="h2"
-              weight="light"
-              alignment="center"
-              marginTop="20"
-            >
-              Crear cuenta
-            </Title>
-          </CardHeader>
-          <CardBody paddingSize="20">
-            <Form
-              shadow="none"
-              paddingSize="0"
-              onSubmit={handleSubmit}
-              className={`${namespace}__form`}
-            >
-              <TextInput
-                id="name"
-                name="name"
-                label="Nombre"
-                value={name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.name}
-                modifier={errors.name && "error"}
-              />
-              <TextInput
-                id="lastname"
-                name="lastname"
-                label="Apellido"
-                value={lastname}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.lastname}
-                modifier={errors.lastname && "error"}
-              />
-              <TextInput
-                id="email"
-                name="email"
-                label="Correo electónico"
-                value={email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.email}
-                modifier={errors.email && "error"}
-              />
-              <TextInput
-                id="address"
-                name="address"
-                label="Dirección"
-                value={address}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.address}
-                modifier={errors.address && "error"}
-              />
-              <PasswordInput
-                id="password"
-                name="password"
-                label="Contraseña"
-                value={password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.password}
-                modifier={errors.password && "error"}
-              />
-              <Container marginTop="20">
-                <Button
-                  type="submit"
-                  disabled={Object.entries(errors).length > 0}
-                  fullWidth
-                >
-                  Registrarme
-                </Button>
-              </Container>
-              <Container
-                marginTop="20"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+            <TextInput
+              id="lastname"
+              name="lastname"
+              label="Apellido"
+              value={lastname}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.lastname}
+              modifier={errors.lastname && "error"}
+            />
+            <TextInput
+              id="email"
+              name="email"
+              label="Correo electónico"
+              value={email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.email}
+              modifier={errors.email && "error"}
+            />
+            <TextInput
+              id="address"
+              name="address"
+              label="Dirección"
+              value={address}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.address}
+              modifier={errors.address && "error"}
+            />
+            <PasswordInput
+              id="password"
+              name="password"
+              label="Contraseña"
+              value={password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.password}
+              modifier={errors.password && "error"}
+            />
+            <Container marginTop="20">
+              <Button
+                type="submit"
+                disabled={Object.entries(errors).length > 0}
+                fullWidth
               >
-                <Text size="xs" weight="light">
-                  ¿Ya tienes cuenta?
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleClickLink}
-                    className={`${namespace}__button-link`}
+                Registrarme
+              </Button>
+            </Container>
+            <Container
+              marginTop="20"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text size="xs" weight="light">
+                ¿Ya tienes cuenta?
+                <Button
+                  paddingSize="0"
+                  hierarchy="transparent"
+                  onClick={handleClickLink}
+                  className={`${namespace}__button-link`}
+                >
+                  <Text
+                    size="xs"
+                    element="span"
+                    weight="light"
+                    color="link"
+                    marginLeft="4"
                   >
-                    <Text
-                      size="xs"
-                      element="span"
-                      weight="light"
-                      color="link"
-                      marginLeft="4"
-                    >
-                      Iniciar sesión
-                    </Text>
-                  </Button>
-                </Text>
-              </Container>
-            </Form>
-          </CardBody>
-        </Card>
-      </Container>
+                    Iniciar sesión
+                  </Text>
+                </Button>
+              </Text>
+            </Container>
+          </Form>
+        </CardBody>
+      </Card>
     </Container>
   );
 };

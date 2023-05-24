@@ -22,11 +22,10 @@
 // Media Queries
 @media screen and (max-width: 768px) {
   .register-page {
-    margin: $db-spacing-8;
     margin-top: 90px;
 
     &__card {
-      width: 100%;
+      min-width: 100%;
     }
   }
 }
