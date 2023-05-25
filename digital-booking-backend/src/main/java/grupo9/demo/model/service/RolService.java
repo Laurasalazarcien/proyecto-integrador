@@ -19,18 +19,18 @@ public class RolService implements IRolService {
     @Autowired
     ObjectMapper mapper;
 
-    private void guardarRol (RolDTO rolDTO){
+    private void saveRol(RolDTO rolDTO){
         Rol rol =mapper.convertValue(rolDTO, Rol.class);
         rolRepository.save(rol);
     }
 
     @Override
-    public void crearRol(RolDTO rolDTO) {
-        guardarRol(rolDTO);
+    public void createRol(RolDTO rolDTO) {
+        saveRol(rolDTO);
     }
 
     @Override
-    public RolDTO leerRol(Long id) {
+    public RolDTO readRol(Long id) {
         Optional<Rol> rol = rolRepository.findById(id);
         RolDTO rolDTO = null;
         if(rol.isPresent())
@@ -40,12 +40,12 @@ public class RolService implements IRolService {
     }
 
     @Override
-    public void modificarRol(RolDTO rolDTO) {
-        guardarRol(rolDTO);
+    public void modifyRol(RolDTO rolDTO) {
+        saveRol(rolDTO);
     }
 
     @Override
-    public void eliminarRol(Long id) {
+    public void removeRol(Long id) {
         rolRepository.deleteById(id);
     }
 }
