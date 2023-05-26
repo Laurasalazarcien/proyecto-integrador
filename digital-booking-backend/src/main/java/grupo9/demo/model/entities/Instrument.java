@@ -21,7 +21,7 @@ public class Instrument {
     @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne
-    @JoinColumn(name = "marca_id")
+    @JoinColumn(name = "brand_id")
     private Brand brand;
     @ManyToOne
     @JoinColumn(name = "instrument_detail_id")
