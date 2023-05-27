@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpbDataSourceConfig">
-    <data-sources>
-      <data-source id="80aa6f66-6f78-4704-b8ed-abd31d9754cd" name="railway-pruebas" url="jdbc:mysql://containers-us-west-16.railway.app/railway?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=UTC&amp;port=6297" driverClass="com.mysql.cj.jdbc.Driver" />
-    </data-sources>
-  </component>
-</project>
