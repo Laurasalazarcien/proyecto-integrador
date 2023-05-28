@@ -40,11 +40,14 @@ const Detail = ({ title, className }) => {
     <div className={componentClassnames}>
       <Container className={`${namespace}__container`}>
         {title && <Title>{title}</Title>}
-        {/* <BreadCrumb ariaLabel="Product detail">
-        {breadCrumbMock.map((level) => (
-          <BreadCrumbLevel key={level.id} {...level} />
-        ))}
-      </BreadCrumb> */}
+        <Container element="section" marginTop="16" marginBottom="20">
+          <BreadCrumb>
+            <BreadCrumbLevel text="Home" redirectTo="/home" />
+            <BreadCrumbLevel text="Instrumentos de viento" redirectTo="/categories/instrumentos-de-viento" />
+            <BreadCrumbLevel text={productDetailMock.title} />
+            {/* <BreadCrumbLevel text={categoryName} /> */}
+          </BreadCrumb>
+        </Container>
         <Container element="section" className="product-detail">
           {/* <Image maxHeight="450px" source={productDetailMock.image} /> */}
           <Button

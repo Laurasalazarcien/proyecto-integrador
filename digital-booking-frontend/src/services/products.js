@@ -8,6 +8,15 @@ class ProductsService {
       return data;
     });
   }
+
+  static async getProductsByCategory(category) {
+    return axios
+      .get(`${config.apiUrl}/products/category/${category}`)
+      .then((resp) => {
+        const { data } = resp;
+        return data;
+      });
+  }
 }
 
 export default ProductsService;

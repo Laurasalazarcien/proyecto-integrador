@@ -21,7 +21,8 @@ export const appReducer = (state = [], action) => {
     case actionTypes.SET_DATA:
       return {
         ...state,
-        data: Array.isArray(payload) ? [...state.data, ...payload] : payload,
+        // data: Array.isArray(payload) ? [...state.data, ...payload] : payload,
+        data: [...payload],
       };
     default:
       return state;

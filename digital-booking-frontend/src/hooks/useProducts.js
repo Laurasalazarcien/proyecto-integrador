@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ProductsService from "../services/products";
 import { useApp } from "././../context/AppContext";
 
-const useProducts = () => {
+const useProducts = (category) => {
   const {
     data: products,
     loading,
@@ -16,7 +16,12 @@ const useProducts = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await ProductsService.getAllProducts();
+      let data = [];
+      if (category) {
+        data = await ProductsService.getProductsByCategory(category);
+      } else {
+        data = await ProductsService.getAllProducts();
+      }
       setData(data.products);
       setLoading(false);
     } catch (error) {
