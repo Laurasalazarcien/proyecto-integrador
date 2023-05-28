@@ -8,6 +8,11 @@
   align-items: center;
   position: relative;
 
+  &__notification {
+    display: flex;
+    align-items: center;
+  }
+
   &__content {
     display: flex;
     align-items: center;
