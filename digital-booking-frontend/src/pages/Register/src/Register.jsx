@@ -116,7 +116,7 @@ const Register = ({ title, className }) => {
             type="success"
             hierarchy="quiet"
             marginTop="8"
-            marginBottom="4"
+            marginBottom="0"
             closable
           >
             Se ha creado tu cuenta de manera exitosa. Por favor revisa tu correo electrónico para validarla.

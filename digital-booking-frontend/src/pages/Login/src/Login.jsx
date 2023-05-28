@@ -87,7 +87,7 @@ const Login = ({ title, className }) => {
             type="error"
             hierarchy="quiet"
             marginTop="8"
-            marginBottom="4"
+            marginBottom="0"
             closable
           >
             Usuario o contraseña incorrectos.
