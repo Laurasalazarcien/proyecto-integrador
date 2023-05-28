@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
+import Message from "../../../components/Message";
 import Form from "../../../components/Form";
 import {
   Text as TextInput,
@@ -82,6 +83,15 @@ const Login = ({ title, className }) => {
           >
             Iniciar sesión
           </Title>
+          <Message
+            type="error"
+            hierarchy="quiet"
+            marginTop="8"
+            marginBottom="4"
+            closable
+          >
+            Usuario o contraseña incorrectos.
+          </Message>
         </CardHeader>
         <CardBody paddingSize="20">
           <Form

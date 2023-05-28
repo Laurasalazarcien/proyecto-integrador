@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
+import Message from "../../../components/Message";
 import Form from "../../../components/Form";
 import {
   Text as TextInput,
@@ -111,6 +112,15 @@ const Register = ({ title, className }) => {
           >
             Crear cuenta
           </Title>
+          <Message
+            type="success"
+            hierarchy="quiet"
+            marginTop="8"
+            marginBottom="4"
+            closable
+          >
+            Se ha creado tu cuenta de manera exitosa. Por favor revisa tu correo electrónico para validarla.
+          </Message>
         </CardHeader>
         <CardBody paddingSize="20">
           <Form

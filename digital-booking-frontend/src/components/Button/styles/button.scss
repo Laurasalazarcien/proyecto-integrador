@@ -4,7 +4,6 @@
   box-sizing: border-box;
   color: $db-white;
   font-weight: $font-weight-regular;
-  background-color: $db-color-neutral;
   transition: 0.18s ease-out;
   font-weight: $font-weight-semibold;
 
@@ -129,7 +128,7 @@
     }
   }
 
-  &--transparent {
+  &--trasparent {
     background-color: transparent;
     box-shadow: none;
 

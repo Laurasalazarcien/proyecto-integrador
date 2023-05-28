@@ -23,7 +23,6 @@ const Text = ({
   transform,
   className,
   children,
-  onClick,
 }) => {
   const componentClassNames = classNames(namespace, className, {
     [`${namespace}--size-${size}`]: size,
