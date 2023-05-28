@@ -104,7 +104,7 @@ const NavBar = ({
           </ListItem>
           <ListItem>
             <Button
-              hierarchy="quiet"
+              hierarchy="white"
               onClick={() => {
                 navigate("/login");
                 setOpenMenu(false);

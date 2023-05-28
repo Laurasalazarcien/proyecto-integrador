@@ -70,31 +70,73 @@
 
   &--loud {
     color: $db-white;
-    background-color: $db-color-neutral; // rgba(52, 131, 250, 1)
+    background-color: $db-color-neutral;
+    transition: background-color 0.2s ease-out;
 
-    // &:hover {
-    //   cursor: pointer;
-    //   background-color: dodgerblue;
-    // }
-  }
-
-  &--success {
-    background-color: $db-color-positive;
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-neutral-dark;
+    }
   }
 
   &--quiet {
     color: $db-color-neutral;
-    background-color: $db-white;
-    border: 1px solid $db-color-neutral;
+    background-color: rgba(65, 137, 230, 0.15);
+    transition: background-color 0.2s ease-out;
 
     &:hover {
       cursor: pointer;
+      background-color: rgba(65, 137, 230, 0.2);
+    }
+  }
+
+  &--white {
+    color: $db-color-neutral;
+    background-color: $db-white;
+    border: 1px solid $db-color-neutral;
+    transition: background-color 0.2s ease-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($db-white, 0.85);
+    }
+  }
+
+  &--success {
+    background-color: $db-color-positive;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-positive-dark;
+    }
+  }
+
+  &--warning {
+    background-color: $db-color-caution;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-caution-dark;
+    }
+  }
+
+  &--error {
+    background-color: $db-color-negative;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-negative-dark;
     }
   }
 
   &--transparent {
     background-color: transparent;
     box-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+      background-color: transparent;
+    }
   }
 
   &--rounded-0 {
@@ -139,14 +181,6 @@
 
   &--positive {
     background-color: $db-positive;
-  }
-
-  &--warning {
-    background-color: $db-warning;
-  }
-
-  &--error {
-    background-color: $db-error;
   }
 
   &--disabled {

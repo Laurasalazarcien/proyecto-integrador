@@ -22,7 +22,7 @@ $db-white-650: rgba(255, 255, 255, 0.65);
 
 // DB Colors
 $db-primary: #9061c2;
-$db-page-background: #F8F9F9;
+$db-page-background: #f8f9f9;
 
 // Fedback colors
 $db-positive: rgba(0, 166, 80);
@@ -36,8 +36,12 @@ $db-color-primary: $db-gray-900;
 $db-color-secondary: $db-gray-550;
 $db-color-disabled: $db-gray-250;
 $db-color-link: rgba(52, 131, 250);
-$db-color-negative: $db-error;
-$db-color-positive: $db-positive;
-$db-color-caution: $db-warning;
 $db-color-neutral: $db-neutral;
+$db-color-positive: $db-positive;
+$db-color-negative: $db-error;
+$db-color-caution: $db-warning;
 $db-color-generic: $db-generic;
+$db-color-neutral-dark: #2968c8;
+$db-color-positive-dark: #388e3c;
+$db-color-negative-dark: #d32f2f;
+$db-color-caution-dark: #e64a19;
