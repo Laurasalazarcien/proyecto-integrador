@@ -1,8 +1,53 @@
 .admin-page {
   margin-top: 80px;
   min-height: 100vh;
-  padding: $db-spacing-20;
   background-color: $db-page-background;
+  display: flex;
+
+  &__aside {
+    width: 300px;
+    height: 100%;
+    color: $db-white;
+    background-color: $db-gray-750;
+    
+    &-text {
+      span.typography--color-primary {
+        color: $db-white-700;
+      }
+    }
+
+    .list__item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $db-white-250;
+
+      svg {
+        display: flex;
+        margin-right: $db-spacing-12;
+      }
+
+      .typography--color-primary {
+        color: $db-white-700;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $db-white-250;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__menu {
+    //background-color: violet;
+  }
+
+  &__table {
+  }
 
   &__container {
     max-width: 1200px;
