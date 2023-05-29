@@ -3,7 +3,7 @@
   height: auto;
   background-color: $db-white;
   position: relative;
-  z-index: 10;
+  z-index: 120;
   transition: transform 1s;
   box-sizing: border-box;
   display: none;
@@ -19,7 +19,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: 100;
     background-color: $db-gray-600;
     display: flex;
     align-items: center;

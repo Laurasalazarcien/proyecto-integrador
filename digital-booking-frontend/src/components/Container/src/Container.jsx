@@ -10,6 +10,7 @@ const Container = ({
   display,
   alignItems,
   justifyContent,
+  flexDirection,
   spaceBetweenItems,
   element,
   margin,
@@ -49,6 +50,7 @@ const Container = ({
     [`${namespace}--gap-${spaceBetweenItems}`]: spaceBetweenItems,
     [`${namespace}--align-items-${alignItems}`]: alignItems,
     [`${namespace}--justify-content-${justifyContent}`]: justifyContent,
+    [`${namespace}--flex-direction-${flexDirection}`]: flexDirection,
   });
 
   const getContainerElement = (element) => {
@@ -74,6 +76,7 @@ Container.propTypes = {
   alignItems: PropTypes.string,
   justifyContent: PropTypes.string,
   margin: PropTypes.string,
+  flexDirection: PropTypes.oneOf(["row", "column"]),
   marginTop: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
   marginLeft: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
   marginRight: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),

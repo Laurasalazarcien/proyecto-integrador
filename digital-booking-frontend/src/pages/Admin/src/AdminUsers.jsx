@@ -40,7 +40,7 @@ const namespace = "admin-page";
 
 const AddProduct = ({ title, className }) => {
   const isMobile = useMobile();
-  const { Trash, TrashPill, PencilPill, PencilSquare } = icons;
+  const { Trash, TrashFill, PencilPill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
   const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const AddProduct = ({ title, className }) => {
                       hierarchy="transparent"
                       onClick={handleDeleteProduct}
                     >
-                      <TrashPill />
+                      <TrashFill />
                     </Button>
                   </TableData>
                 </TableRow>

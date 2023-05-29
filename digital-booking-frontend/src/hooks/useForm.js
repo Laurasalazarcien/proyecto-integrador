@@ -25,8 +25,8 @@ const useForm = (initialValues, validateForm, submitFunction) => {
     setSubmited(true);
   };
 
-  const handleReset = (e) => {
-    e.preventDefault();
+  const handleReset = () => {
+    setErrors({});
     setForm(initialValues);
   };
 
@@ -34,6 +34,7 @@ const useForm = (initialValues, validateForm, submitFunction) => {
     form,
     errors,
     submited,
+    setForm,
     setErrors,
     handleChange,
     handleBlur,

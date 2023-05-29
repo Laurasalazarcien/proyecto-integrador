@@ -21,6 +21,9 @@ import TagsFill from "./src/TagsFill";
 import Calendar from "./src/CalendarFill copy";
 import CalendarFill from "./src/Calendar";
 import MusicNote from "./src/MusicNote";
+import BoomBox from "./src/BoomBoxFill";
+import BoomBoxFill from "./src/BoomBox copy";
+
 
 const icons = {
   Check,
@@ -46,6 +49,8 @@ const icons = {
   Calendar,
   CalendarFill,
   MusicNote,
+  BoomBox,
+  BoomBoxFill
 };
 
 export default icons;

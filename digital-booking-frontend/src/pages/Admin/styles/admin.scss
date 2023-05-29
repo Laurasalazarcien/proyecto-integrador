@@ -9,7 +9,7 @@
     height: 100%;
     color: $db-white;
     background-color: $db-gray-750;
-    
+
     &-text {
       span.typography--color-primary {
         color: $db-white-700;
@@ -22,13 +22,21 @@
       align-items: center;
       border-bottom: 1px solid $db-white-250;
 
+      .typography--color-primary {
+        color: $db-white-700;
+      }
+
       svg {
         display: flex;
         margin-right: $db-spacing-12;
+        color: $db-white-700;
       }
 
-      .typography--color-primary {
-        color: $db-white-700;
+      &--selected {
+        svg,
+        .typography--color-primary {
+          color: $db-white;
+        }
       }
 
       &:hover {
@@ -42,21 +50,9 @@
     }
   }
 
-  &__menu {
-    //background-color: violet;
-  }
-
-  &__table {
-  }
-
-  &__container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .table {
-    margin-top: 24px;
+  &__dashboard {
+    width: 100%;
+    padding: $db-spacing-24 $db-spacing-32;
   }
 }
 

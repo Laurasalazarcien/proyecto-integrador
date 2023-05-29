@@ -7,7 +7,12 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
-import { Title, Text } from "../../../components/Typography";
+import Form from "../../../components/Form";
+import Dropdown from "../../../components/Dropdown";
+import ImageLoader from "../../../components/ImageLoader";
+import Pagination from "../../../components/Pagination";
+import Modal from "../../../components/Modal";
+import icons from "../../../components/icons";
 import Table, {
   TableHead,
   TableHeading,
@@ -15,18 +20,13 @@ import Table, {
   TableRow,
   TableData,
 } from "../../../components/Table";
-import Form from "../../../components/Form";
 import {
   Text as TextInput,
   Numeric as NumericInput,
   TextArea,
 } from "../../../components/TextField";
-import Card, { CardHeader, CardBody } from "../../../components/Card";
-import Dropdown from "../../../components/Dropdown";
-import ImageLoader from "../../../components/ImageLoader";
-import Pagination from "../../../components/Pagination";
-import Modal from "../../../components/Modal";
-import icons from "../../../components/icons";
+import Card, { CardBody } from "../../../components/Card";
+import { Title } from "../../../components/Typography";
 
 import {
   productsListMock,
@@ -35,26 +35,100 @@ import {
   brandsDropdownMock,
 } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
+import useForm from "../../../hooks/useForm";
 
-const namespace = "admin-page";
+const namespace = "admin-page-products";
+
+const valideteForm = (form) => {
+  let errors = {};
+  const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+
+  if (form.name.trim().length === 0) {
+    errors.name = "Este campo no puede quedar vacio.";
+  }
+
+  if (parseInt(form.stock) === 0) {
+    errors.stock = "Selecciona un valor mayor a cero.";
+  }
+
+  if (form.price.trim().length === 0) {
+    errors.price = "Este campo no puede quedar vacio.";
+  }
+
+  if (form.description.trim().length <= 15) {
+    errors.description = "Ingresa almenos 15 caracteres.";
+  }
+
+  if (form.image.trim().length <= 15) {
+    errors.image = "Ingresa almenos 15 caracteres.";
+  }
+
+  return errors;
+};
 
 const AddProduct = ({ title, className }) => {
   const isMobile = useMobile();
-  const { Trash, TrashPill, PencilPill, PencilSquare } = icons;
+  const { TrashFill, PencilPill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
+  const [action, setAction] = useState("");
   const componentClassnames = classNames(namespace, className);
-  const navigate = useNavigate();
 
-  const handleOpenModal = () => {
+  const {
+    form,
+    name,
+    stock,
+    price,
+    description,
+    image,
+    errors,
+    handleChange,
+    handleBlur,
+    setErrors,
+    handleReset,
+    setForm,
+  } = useForm(
+    {
+      name: "",
+      stock: "0",
+      price: "",
+      description: "",
+      image: "",
+    },
+    valideteForm
+  );
+
+  const handlConfirm = () => {
+    const errors = valideteForm(form);
+    if (Object.entries(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
+    console.log("submit", form);
+  };
+
+  const handleOpenModal = (action) => {
     setModalVisibility(true);
+    setAction(action);
   };
 
   const handleCloseModal = () => {
+    handleReset();
     setModalVisibility(false);
   };
 
+  const handleEditProduct = (productId) => {
+    handleOpenModal("edit");
+    const product = productsListMock.find(
+      (product) => product.id === productId
+    );
+    setForm({
+      ...form,
+      ...product,
+    });
+    console.log(product);
+  };
+
   const handleDeleteProduct = () => {
-    // Swal.fire("Eliminar producto", "¿Estás seguro de eliminar este producto?", "warning");
     Swal.fire({
       title: "Eliminar producto",
       text: "¿Estás seguro de eliminar este producto?",
@@ -69,72 +143,77 @@ const AddProduct = ({ title, className }) => {
 
   return (
     <Container className={componentClassnames}>
-      <Container className={`${namespace}__container`}>
-        <Title size={isMobile ? "xl" : "xxl"} weight="light" marginBottom="8">
-          Panel de administración
+      <Container
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        marginBottom="20"
+      >
+        <Title size={isMobile ? "m" : "xl"} weight="light">
+          Gestionar instrumentos
         </Title>
-        <Text weight="light" marginBottom="16">
-          Desde aqui vas a poder gestionar tus productos.
-        </Text>
-        <Button modifier="success" onClick={handleOpenModal}>
-          Agregar producto
+        <Button modifier="success" onClick={(e) => handleOpenModal("add")}>
+          Agregar
         </Button>
-        <Container marginBottom="20">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeading alignment="center">#</TableHeading>
-                <TableHeading>Image</TableHeading>
-                <TableHeading>Name</TableHeading>
-                <TableHeading>Description</TableHeading>
-                <TableHeading>Stock</TableHeading>
-                <TableHeading>Actions</TableHeading>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {productsListMock.map((product) => (
-                <TableRow key={product.id}>
-                  <TableData alignment="center">{product.id}</TableData>
-                  <TableData>
-                    <Image
-                      source={product.image}
-                      maxHeight="50px"
-                      paddingSize="0"
-                    />
-                  </TableData>
-                  <TableData>{product.title}</TableData>
-                  <TableData>{product.description}</TableData>
-                  <TableData alignment="center">{product.stock}</TableData>
-                  <TableData
-                    alignment="center"
-                    className="table__data--actions"
+      </Container>
+      <Container
+        marginBottom="20"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+      >
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeading alignment="center">#</TableHeading>
+              <TableHeading>Image</TableHeading>
+              <TableHeading>Name</TableHeading>
+              <TableHeading>Description</TableHeading>
+              <TableHeading>Stock</TableHeading>
+              <TableHeading>Actions</TableHeading>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {productsListMock.map((product) => (
+              <TableRow key={product.id}>
+                <TableData alignment="center">{product.id}</TableData>
+                <TableData>
+                  <Image
+                    source={product.image}
+                    maxHeight="50px"
+                    paddingSize="0"
+                  />
+                </TableData>
+                <TableData>{product.name}</TableData>
+                <TableData>{product.description}</TableData>
+                <TableData alignment="center">{product.stock}</TableData>
+                <TableData alignment="center" className="table__data--actions">
+                  <Button
+                    paddingSize="0"
+                    hierarchy="transparent"
+                    onClick={(e) => handleEditProduct(product.id)}
                   >
-                    <Button
-                      paddingSize="0"
-                      hierarchy="transparent"
-                      onClick={handleOpenModal}
-                    >
-                      <PencilSquare />
-                    </Button>
-                    <Button
-                      paddingSize="0"
-                      hierarchy="transparent"
-                      onClick={handleDeleteProduct}
-                    >
-                      <TrashPill />
-                    </Button>
-                  </TableData>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Container>
+                    <PencilSquare />
+                  </Button>
+                  <Button
+                    paddingSize="0"
+                    hierarchy="transparent"
+                    onClick={handleDeleteProduct}
+                  >
+                    <TrashFill />
+                  </Button>
+                </TableData>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
         <Container
           display="flex"
           alignItems="center"
           justifyContent="end"
           element="section"
           className="pagination"
+          marginTop="20"
         >
           <Pagination
             prevButtonLabel="Anterior"
@@ -142,91 +221,115 @@ const AddProduct = ({ title, className }) => {
             nummerOfPages={5}
           />
         </Container>
-        <Modal
-          title="Agregar producto"
-          isOpen={openModal}
-          onCancel={handleCloseModal}
-        >
-          <Card shadow="none" paddingSize="0">
-            <CardBody paddingSize="0">
-              <Form shadow="none" paddingSize="0" onSubmit={() => {}}>
-                <TextInput
-                  id="title"
-                  name="title"
-                  label="Title"
-                  value="Hola"
-                  placeholder="Enter the product title"
-                  onChange={() => {}}
-                  onBlur={() => {}}
-                  helperMessage=""
-                  modifier=""
-                />
-                <NumericInput
-                  id="stock"
-                  name="stock"
-                  label="Stock"
-                  value="Hola"
-                  placeholder="Enter the product stock"
-                  onChange={() => {}}
-                  onBlur={() => {}}
-                  helperMessage=""
-                  modifier=""
-                />
-                <TextArea
-                  id="descriptiom"
-                  name="description"
-                  label="Description"
-                  value=""
-                  placeholder="Enter the product description"
-                  onChange={() => {}}
-                  onBlur={() => {}}
-                  helperMessage=""
-                  modifier=""
-                />
-                <Dropdown
-                  id="category"
-                  name="category"
-                  label="Category"
-                  searchPlaceholder="Search a category"
-                  options={categoriesDropdownMock}
-                  modifier=""
-                  helperMessage=""
-                  selectedOption="3"
-                  onSelectOption={(option) => {
-                    console.log("Option ---> ", option);
-                  }}
-                  fullWidth
-                />
-                <Dropdown
-                  id="brand"
-                  name="brand"
-                  label="Brand"
-                  searchPlaceholder="Search a brand"
-                  options={brandsDropdownMock}
-                  modifier=""
-                  helperMessage=""
-                  selectedOption="3"
-                  onSelectOption={(option) => {
-                    console.log("Option ---> ", option);
-                  }}
-                  fullWidth
-                />
-                <ImageLoader
-                  id="image"
-                  name="image"
-                  label="Image"
-                  value=""
-                  placeholder="Enter the product image"
-                  onChange={() => {}}
-                  onBlur={() => {}}
-                  helperMessage=""
-                  modifier=""
-                />
-              </Form>
-            </CardBody>
-          </Card>
-        </Modal>
       </Container>
+      <Modal
+        title={action === "add" ? "Agregar producto" : "Editar producto"}
+        isOpen={openModal}
+        onCancel={handleCloseModal}
+        onConfirm={handlConfirm}
+      >
+        <Card shadow="none" paddingSize="0">
+          <CardBody paddingSize="0">
+            <Form shadow="none" paddingSize="0">
+              <TextInput
+                id="name"
+                name="name"
+                label="Nombre"
+                value={name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.name}
+                modifier={errors.name && "error"}
+              />
+              <NumericInput
+                id="stock"
+                name="stock"
+                label="Existencias"
+                value={stock}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.stock}
+                modifier={errors.stock && "error"}
+              />
+              <TextInput
+                id="price"
+                name="price"
+                label="Precio"
+                value={price}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.price}
+                modifier={errors.price && "error"}
+              />
+              <TextArea
+                id="descriptiom"
+                name="description"
+                label="Descripción"
+                value={description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.description}
+                modifier={errors.description && "error"}
+              />
+              <Dropdown
+                id="category"
+                name="category"
+                label="Categoría"
+                searchPlaceholder="Search a category"
+                options={categoriesDropdownMock}
+                modifier=""
+                helperMessage=""
+                selectedOption="3"
+                onSelectOption={(option) => {
+                  setForm({
+                    ...form,
+                    category: option,
+                  });
+                }}
+                fullWidth
+              />
+              <Dropdown
+                id="brand"
+                name="brand"
+                label="Marca"
+                searchPlaceholder="Search a brand"
+                options={brandsDropdownMock}
+                modifier=""
+                helperMessage=""
+                selectedOption="3"
+                onSelectOption={(option) => {
+                  setForm({
+                    ...form,
+                    brand: option,
+                  });
+                }}
+                fullWidth
+              />
+              <TextInput
+                id="image"
+                name="image"
+                label="Imagen"
+                value={image}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.image}
+                modifier={errors.image && "error"}
+              />
+              {/* <ImageLoader
+                id="image"
+                name="image"
+                label="Image"
+                value=""
+                placeholder="Enter the product image"
+                onChange={() => {}}
+                onBlur={() => {}}
+                helperMessage=""
+                modifier=""
+              /> */}
+            </Form>
+          </CardBody>
+        </Card>
+      </Modal>
     </Container>
   );
 };

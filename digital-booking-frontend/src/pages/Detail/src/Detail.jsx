@@ -72,7 +72,7 @@ const Detail = ({ title, className }) => {
                 className="product-detail__title"
                 alignment={isMobile ? "center" : "left"}
               >
-                {productDetailMock.title}
+                {productDetailMock.name}
               </Title>
               <Text
                 size="m"
