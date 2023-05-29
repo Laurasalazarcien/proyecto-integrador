@@ -23,7 +23,7 @@ import CalendarFill from "./src/Calendar";
 import MusicNote from "./src/MusicNote";
 import BoomBox from "./src/BoomBoxFill";
 import BoomBoxFill from "./src/BoomBox copy";
-
+import Upload from "./src/Upload";
 
 const icons = {
   Check,
@@ -50,7 +50,8 @@ const icons = {
   CalendarFill,
   MusicNote,
   BoomBox,
-  BoomBoxFill
+  BoomBoxFill,
+  Upload
 };
 
 export default icons;

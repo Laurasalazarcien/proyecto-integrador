@@ -1,2 +1,2 @@
-import Example from './src/Example';
+import Example from "./src/Example";
 export default Example;
