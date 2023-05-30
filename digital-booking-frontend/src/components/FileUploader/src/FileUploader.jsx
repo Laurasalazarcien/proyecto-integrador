@@ -9,30 +9,21 @@ const namespace = "file-uploader";
 
 const FileUploader = ({
   id,
-  type,
   name,
   value,
   label,
-  minValue,
-  maxValue,
-  stepValue,
-  placeholder,
   modifier,
+  maxFileSize,
+  maxNumberOfFiles,
+  allowedFileFormats,
   helperMessage,
   onChange,
-  onBlur,
   className,
 }) => {
   const { Upload } = icons;
-  const componentClassNames = classNames(
-    namespace,
-    `${namespace}--mumeric`,
-    className,
-    {
-      [`${namespace}--${modifier}`]: modifier,
-      [`${namespace}--${type}`]: type,
-    }
-  );
+  const componentClassNames = classNames(namespace, className, {
+    [`${namespace}--${modifier}`]: modifier,
+  });
 
   return (
     <div className={componentClassNames}>
@@ -40,6 +31,8 @@ const FileUploader = ({
       <div className={`${namespace}__dropzone`}>
         <input
           id={id}
+          name={name}
+          value={value}
           type="file"
           accept=".png,.jpg,.pdf"
           className={`${namespace}__dropzone-input`}
@@ -58,7 +51,9 @@ const FileUploader = ({
               </span>
             </p>
             <p className={`${namespace}__dropzone-requirements`}>
-              Hasta 10 archivos .jpg, .png, .pdf con peso máximo 100KB cada uno
+              {`Hasta ${maxNumberOfFiles} archivos ${allowedFileFormats.join(
+                ", "
+              )} con peso máximo ${maxFileSize} cada uno`}
             </p>
           </div>
         </div>
@@ -72,29 +67,24 @@ const FileUploader = ({
 
 FileUploader.propTypes = {
   id: PropTypes.string,
-  type: PropTypes.oneOf(["full-width", "inline"]),
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
   modifier: PropTypes.string,
+  maxFileSize: PropTypes.string,
+  maxNumberOfFiles: PropTypes.number,
+  allowedFileFormats: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string,
-  minValue: PropTypes.string,
-  maxValue: PropTypes.string,
-  stepValue: PropTypes.string,
   helperMessage: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
 
 FileUploader.defaultProps = {
-  type: "full-width",
   modifier: "",
-  placeholder: "",
   helperMessage: "",
-  minValue: "0",
-  maxValue: "20",
-  stepValue: "1",
+  maxFileSize: "100KB",
+  maxNumberOfFiles: 10,
+  allowedFileFormats: ["jpg", "png", "pdf"],
   className: "",
 };
 
