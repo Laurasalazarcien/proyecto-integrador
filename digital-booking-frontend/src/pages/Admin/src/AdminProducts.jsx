@@ -147,6 +147,7 @@ const AddProduct = ({ title, className }) => {
         alignItems="center"
         justifyContent="space-between"
         marginBottom="20"
+        element="section"
       >
         <Title size={isMobile ? "m" : "xl"} weight="light">
           Gestionar instrumentos
@@ -160,6 +161,7 @@ const AddProduct = ({ title, className }) => {
         display="flex"
         flexDirection="column"
         justifyContent="center"
+        element="section"
       >
         <Table>
           <TableHead>
@@ -210,7 +212,6 @@ const AddProduct = ({ title, className }) => {
           display="flex"
           alignItems="center"
           justifyContent="end"
-          element="section"
           className="pagination"
           marginTop="20"
         >
@@ -304,16 +305,16 @@ const AddProduct = ({ title, className }) => {
                 }}
                 fullWidth
               />
-              <TextInput
+              {/* <TextInput
                 id="image"
                 name="image"
-                label="Imagen"
+                label="Imagen URL"
                 value={image}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 helperMessage={errors.image}
                 modifier={errors.image && "error"}
-              />
+              /> */}
               <FileLoader
                 id="imagea"
                 name="images"

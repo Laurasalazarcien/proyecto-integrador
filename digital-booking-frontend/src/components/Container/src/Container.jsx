@@ -37,16 +37,11 @@ const Container = ({
     [`${namespace}--padding-${padding}`]: padding,
     [`${namespace}--columns-${columns}`]: columns,
     [`${namespace}--display-${display}`]: display,
-    [`${namespace}--columns-xs-${columnsInExtraSmallDevices}`]:
-      columnsInExtraSmallDevices,
-    [`${namespace}--columns-sm-${columnsInSmallDevices}`]:
-      columnsInSmallDevices,
-    [`${namespace}--columns-md-${columnsInMediumDevices}`]:
-      columnsInMediumDevices,
-    [`${namespace}--columns-lg-${columnsInLargeDevices}`]:
-      columnsInLargeDevices,
-    [`${namespace}--columns-xl-${columnsInExtraLargeDevices}`]:
-      columnsInExtraLargeDevices,
+    [`${namespace}--columns-xs-${columnsInExtraSmallDevices}`]:columnsInExtraSmallDevices,
+    [`${namespace}--columns-sm-${columnsInSmallDevices}`]: columnsInSmallDevices,
+    [`${namespace}--columns-md-${columnsInMediumDevices}`]: columnsInMediumDevices,
+    [`${namespace}--columns-lg-${columnsInLargeDevices}`]: columnsInLargeDevices,
+    [`${namespace}--columns-xl-${columnsInExtraLargeDevices}`]: columnsInExtraLargeDevices,
     [`${namespace}--gap-${spaceBetweenItems}`]: spaceBetweenItems,
     [`${namespace}--align-items-${alignItems}`]: alignItems,
     [`${namespace}--justify-content-${justifyContent}`]: justifyContent,
