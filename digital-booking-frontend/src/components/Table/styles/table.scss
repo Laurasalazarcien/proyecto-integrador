@@ -6,6 +6,7 @@
   border: 1px solid $db-gray-100;
   font-size: $font-size-14;
   font-family: $font-family-primary;
+  background-color: $db-white;
 
   &__head {
     text-align: left;
@@ -18,8 +19,6 @@
 
   &__data {
     &--actions {
-      text-align: center;
-
       .button--medium {
         padding: 0;
 
@@ -27,15 +26,11 @@
           color: $db-color-caution;
           margin-right: $db-spacing-4;
         }
-  
+
         .bi-trash-fill {
           color: $db-color-negative;
         }
       }
-    }
-
-    &--stock {
-      text-align: center;
     }
   }
 

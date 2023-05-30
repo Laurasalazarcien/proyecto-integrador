@@ -80,18 +80,6 @@ const NavBar = ({
           itemsalignment="row"
           className={`${namespace}__menu`}
         >
-          {/* {menuOptions &&
-          menuOptions.map(({ name, target }) => (
-            <ListItem 
-              key={name} 
-              onClick={() => handleClickOption(target)}
-            >
-              <Text size="s" element="span" transform="uppercase">
-                {name}
-              </Text>
-            </ListItem>
-          ))} */}
-          {/* <ListItem>Products</ListItem> */}
           <ListItem>
             <Button
               onClick={() => {
@@ -104,7 +92,7 @@ const NavBar = ({
           </ListItem>
           <ListItem>
             <Button
-              hierarchy="quiet"
+              hierarchy="white"
               onClick={() => {
                 navigate("/login");
                 setOpenMenu(false);

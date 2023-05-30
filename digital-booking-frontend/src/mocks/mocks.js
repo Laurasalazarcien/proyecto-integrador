@@ -1,7 +1,7 @@
 const productsListMock = [
   {
     id: 1,
-    title: "Saxofón Alto Yamaha Profesional",
+    name: "Saxofón Alto Yamaha Profesional",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumentos de viento",
@@ -13,7 +13,7 @@ const productsListMock = [
   },
   {
     id: 2,
-    title: "GUITARRA ELEC IBANEZ AS53-TF",
+    name: "GUITARRA ELEC IBANEZ AS53-TF",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Guitarras y Bajos",
@@ -25,7 +25,7 @@ const productsListMock = [
   },
   {
     id: 3,
-    title: "TROMPETA PARA ESTUDIANTE BACH TR500DIR",
+    name: "TROMPETA PARA ESTUDIANTE BACH TR500DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumemtos de viento",
@@ -37,7 +37,7 @@ const productsListMock = [
   },
   {
     id: 4,
-    title: "TROMPETA BACH TR655DIR",
+    name: "TROMPETA BACH TR655DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumentos de viento",
@@ -49,7 +49,7 @@ const productsListMock = [
   },
   {
     id: 5,
-    title: "BAJO ELECTRICO FENDER SQUIRE- Classic Vibe 70 JAZZ BASS -NATURAL",
+    name: "BAJO ELECTRICO FENDER SQUIRE- Classic Vibe 70 JAZZ BASS -NATURAL",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Guitarras y Bajos",
@@ -61,7 +61,7 @@ const productsListMock = [
   },
   {
     id: 6,
-    title: "BATERIA LUDWIG EVOLUTION OUTFIT 22 CON HARD & ZBT PACK NEGRA",
+    name: "BATERIA LUDWIG EVOLUTION OUTFIT 22 CON HARD & ZBT PACK NEGRA",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Baterias",
@@ -73,7 +73,7 @@ const productsListMock = [
   },
   {
     id: 7,
-    title: "VIOLIN 4/4 SOLIDO VERONA HXTQ09FR NATURAL",
+    name: "VIOLIN 4/4 SOLIDO VERONA HXTQ09FR NATURAL",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumentos de viento",
@@ -85,7 +85,7 @@ const productsListMock = [
   },
   {
     id: 8,
-    title: "CLARINETE SIb SELMER 1400B",
+    name: "CLARINETE SIb SELMER 1400B",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumentos de viento",
@@ -97,7 +97,7 @@ const productsListMock = [
   },
   {
     id: 9,
-    title: "GUITARRA ACUSTICA MARTIN 11LX1",
+    name: "GUITARRA ACUSTICA MARTIN 11LX1",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Guitarras",
@@ -109,7 +109,7 @@ const productsListMock = [
   },
   {
     id: 10,
-    title: "SAXOFON TENOR CONN tS651DIR",
+    name: "SAXOFON TENOR CONN tS651DIR",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
     category: "Instrumentos de viento",
@@ -123,7 +123,7 @@ const productsListMock = [
 
 const productDetailMock = {
   id: 1,
-  title: "GUITARRA ELEC IBANEZ AS53-TF",
+  name: "GUITARRA ELEC IBANEZ AS53-TF",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   category: "Guitarras y Bajos",
@@ -159,6 +159,7 @@ const productDetailMock = {
 const categoriesMock = [
   {
     id: 1,
+    urlLabel: "guitarras-y-bajos",
     image:
       "https://www.tiendacompensar.com/ccstore/v1/images/?source=/file/v2106446387901685731/products/id1413.manos-de-hombre-tocan-guitarra-acustica.jpg&height=350&width=350",
     name: "Guitarras y Bajos",
@@ -166,6 +167,7 @@ const categoriesMock = [
   },
   {
     id: 2,
+    urlLabel: "instrumentos-de-viento",
     image:
       "https://eldiariony.com/wp-content/uploads/sites/2/2022/06/saxofon-campan%CC%83a-gofundme-shutterstock_600775652.jpg?quality=75&strip=all&w=1200",
     name: "Instrumentos de viento",
@@ -173,6 +175,7 @@ const categoriesMock = [
   },
   {
     id: 3,
+    urlLabel: "percusion",
     image:
       "https://buscaunmusico.com/wp-content/uploads/2020/01/drums-2599508_640.jpg",
     name: "Percusión",
@@ -180,6 +183,7 @@ const categoriesMock = [
   },
   {
     id: 4,
+    urlLabel: "pianos",
     image:
       "https://t2.uc.ltmcdn.com/es/posts/9/8/2/cuales_son_los_mejores_pianistas_del_mundo_17289_orig.jpg",
     name: "Pianos",
@@ -187,6 +191,7 @@ const categoriesMock = [
   },
   {
     id: 5,
+    urlLabel: "sintetizadores",
     image:
       "https://djpmusicschool.com/wp-content/uploads/sintetizador-djp-music-school.png",
     name: "Sintetizadores",
@@ -194,6 +199,7 @@ const categoriesMock = [
   },
   {
     id: 6,
+    urlLabel: "teclados-electronicos",
     image:
       "https://belmusic.com.co/wp-content/uploads/2018/09/Teclados-Belmusic-2.jpg",
     name: "Teclados electrónicos",
@@ -279,10 +285,32 @@ const brandsDropdownMock = [
   },
 ];
 
+const breadCrumbMock = [
+  {
+    id: 1,
+    text: 'Home',
+    title: 'Ir a Home',
+    href: '/home'
+  },
+  {
+    id: 2,
+    text: 'Guitarras y Bajos',
+    title: 'Ir a Guitarras y Bajos',
+    href: '/home'
+  },
+  {
+    id: 3,
+    text: 'GUITARRA ELEC IBANEZ AS53-TF',
+    title: '',
+    href: ''
+  },
+];
+
 export {
   productsListMock,
   productDetailMock,
   categoriesMock,
   categoriesDropdownMock,
   brandsDropdownMock,
+  breadCrumbMock
 };

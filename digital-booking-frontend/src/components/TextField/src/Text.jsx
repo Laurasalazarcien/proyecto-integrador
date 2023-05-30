@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Label, HelperMessage } from '../../Form';
+import { Label, HelperMessage } from "../../Form";
 
 const namespace = "textfield";
 
@@ -35,11 +35,11 @@ const Text = ({
         id={id}
         type="text"
         name={name}
-        // value={value}
+        value={value}
         className={`${namespace}__input`}
         placeholder={placeholder}
-        // onChange={onChange}
-        // onBlur={onBlur}
+        onChange={onChange}
+        onBlur={onBlur}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />
