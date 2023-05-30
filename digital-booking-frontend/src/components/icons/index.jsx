@@ -24,6 +24,7 @@ import MusicNote from "./src/MusicNote";
 import BoomBox from "./src/BoomBoxFill";
 import BoomBoxFill from "./src/BoomBox copy";
 import Upload from "./src/Upload";
+import BoxArrowLeft from "./src/BoxArrowLeft";
 
 const icons = {
   Check,
@@ -51,7 +52,8 @@ const icons = {
   MusicNote,
   BoomBox,
   BoomBoxFill,
-  Upload
+  Upload,
+  BoxArrowLeft
 };
 
 export default icons;

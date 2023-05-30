@@ -18,6 +18,10 @@
     height: 100%;
   }
 
+  &__icon {
+    margin-right: $db-spacing-8;
+  }
+
   &--padding-0 {
     padding: 0;
   }
@@ -196,4 +200,33 @@
     display: block;
     width: 100%;
   }
+
+  // &--dropdown {
+  //   position: relative;
+
+  //   .button__list {
+  //     width: max-content;
+  //     position: absolute;
+  //     right: 0;
+  //     top: 36px;
+  //     background-color: $db-white;
+
+  //     .list__item {
+  //       width: 100%;
+  //       color: $db-gray-550;
+  //       font-size: $db-spacing-12;
+  //       padding: $db-spacing-8 $db-spacing-12;
+  //     }
+  //   }
+
+  //   &__mask {
+  //     width: 100%;
+  //     height: 100%;
+  //     position: fixed;
+  //     top: 0;
+  //     left: 0;
+  //     z-index: 0;
+  //     background: transparent;
+  //   }
+  // }
 }

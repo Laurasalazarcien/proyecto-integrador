@@ -3,14 +3,14 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
-import Button from "../../Button";
 import Image from "../../Image";
+import icons from "../../icons";
 import Container from "../../Container";
 import { Text } from "../../Typography";
-import List, { ListItem } from "../../List";
-import icons from "../../icons";
-import logo from "../../../assets/icons/logo-no-background.svg";
 import { useMobile } from "../../../hooks/useMobile";
+import List, { ListItem } from "../../List";
+import Button, { DropdownButton } from "../../Button";
+import logo from "../../../assets/icons/logo-no-background.svg";
 
 const namespace = "navbar";
 
@@ -22,7 +22,7 @@ const NavBar = ({
   fixed,
   className,
 }) => {
-  const { BurguerMenu, Close } = icons;
+  const { BurguerMenu, Close, BoxArrowLeft } = icons;
   const isMobile = useMobile();
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -99,6 +99,17 @@ const NavBar = ({
               }}
             >
               Iniciar sesión
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button
+              icon={<BoxArrowLeft />}
+              onClick={() => {
+                navigate("/register");
+                setOpenMenu(false);
+              }}
+            >
+              Salir
             </Button>
           </ListItem>
         </List>
