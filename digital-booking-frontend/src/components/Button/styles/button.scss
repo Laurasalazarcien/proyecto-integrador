@@ -138,6 +138,16 @@
     }
   }
 
+  &--disabled {
+    background-color: $db-gray-100;
+    color: $db-gray-250;
+
+    &:hover {
+      cursor: initial;
+      background-color: $db-gray-100;
+    }
+  }
+
   &--rounded-0 {
     border-radius: 0;
   }
@@ -180,15 +190,6 @@
 
   &--positive {
     background-color: $db-positive;
-  }
-
-  &--disabled {
-    background-color: $db-gray-100;
-    color: $db-gray-250;
-
-    &:hover {
-      cursor: initial;
-    }
   }
 
   &--full-width {
