@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/rols")
 public class RolController {
@@ -38,6 +40,9 @@ public class RolController {
     public ResponseEntity<?> removeRol(@PathVariable Long id) {
         rolService.removeRol(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+    public Collection<RolDTO> getAllRols(){
+        return rolService.getAll();
     }
 
 }

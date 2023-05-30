@@ -41,7 +41,7 @@ public class InstrumentController {
     }
 
     @GetMapping
-    public Collection<InstrumentDTO> getallInstruments(){
+    public Collection<InstrumentDTO> getAllInstruments(){
         return instrumentService.getAll();
     }
 }
