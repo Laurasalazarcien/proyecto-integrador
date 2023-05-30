@@ -12,7 +12,7 @@ import icons from "../../../components/icons";
 
 const namespace = "admin-page";
 
-const AddProduct = ({ title, className }) => {
+const Admin = ({ className }) => {
   const { MusicNote, PeopleFill, TagsFill, CalendarFill, BoomBoxFill } = icons;
   const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
@@ -81,14 +81,13 @@ const AddProduct = ({ title, className }) => {
   );
 };
 
-AddProduct.propTypes = {
+Admin.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-AddProduct.defaultProps = {
-  title: "",
+Admin.defaultProps = {
   className: "",
 };
 
-export default AddProduct;
+export default Admin;

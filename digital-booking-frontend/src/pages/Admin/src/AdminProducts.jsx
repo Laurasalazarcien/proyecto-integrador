@@ -65,7 +65,7 @@ const valideteForm = (form) => {
   return errors;
 };
 
-const AddProduct = ({ title, className }) => {
+const AdminProducts = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilPill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
@@ -330,14 +330,13 @@ const AddProduct = ({ title, className }) => {
   );
 };
 
-AddProduct.propTypes = {
+AdminProducts.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-AddProduct.defaultProps = {
-  title: "",
+AdminProducts.defaultProps = {
   className: "",
 };
 
-export default AddProduct;
+export default AdminProducts;
