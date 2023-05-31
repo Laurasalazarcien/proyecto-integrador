@@ -27,6 +27,7 @@ const Button = ({
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
     [`${namespace}--rounded-${borderRadius}`]: borderRadius,
     [`${namespace}--disabled`]: disabled,
+    [`${namespace}--loading`]: loading,
     [`${namespace}--full-width`]: fullWidth,
     [`${namespace}--link`]: href,
   });
@@ -53,7 +54,7 @@ const Button = ({
     >
       <div className={`${namespace}__content`}>
         {icon && <span className={`${namespace}__icon`}>{icon}</span>}
-        {loading ? <Spinner /> : children}
+        {loading ? <Spinner borderWidth="2px" /> : children}
       </div>
     </button>
   );
