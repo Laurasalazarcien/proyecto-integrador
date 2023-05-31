@@ -18,6 +18,7 @@ import Table, {
   TableBody,
   TableRow,
   TableData,
+  TableSkeleton,
 } from "../../../components/Table";
 import {
   Text as TextInput,
@@ -29,7 +30,6 @@ import { Title } from "../../../components/Typography";
 
 import {
   productsListMock,
-  categoriesMock,
   categoriesDropdownMock,
   brandsDropdownMock,
 } from "../../../mocks/mocks";
@@ -67,8 +67,9 @@ const valideteForm = (form) => {
 
 const AdminProducts = ({ className }) => {
   const isMobile = useMobile();
-  const { TrashFill, PencilPill, PencilSquare } = icons;
+  const { TrashFill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [action, setAction] = useState("");
   const componentClassnames = classNames(namespace, className);
 
@@ -163,6 +164,7 @@ const AdminProducts = ({ className }) => {
         justifyContent="center"
         element="section"
       >
+        {/* <TableSkeleton/> */}
         <Table>
           <TableHead>
             <TableRow>
