@@ -14,7 +14,8 @@ import java.util.Set;
 public class Brand {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "brand_sequence", sequenceName = "brand_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "brand_sequence")
     private Long id;
     private String name;
 

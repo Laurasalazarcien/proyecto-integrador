@@ -17,7 +17,8 @@ import javax.persistence.*;
 public class Booking {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "booking_sequence", sequenceName = "booking_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "booking_sequence")
     private Long id;
     private LocalDate startDate;
     private LocalDate finalDate;

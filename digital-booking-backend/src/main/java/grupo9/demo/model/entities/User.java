@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_sequence")
     private Long id;
     private String name;
     private String lastName;

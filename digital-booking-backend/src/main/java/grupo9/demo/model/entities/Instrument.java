@@ -16,14 +16,20 @@ import java.util.Set;
 public class Instrument {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "instrument_sequence", sequenceName = "instrument_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "instrument_sequence")
     private Long id;
     private String name;
     private Double price;
     private String description;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String characteristics;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String images;
 
+    private Integer stock;
 
 
     @ManyToOne
