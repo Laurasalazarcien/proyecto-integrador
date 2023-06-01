@@ -48,7 +48,7 @@ public class InstrumentService implements IInstrumentService {
 
     @Override
     public void removeInstrument(Long id) {
-
+        instrumentRepository.deleteById(id);
     }
 
     @Override

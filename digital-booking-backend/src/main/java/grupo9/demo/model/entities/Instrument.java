@@ -22,8 +22,6 @@ public class Instrument {
     private String name;
     private Double price;
     private String description;
-    private String images;
-    private String characteristics;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String characteristics;

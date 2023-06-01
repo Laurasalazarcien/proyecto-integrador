@@ -12,6 +12,6 @@ public interface IUserService {
     void removeUser(Long id);
     Set<UserDTO> getAll();
 
-    @Query("SELECT * FROM user as where name=?")
-    UserDTO searchUser(String name, String password);
+    // @Query("SELECT * FROM user as where name=?")
+    // UserDTO searchUser(String name, String password);
 }

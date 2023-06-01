@@ -19,11 +19,9 @@ public class InstrumentDTO {
     private String images;
     private Integer stock;
     private Category category;
-    private String images;
     private Brand brand;
     private InstrumentDetail instrumentDetail;
     private Status status;
-    private String characteristics;
     private Set<Booking> bookings;
     private Set<Image> image;
 
