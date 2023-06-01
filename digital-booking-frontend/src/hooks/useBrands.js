@@ -1,20 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import CategoriesService from "../services/categories";
+import BrandsService from "../services/brands";
 
-const useCategories = () => {
-  const [categories, setCategories] = useState([]);
+const useBrands = () => {
+  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await CategoriesService.getAllCategories();
-      setTimeout(() => {
-        setCategories(data);
-        setLoading(false);
-      }, 500);
+      const data = await BrandsService.getAllCategories();
+      setBrands(data);
+      setLoading(false);
     } catch (error) {
       setErrors(error);
       setLoading(false);
@@ -25,26 +23,26 @@ const useCategories = () => {
     fetchData();
   }, []);
 
-  const createCategory = () => {
+  const createBrand = () => {
     // TODO: Implements function
   };
 
-  const updateCategory = (productId) => {
+  const updateBrand = (brandtId) => {
     // TODO: Implements function
   };
 
-  const deleteCategory = (productId) => {
+  const deleteBrand = (brandtId) => {
     // TODO: Implements function
   };
 
   return {
-    categories,
-    createCategory,
-    updateCategory,
-    deleteCategory,
+    brands,
+    createBrand,
+    updateBrand,
+    deleteBrand,
     loading,
     errors,
   };
 };
 
-export default useCategories;
+export default useBrands;
