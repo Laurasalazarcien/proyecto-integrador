@@ -2,21 +2,21 @@ import axios from "axios";
 import config from "./config";
 
 class ProductsService {
-  static getAllProducts() {
+  static async getAllProducts() {
     return axios.get(`instruments`, config).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static getProductById(productId) {
+  static async getProductById(productId) {
     return axios.get(`instruments/${productId}`, config).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static getProductsByCategory(category) {
+  static async getProductsByCategory(category) {
     return axios
       .get(`${config.apiUrl}/products/category/${category}`)
       .then((resp) => {
@@ -25,21 +25,21 @@ class ProductsService {
       });
   }
 
-  static createProduct(product) {
+  static async createProduct(product) {
     return axios.post(`instruments`, product, config).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static editProduct(product) {
+  static async editProduct(product) {
     return axios.put(`instruments`, product, config).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static deleteProduct(productId) {
+  static async deleteProduct(productId) {
     return axios.delete(`instruments/${productId}`, config).then((resp) => {
       const { data } = resp;
       return data;

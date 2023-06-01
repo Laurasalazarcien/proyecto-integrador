@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import BrandsService from "../services/brands";
 
-const useBrands = () => {
+const useBrands = ({ id } = {}) => {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -10,7 +10,12 @@ const useBrands = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await BrandsService.getAllCategories();
+      let data = [];
+      if (id) {
+        data = await BrandsService.getBrandById(id);
+      } else {
+        data = await BrandsService.getAllBrands();
+      }
       setBrands(data);
       setLoading(false);
     } catch (error) {

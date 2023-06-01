@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import CategoriesService from "../services/categories";
 
-const useCategories = () => {
+const useCategories = ({ id } = {}) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -10,7 +10,12 @@ const useCategories = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await CategoriesService.getAllCategories();
+      let data = [];
+      if (id) {
+        data = await CategoriesService.getCategoryById(id);
+      } else {
+        data = await CategoriesService.getAllCategories();
+      }
       setCategories(data);
       setLoading(false);
     } catch (error) {
