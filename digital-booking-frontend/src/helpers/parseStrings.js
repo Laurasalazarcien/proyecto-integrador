@@ -14,6 +14,7 @@ const convertToLowerCase = (text) => {
   return text.toLowerCase();
 };
 
+
 export {
   removeHyphens,
   convertFirstLetterToUpperCase,

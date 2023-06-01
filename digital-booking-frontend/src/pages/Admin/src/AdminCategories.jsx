@@ -35,6 +35,7 @@ import {
 } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
+import useProducts from "../../../hooks/useProducts";
 
 const namespace = "admin-page-products";
 
@@ -69,9 +70,14 @@ const AdminProducts = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [action, setAction] = useState("");
-  const componentClassnames = classNames(namespace, className);
+
+  const {
+    products,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useProducts();
+  console.log(products);
 
   const {
     form,
@@ -140,6 +146,8 @@ const AdminProducts = ({ className }) => {
       }
     });
   };
+
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>

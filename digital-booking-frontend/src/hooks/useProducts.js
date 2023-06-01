@@ -1,17 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import ProductsService from "../services/products";
 import { useApp } from "././../context/AppContext";
 
 const useProducts = (category) => {
-  const {
-    data: products,
-    loading,
-    errors,
-    setLoading,
-    setErrors,
-    setData,
-  } = useApp();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -22,8 +17,10 @@ const useProducts = (category) => {
       } else {
         data = await ProductsService.getAllProducts();
       }
-      setData(data);
-      setLoading(false);
+      setTimeout(() => {
+        setProducts(data);
+        setLoading(false);
+      }, 500);
     } catch (error) {
       setErrors(error);
       setLoading(false);
@@ -34,8 +31,16 @@ const useProducts = (category) => {
     fetchData();
   }, []);
 
-  const createProduct = () => {
-    // TODO: Implements function
+  const createProduct = async (product) => {
+    setLoading(true);
+    try {
+      const resp = await ProductsService.createProduct(product);
+      console.log('POST response');
+      setLoading(false);
+    } catch (error) {
+      setErrors(error);
+      setLoading(false);
+    }
   };
 
   const updateProduct = (productId) => {

@@ -35,6 +35,11 @@ import {
 } from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
+import useProducts from "../../../hooks/useProducts";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
+import useCategories from "../../../hooks/useCategories";
+import useBrands from "../../../hooks/useBrands";
+import ProductsService from "../../../services/products";
 
 const namespace = "admin-page-products";
 
@@ -58,9 +63,9 @@ const valideteForm = (form) => {
     errors.description = "Ingresa almenos 15 caracteres.";
   }
 
-  if (form.image.trim().length <= 15) {
-    errors.image = "Ingresa almenos 15 caracteres.";
-  }
+  // if (form.image.trim().length <= 15) {
+  //   errors.image = "Ingresa almenos 15 caracteres.";
+  // }
 
   return errors;
 };
@@ -69,9 +74,21 @@ const AdminProducts = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [action, setAction] = useState("");
   const componentClassnames = classNames(namespace, className);
+
+  const {
+    products,
+    createProduct,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useProducts();
+  const {
+    categories,
+    loading: loadingCategories,
+    error: errorCategories,
+  } = useCategories();
+  const { brands, loading: loadingBrands, error: errorBrands } = useBrands();
 
   const {
     form,
@@ -89,8 +106,8 @@ const AdminProducts = ({ className }) => {
   } = useForm(
     {
       name: "",
-      stock: "0",
-      price: "",
+      stock: 0,
+      price: 0,
       description: "",
       image: "",
     },
@@ -103,7 +120,70 @@ const AdminProducts = ({ className }) => {
       setErrors(errors);
       return;
     }
-    console.log("submit", form);
+    // createProduct({
+    //   name: form.name,
+    //   price: form.price,
+    //   description: form.description,
+    //   category: categories.find(category => category.id === form.category),
+    //   brand: brands.find(brand => brand.id === form.brand)
+    // })
+    ProductsService.createProduct({
+      name: form.name,
+      stock: parseFloat(form.stock),
+      price: parseFloat(form.price),
+      description: form.description,
+      category: categories.find((category) => category.id === form.category),
+      brand: brands.find((brand) => brand.id === form.brand),
+      instrumentDetail: {
+        id: 1,
+        description: null,
+      },
+      status: {
+        id: 1,
+        name: "Comprado",
+      },
+      characteristics: "",
+    })
+    // fetch("http://localhost:8080/instruments", {
+    //   method: "POST",  
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Access-Control-Allow-Headers": "Content-Type",
+    //     "Access-Control-Allow-Origin": "https://www.example.com",
+    //     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+    //   },
+    //   body: JSON.stringify({
+    //     name: form.name,
+    //     stock: parseFloat(form.stock),
+    //     price: parseFloat(form.price),
+    //     description: form.description,
+    //     category: categories.find((category) => category.id === form.category),
+    //     brand: brands.find((brand) => brand.id === form.brand),
+    //     instrumentDetail: {
+    //       id: 1,
+    //       description: null,
+    //     },
+    //     status: {
+    //       id: 1,
+    //       name: "Comprado",
+    //     },
+    //     characteristics: "",
+    //   }),
+    // })
+      .then((resp) => {
+        console.log("Resp --> ", resp);
+      })
+      .catch((error) => {
+        console.log("Error ---> ", error);
+      });
+    // console.log({
+    //   name: form.name,
+    //   stock: parseFloat(form.stock),
+    //   price: parseFloat(form.price),
+    //   description: form.description,
+    //   category: categories.find((category) => category.id === form.category),
+    //   brand: brands.find((brand) => brand.id === form.brand),
+    // });
   };
 
   const handleOpenModal = (action) => {
@@ -118,14 +198,15 @@ const AdminProducts = ({ className }) => {
 
   const handleEditProduct = (productId) => {
     handleOpenModal("edit");
-    const product = productsListMock.find(
+    const product = products.find(
       (product) => product.id === productId
     );
     setForm({
       ...form,
       ...product,
+      brand: form.brand,
+      category: form.category
     });
-    console.log(product);
   };
 
   const handleDeleteProduct = () => {
@@ -164,65 +245,86 @@ const AdminProducts = ({ className }) => {
         justifyContent="center"
         element="section"
       >
-        {/* <TableSkeleton/> */}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading alignment="center">#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData alignment="center">{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.name}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData alignment="center">{product.stock}</TableData>
-                <TableData alignment="center" className="table__data--actions">
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={(e) => handleEditProduct(product.id)}
-                  >
-                    <PencilSquare />
-                  </Button>
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleDeleteProduct}
-                  >
-                    <TrashFill />
-                  </Button>
-                </TableData>
+        {loadingProducts ? (
+          <div>Cargando...</div>
+        ) : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeading alignment="center">#</TableHeading>
+                <TableHeading>Image</TableHeading>
+                <TableHeading>Name</TableHeading>
+                <TableHeading>Description</TableHeading>
+                <TableHeading>Stock</TableHeading>
+                <TableHeading>Actions</TableHeading>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Container
-          display="flex"
-          alignItems="center"
-          justifyContent="end"
-          className="pagination"
-          marginTop="20"
-        >
-          <Pagination
-            prevButtonLabel="Anterior"
-            nextButtonLabel="Siguiente"
-            nummerOfPages={5}
-          />
-        </Container>
+            </TableHead>
+            <TableBody>
+              {products
+                .sort((a, b) => a.id - b.id)
+                .map((product) => {
+                  const productImages = product.images
+                    .slice(1)
+                    .slice(0, product.images.length - 2)
+                    .split(", ")
+                    .map((img) => img.slice(1).slice(0, img.length - 2));
+                  return (
+                    <TableRow key={product.id}>
+                      <TableData alignment="center">{product.id}</TableData>
+                      <TableData>
+                        <Image
+                          source={productImages[0]}
+                          maxHeight="50px"
+                          paddingSize="0"
+                        />
+                      </TableData>
+                      <TableData>
+                        {convertFirstLetterToUpperCase(product.name)}
+                      </TableData>
+                      <TableData>
+                        {convertFirstLetterToUpperCase(product.description)}
+                      </TableData>
+                      <TableData alignment="center">{product.stock}</TableData>
+                      <TableData
+                        alignment="center"
+                        className="table__data--actions"
+                      >
+                        <Button
+                          paddingSize="0"
+                          hierarchy="transparent"
+                          onClick={(e) => handleEditProduct(product.id)}
+                        >
+                          <PencilSquare />
+                        </Button>
+                        <Button
+                          paddingSize="0"
+                          hierarchy="transparent"
+                          onClick={handleDeleteProduct}
+                        >
+                          <TrashFill />
+                        </Button>
+                      </TableData>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        )}
+        {/* {!loadingProducts && (
+          <Container
+            display="flex"
+            alignItems="center"
+            justifyContent="end"
+            className="pagination"
+            marginTop="20"
+          >
+            <Pagination
+              prevButtonLabel="Anterior"
+              nextButtonLabel="Siguiente"
+              nummerOfPages={5}
+            />
+          </Container>
+        )} */}
       </Container>
       <Modal
         title={action === "add" ? "Agregar producto" : "Editar producto"}
@@ -273,40 +375,50 @@ const AdminProducts = ({ className }) => {
                 helperMessage={errors.description}
                 modifier={errors.description && "error"}
               />
-              <Dropdown
-                id="category"
-                name="category"
-                label="Categoría"
-                searchPlaceholder="Search a category"
-                options={categoriesDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  setForm({
-                    ...form,
-                    category: option,
-                  });
-                }}
-                fullWidth
-              />
-              <Dropdown
-                id="brand"
-                name="brand"
-                label="Marca"
-                searchPlaceholder="Search a brand"
-                options={brandsDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  setForm({
-                    ...form,
-                    brand: option,
-                  });
-                }}
-                fullWidth
-              />
+              {!loadingCategories && categories.length > 0 && (
+                <Dropdown
+                  id="category"
+                  name="category"
+                  label="Categoría"
+                  searchPlaceholder="Search a category"
+                  options={categories.map((category) => ({
+                    label: convertFirstLetterToUpperCase(category.name),
+                    value: category.id,
+                  }))}
+                  modifier=""
+                  helperMessage=""
+                  selectedOption={1}
+                  onSelectOption={(option) => {
+                    setForm({
+                      ...form,
+                      category: option,
+                    });
+                  }}
+                  fullWidth
+                />
+              )}
+              {!loadingBrands && brands.length > 0 && (
+                <Dropdown
+                  id="brand"
+                  name="brand"
+                  label="Marca"
+                  searchPlaceholder="Search a brand"
+                  options={brands.map((brand) => ({
+                    label: convertFirstLetterToUpperCase(brand.name),
+                    value: brand.id,
+                  }))}
+                  modifier=""
+                  helperMessage=""
+                  selectedOption={1}
+                  onSelectOption={(option) => {
+                    setForm({
+                      ...form,
+                      brand: option,
+                    });
+                  }}
+                  fullWidth
+                />
+              )}
               <FileLoader
                 id="imagea"
                 name="images"

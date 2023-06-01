@@ -39,7 +39,6 @@ const Home = ({ title, className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
-  console.log({ categories });
 
   const handleClick = (id) => {
     console.log("id: ", id);
@@ -193,57 +192,66 @@ const Home = ({ title, className }) => {
                 </Card>
               ))}
             {products &&
-              products.map((product) => (
-                <Card
-                  key={product.id}
-                  shadow="elevated"
-                  className="instrument-card"
-                  onClick={() => handleClick(product.id)}
-                  clickeable
-                  animated
-                >
-                  <CardHeader>
-                    <Image
-                      source={product.images[0]}
-                      alternativeText={product.name}
-                      containerHeight={isMobile ? "150px" : "200px"}
-                      maxHeight={isMobile ? "150px" : "200px"}
-                      maxWidth={isMobile ? "150px" : "200px"}
-                      onClick={() => console.log("img click")}
-                    />
-                  </CardHeader>
-                  <CardBody>
-                    <Title
-                      size="s"
-                      element="h2"
-                      weight="semibold"
-                      alignment="left"
-                      transform="uppercase"
-                      marginBottom="4"
-                    >
-                      {product.name}
-                    </Title>
-                    <Text size="s" weight="light" alignment="left">
-                      $ {product.price}
-                    </Text>
-                  </CardBody>
-                </Card>
-              ))}
+              products.map((product) => {
+                const productImages = product.images
+                  .slice(1)
+                  .slice(0, product.images.length - 2)
+                  .split(", ")
+                  .map((img) => img.slice(1).slice(0, img.length - 2));
+                return (
+                  <Card
+                    key={product.id}
+                    shadow="elevated"
+                    className="instrument-card"
+                    onClick={() => handleClick(product.id)}
+                    clickeable
+                    animated
+                  >
+                    <CardHeader>
+                      <Image
+                        source={productImages[0]}
+                        alternativeText={product.name}
+                        containerHeight={isMobile ? "150px" : "200px"}
+                        maxHeight={isMobile ? "150px" : "200px"}
+                        maxWidth={isMobile ? "150px" : "200px"}
+                        onClick={() => console.log("img click")}
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <Title
+                        size="s"
+                        element="h2"
+                        weight="semibold"
+                        alignment="left"
+                        transform="uppercase"
+                        marginBottom="4"
+                      >
+                        {product.name}
+                      </Title>
+                      <Text size="s" weight="light" alignment="left">
+                        $ {product.price}
+                      </Text>
+                    </CardBody>
+                  </Card>
+                );
+              })}
           </Container>
         </Container>
-        <Container
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          element="section"
-          className="pagination"
-        >
-          <Pagination
-            prevButtonLabel="Anterior"
-            nextButtonLabel="Siguiente"
-            nummerOfPages={5}
-          />
-        </Container>
+        {!loadingProducts && !loadingCategories && (
+          <Container
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            element="section"
+            className="pagination"
+          >
+            <Pagination
+              prevButtonLabel="Anterior"
+              nextButtonLabel="Siguiente"
+              nummerOfPages={5}
+            />
+          </Container>
+        )}
       </Container>
     </Container>
   );
