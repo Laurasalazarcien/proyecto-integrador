@@ -25,6 +25,13 @@
       }
     }
   }
+
+  .product-characteristics {
+    &__card {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 // Media Queries

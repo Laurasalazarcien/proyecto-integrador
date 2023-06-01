@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ProductsService from "../services/products";
 import { useApp } from "././../context/AppContext";
 
-const useProducts = (category) => {
+const useProducts = ({ id, category } = {}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -14,6 +14,8 @@ const useProducts = (category) => {
       let data = [];
       if (category) {
         data = await ProductsService.getProductsByCategory(category);
+      } else if (id) {
+        data = await ProductsService.getProductById(id);
       } else {
         data = await ProductsService.getAllProducts();
       }

@@ -9,6 +9,13 @@ class ProductsService {
     });
   }
 
+  static getProductById(productId) {
+    return axios.get(`instruments/${productId}`, config).then((resp) => {
+      const { data } = resp;
+      return data;
+    });
+  }
+
   static getProductsByCategory(category) {
     return axios
       .get(`${config.apiUrl}/products/category/${category}`)

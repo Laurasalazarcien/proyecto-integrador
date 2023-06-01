@@ -39,7 +39,6 @@ const Home = ({ title, className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
-  console.log({categories, products});
 
   const handleClick = (id) => {
     console.log("id: ", id);
