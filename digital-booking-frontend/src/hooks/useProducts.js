@@ -17,10 +17,8 @@ const useProducts = (category) => {
       } else {
         data = await ProductsService.getAllProducts();
       }
-      setTimeout(() => {
-        setProducts(data);
-        setLoading(false);
-      }, 500);
+      setProducts(data);
+      setLoading(false);
     } catch (error) {
       setErrors(error);
       setLoading(false);
@@ -35,7 +33,7 @@ const useProducts = (category) => {
     setLoading(true);
     try {
       const resp = await ProductsService.createProduct(product);
-      console.log('POST response');
+      console.log("POST response");
       setLoading(false);
     } catch (error) {
       setErrors(error);
@@ -53,6 +51,7 @@ const useProducts = (category) => {
 
   return {
     products,
+    setProducts,
     createProduct,
     updateProduct,
     deleteProduct,

@@ -3,7 +3,7 @@ import config from "./config";
 
 class BrandsService {
   static async getAllCategories() {
-    return axios.get(`${config.apiUrl}/brands`).then((resp) => {
+    return axios.get("brands", config).then((resp) => {
       const { data } = resp;
       return data;
     });

@@ -11,10 +11,8 @@ const useCategories = () => {
     setLoading(true);
     try {
       const data = await CategoriesService.getAllCategories();
-      setTimeout(() => {
-        setCategories(data);
-        setLoading(false);
-      }, 500);
+      setCategories(data);
+      setLoading(false);
     } catch (error) {
       setErrors(error);
       setLoading(false);

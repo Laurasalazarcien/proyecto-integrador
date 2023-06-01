@@ -54,6 +54,35 @@
     width: 100%;
     padding: $db-spacing-24 $db-spacing-32;
   }
+
+  .characteristics-inputs,
+  .images-inputs {
+    .textfield {
+      margin-bottom: 0;
+    }
+  }
+
+  .characteristics-inputs {
+    .characteristics__field {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 10fr 1fr;
+
+      &-inputs {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+  }
+
+  .images-inputs {
+    .image__field {
+      display: grid;
+      grid-gap: 8px;
+      grid-template-columns: 10fr 1fr;
+      align-items: center;
+    }
+  }
 }
 
 // Media Queries

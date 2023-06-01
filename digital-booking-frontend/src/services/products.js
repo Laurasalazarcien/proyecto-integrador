@@ -3,7 +3,7 @@ import config from "./config";
 
 class ProductsService {
   static getAllProducts() {
-    return axios.get(`${config.apiUrl}/instruments`).then((resp) => {
+    return axios.get(`instruments`, config).then((resp) => {
       const { data } = resp;
       return data;
     });
@@ -19,7 +19,21 @@ class ProductsService {
   }
 
   static createProduct(product) {
-    return axios.post(`${config.apiUrl}/products`, product).then((resp) => {
+    return axios.post(`instruments`, product, config).then((resp) => {
+      const { data } = resp;
+      return data;
+    });
+  }
+
+  static editProduct(product) {
+    return axios.put(`instruments`, product, config).then((resp) => {
+      const { data } = resp;
+      return data;
+    });
+  }
+
+  static deleteProduct(productId) {
+    return axios.delete(`instruments/${productId}`, config).then((resp) => {
       const { data } = resp;
       return data;
     });

@@ -39,6 +39,7 @@ const Home = ({ title, className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
+  console.log({categories, products});
 
   const handleClick = (id) => {
     console.log("id: ", id);
@@ -198,6 +199,9 @@ const Home = ({ title, className }) => {
                   .slice(0, product.images.length - 2)
                   .split(", ")
                   .map((img) => img.slice(1).slice(0, img.length - 2));
+                  if (product.id === 107) {
+                    console.log('Images product ---> ', JSON.parse(product.images));
+                  }
                 return (
                   <Card
                     key={product.id}

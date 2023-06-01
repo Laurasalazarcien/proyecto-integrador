@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
@@ -148,6 +148,12 @@ const AdminProducts = ({ className }) => {
   };
 
   const componentClassnames = classNames(namespace, className);
+
+  useEffect(() => {
+    setModalVisibility(false);
+    setModalVisibility(true);
+  }, [form.category])
+  
 
   return (
     <Container className={componentClassnames}>
