@@ -20,22 +20,28 @@ const TableSkeleton = ({ numberOfRows, className }) => {
         <TableHead>
           <TableRow>
             <TableHeading>
-              <Skeleton width="17px" />
+              <Skeleton />
             </TableHeading>
             <TableHeading>
-              <Skeleton width="50px" />
+              <Skeleton />
             </TableHeading>
             <TableHeading>
-              <Skeleton width="50px" />
+              <Skeleton />
             </TableHeading>
             <TableHeading>
-              <Skeleton width="70px" />
+              <Skeleton />
             </TableHeading>
             <TableHeading>
-              <Skeleton width="40px" />
+              <Skeleton />
             </TableHeading>
             <TableHeading>
-              <Skeleton width="54px" />
+              <Skeleton />
+            </TableHeading>
+            <TableHeading>
+              <Skeleton />
+            </TableHeading>
+            <TableHeading>
+              <Skeleton />
             </TableHeading>
           </TableRow>
         </TableHead>
@@ -43,22 +49,28 @@ const TableSkeleton = ({ numberOfRows, className }) => {
           {generateArray(numberOfRows).map((product) => (
             <TableRow key={product.id}>
               <TableData>
-                <Skeleton width="17px" />
+                <Skeleton />
               </TableData>
               <TableData>
-                <Skeleton width="156px" />
+                <Skeleton />
               </TableData>
               <TableData>
-                <Skeleton width="511px" />
+                <Skeleton />
               </TableData>
               <TableData>
-                <Skeleton width="509px" />
+                <Skeleton />
               </TableData>
               <TableData>
-                <Skeleton width="40p" />
+                <Skeleton />
               </TableData>
               <TableData>
-                <Skeleton width="54px" />
+                <Skeleton />
+              </TableData>
+              <TableData>
+                <Skeleton />
+              </TableData>
+              <TableData>
+                <Skeleton />
               </TableData>
             </TableRow>
           ))}

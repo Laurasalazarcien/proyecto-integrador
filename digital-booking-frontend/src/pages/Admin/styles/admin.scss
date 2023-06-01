@@ -84,6 +84,38 @@
       align-items: center;
     }
   }
+
+  .products-table {
+    max-width: 100%;
+  }
+
+  .table--skeleton {
+    .table {
+      width: 100%;
+    }
+
+    .table__heading,
+    .table__data {
+      border: none;
+    }
+
+    .table__row {
+      border-bottom: 1px solid $db-gray-100;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .table__row {
+      display: grid;
+      grid-template-columns: 80px 120px 1fr 1fr 120px 120px 180px 120px;
+    }
+  }
 }
 
 // Media Queries

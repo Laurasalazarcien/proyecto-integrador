@@ -177,7 +177,7 @@ const AdminProducts = ({ className }) => {
       //     console.log("Error ---> ", error);
       //   });
     } else {
-      ProductsService.createProduct({
+      const newProduct = {
         name: form.name,
         stock: parseFloat(form.stock),
         price: parseFloat(form.price),
@@ -194,9 +194,11 @@ const AdminProducts = ({ className }) => {
           name: "disponible",
         },
         characteristics: form.characteristics,
-      })
+      };
+      createProduct(newProduct)
         .then((resp) => {
           setModalVisibility(false);
+          setProducts([...products, newProduct]);
           Swal.fire({
             text: "Producto creado con éxito.",
             icon: "success",
@@ -223,7 +225,6 @@ const AdminProducts = ({ className }) => {
 
   const handleEditProduct = (productId) => {
     const product = products.find((product) => product.id === productId);
-    console.log("product ---> ", product);
     setForm({
       ...form,
       ...product,
@@ -401,7 +402,7 @@ const AdminProducts = ({ className }) => {
         element="section"
       >
         {loadingProducts ? (
-          <div>Cargando...</div>
+          <TableSkeleton className="products-table" />
         ) : (
           <Table>
             <TableHead>

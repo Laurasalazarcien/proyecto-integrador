@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import CategoriesService from "../services/categories";
 
@@ -28,20 +27,21 @@ const useCategories = ({ id } = {}) => {
     fetchData();
   }, []);
 
-  const createCategory = () => {
-    // TODO: Implements function
+  const createCategory = (category) => {
+    return CategoriesService.createCategory(category);
   };
 
-  const updateCategory = (productId) => {
-    // TODO: Implements function
+  const updateCategory = (category) => {
+    return CategoriesService.updateCategory(category);
   };
 
-  const deleteCategory = (productId) => {
-    // TODO: Implements function
+  const deleteCategory = (categoryId) => {
+    return CategoriesService.deleteCategory(categoryId);
   };
 
   return {
     categories,
+    setCategories,
     createCategory,
     updateCategory,
     deleteCategory,

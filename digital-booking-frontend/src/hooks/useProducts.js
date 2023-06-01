@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import ProductsService from "../services/products";
-import { useApp } from "././../context/AppContext";
 
 const useProducts = ({ id, category } = {}) => {
   const [products, setProducts] = useState([]);
@@ -31,24 +29,16 @@ const useProducts = ({ id, category } = {}) => {
     fetchData();
   }, []);
 
-  const createProduct = async (product) => {
-    setLoading(true);
-    try {
-      const resp = await ProductsService.createProduct(product);
-      console.log("POST response");
-      setLoading(false);
-    } catch (error) {
-      setErrors(error);
-      setLoading(false);
-    }
+  const createProduct = (product) => {
+    return ProductsService.createProduct(product);
   };
 
-  const updateProduct = (productId) => {
-    // TODO: Implements function
+  const updateProduct = (product) => {
+    return ProductsService.updateProduct(product);
   };
 
   const deleteProduct = (productId) => {
-    // TODO: Implements function
+    return ProductsService.deleteProduct(productId);
   };
 
   return {

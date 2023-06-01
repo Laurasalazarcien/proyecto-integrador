@@ -16,7 +16,7 @@ public class CategoryController {
 
     @Autowired
     ICategoryService categoryService;
-
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
         categoryService.createCategory(categoryDTO);

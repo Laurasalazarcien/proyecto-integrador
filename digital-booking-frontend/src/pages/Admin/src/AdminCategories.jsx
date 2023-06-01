@@ -7,8 +7,6 @@ import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
 import Form from "../../../components/Form";
-import Dropdown from "../../../components/Dropdown";
-import FileLoader from "../../../components/FileUploader";
 import Pagination from "../../../components/Pagination";
 import Modal from "../../../components/Modal";
 import icons from "../../../components/icons";
@@ -20,70 +18,54 @@ import Table, {
   TableData,
   TableSkeleton,
 } from "../../../components/Table";
-import {
-  Text as TextInput,
-  Numeric as NumericInput,
-  TextArea,
-} from "../../../components/TextField";
+import { Text as TextInput, TextArea } from "../../../components/TextField";
 import Card, { CardBody } from "../../../components/Card";
 import { Title } from "../../../components/Typography";
-
-import {
-  productsListMock,
-  categoriesDropdownMock,
-  brandsDropdownMock,
-} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
-import useProducts from "../../../hooks/useProducts";
+import useCategories from "../../../hooks//useCategories";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "admin-page-products";
 
 const valideteForm = (form) => {
   let errors = {};
-  const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
 
   if (form.name.trim().length === 0) {
     errors.name = "Este campo no puede quedar vacio.";
   }
 
-  if (parseInt(form.stock) === 0) {
-    errors.stock = "Selecciona un valor mayor a cero.";
+  if (form.description.trim().length <= 10) {
+    errors.description = "Ingresa almenos 10 caracteres.";
   }
 
-  if (form.price.trim().length === 0) {
-    errors.price = "Este campo no puede quedar vacio.";
-  }
-
-  if (form.description.trim().length <= 15) {
-    errors.description = "Ingresa almenos 15 caracteres.";
-  }
-
-  if (form.image.trim().length <= 15) {
-    errors.image = "Ingresa almenos 15 caracteres.";
+  if (form.image.trim().length === 0) {
+    errors.image = "Este campo no puede quedar vacio.";
   }
 
   return errors;
 };
 
-const AdminProducts = ({ className }) => {
+const AdminCategories = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
   const [action, setAction] = useState("");
 
   const {
-    products,
-    loading: loadingProducts,
-    error: errorProducts,
-  } = useProducts();
-  console.log(products);
+    categories,
+    setCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    loading: loadingCategories,
+    error: errorCategories,
+  } = useCategories();
+  console.log({ categories });
 
   const {
     form,
     name,
-    stock,
-    price,
     description,
     image,
     errors,
@@ -95,8 +77,6 @@ const AdminProducts = ({ className }) => {
   } = useForm(
     {
       name: "",
-      stock: "0",
-      price: "",
       description: "",
       image: "",
     },
@@ -109,7 +89,36 @@ const AdminProducts = ({ className }) => {
       setErrors(errors);
       return;
     }
-    console.log("submit", form);
+    const category = { ...form };
+    const response =
+      action === "edit" ? updateCategory(category) : createCategory(category);
+    response
+      .then((resp) => {
+        setModalVisibility(false);
+        if (action === "edit") {
+          setCategories(
+            categories.map((cat) =>
+              cat.id === category.id ? { ...category } : cat
+            )
+          );
+        } else {
+          setCategories([...categories, category]);
+        }
+        Swal.fire({
+          text: `Categoría ${
+            action === "edit" ? "actualizada" : "creada"
+          } con éxito.`,
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: `Ocurrió un error al ${
+            action === "edit" ? "actualizada" : "creada"
+          } la categoría.`,
+          icon: "error",
+        });
+      });
   };
 
   const handleOpenModal = (action) => {
@@ -122,38 +131,45 @@ const AdminProducts = ({ className }) => {
     setModalVisibility(false);
   };
 
-  const handleEditProduct = (productId) => {
-    handleOpenModal("edit");
-    const product = productsListMock.find(
-      (product) => product.id === productId
-    );
+  const handleEditCategory = (categoryId) => {
+    const category = categories.find((category) => category.id === categoryId);
     setForm({
       ...form,
-      ...product,
+      ...category,
     });
-    console.log(product);
+    handleOpenModal("edit");
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteCategory = (categoryId) => {
     Swal.fire({
-      title: "Eliminar producto",
-      text: "¿Estás seguro de eliminar este producto?",
-      icon: "error",
+      title: "Eliminar categoría",
+      text: "¿Estás seguro de eliminar esta categoría?",
+      icon: "info",
       showCancelButton: true,
     }).then((resp) => {
       if (resp.isConfirmed) {
-        console.log("Delete product ...");
+        deleteCategory(categoryId)
+          .then((resp) => {
+            setModalVisibility(false);
+            setCategories(
+              categories.filter((category) => category.id !== categoryId)
+            );
+            Swal.fire({
+              text: "Categoría eliminada con éxito.",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Ocurrió un error al eliminar la categoría",
+              icon: "error",
+            });
+          });
       }
     });
   };
 
   const componentClassnames = classNames(namespace, className);
-
-  useEffect(() => {
-    setModalVisibility(false);
-    setModalVisibility(true);
-  }, [form.category])
-  
 
   return (
     <Container className={componentClassnames}>
@@ -178,65 +194,77 @@ const AdminProducts = ({ className }) => {
         justifyContent="center"
         element="section"
       >
-        {/* <TableSkeleton/> */}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading alignment="center">#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData alignment="center">{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.name}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData alignment="center">{product.stock}</TableData>
-                <TableData alignment="center" className="table__data--actions">
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={(e) => handleEditProduct(product.id)}
-                  >
-                    <PencilSquare />
-                  </Button>
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleDeleteProduct}
-                  >
-                    <TrashFill />
-                  </Button>
-                </TableData>
+        {loadingCategories ? (
+          <TableSkeleton numberOfRows={5} />
+        ) : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeading alignment="center">#</TableHeading>
+                <TableHeading>Imagen</TableHeading>
+                <TableHeading>Nombre</TableHeading>
+                <TableHeading>Descripción</TableHeading>
+                {/* <TableHeading>Stock</TableHeading> */}
+                <TableHeading>Acciones</TableHeading>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Container
-          display="flex"
-          alignItems="center"
-          justifyContent="end"
-          className="pagination"
-          marginTop="20"
-        >
-          <Pagination
-            prevButtonLabel="Anterior"
-            nextButtonLabel="Siguiente"
-            nummerOfPages={5}
-          />
-        </Container>
+            </TableHead>
+            <TableBody>
+              {categories
+                .sort((a, b) => a.id - b.id)
+                .map((category) => (
+                  <TableRow key={category.id}>
+                    <TableData alignment="center">{category.id}</TableData>
+                    <TableData>
+                      <Image
+                        source={category.image}
+                        maxHeight="50px"
+                        paddingSize="0"
+                      />
+                    </TableData>
+                    <TableData>
+                      {convertFirstLetterToUpperCase(category.name)}
+                    </TableData>
+                    <TableData>{category.description}</TableData>
+                    {/* <TableData alignment="center">{product.stock}</TableData> */}
+                    <TableData
+                      alignment="center"
+                      className="table__data--actions"
+                    >
+                      <Button
+                        paddingSize="0"
+                        hierarchy="transparent"
+                        onClick={(e) => handleEditCategory(category.id)}
+                      >
+                        <PencilSquare />
+                      </Button>
+                      <Button
+                        paddingSize="0"
+                        hierarchy="transparent"
+                        onClick={() => handleDeleteCategory(category.id)}
+                      >
+                        <TrashFill />
+                      </Button>
+                    </TableData>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        )}
+        {!loadingCategories && categories.length > 10 && (
+          <Container
+            display="flex"
+            alignItems="center"
+            justifyContent="end"
+            className="pagination"
+            marginTop="20"
+          >
+            <Pagination
+              prevButtonLabel="Anterior"
+              nextButtonLabel="Siguiente"
+              nummerOfPages={5}
+            />
+          </Container>
+        )}
       </Container>
       <Modal
         title={action === "add" ? "Agregar categoría" : "Editar categoría"}
@@ -267,12 +295,15 @@ const AdminProducts = ({ className }) => {
                 helperMessage={errors.description}
                 modifier={errors.description && "error"}
               />
-              <FileLoader
+              <TextInput
                 id="image"
                 name="image"
                 label="Imagen"
-                helperMessage=""
-                modifier=""
+                value={image}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.name}
+                modifier={errors.name && "error"}
               />
             </Form>
           </CardBody>
@@ -282,13 +313,13 @@ const AdminProducts = ({ className }) => {
   );
 };
 
-AdminProducts.propTypes = {
+AdminCategories.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-AdminProducts.defaultProps = {
+AdminCategories.defaultProps = {
   className: "",
 };
 
-export default AdminProducts;
+export default AdminCategories;

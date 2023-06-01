@@ -24,8 +24,8 @@ class CategoriesService {
     });
   }
 
-  static async editCategory(category) {
-    return axios.put(`instruments`, category, config).then((resp) => {
+  static async updateCategory(category) {
+    return axios.put(`categories`, category, config).then((resp) => {
       const { data } = resp;
       return data;
     });
