@@ -13,7 +13,6 @@ import Skeleton from "../../../components/Skeleton";
 import SearchBox from "../../../components/SearchBox";
 import Pagination from "../../../components/Pagination";
 import { Title, Text } from "../../../components/Typography";
-import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 
 import { useMobile } from "../../../hooks/useMobile";
@@ -22,6 +21,7 @@ import useProducts from "../../../hooks/useProducts";
 import useCategories from "../../../hooks/useCategories";
 
 import { productsListMock, categoriesMock } from "../../../mocks/mocks";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "home-page";
 
@@ -39,6 +39,7 @@ const Home = ({ title, className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
+  console.log({ categories });
 
   const handleClick = (id) => {
     console.log("id: ", id);
@@ -114,7 +115,7 @@ const Home = ({ title, className }) => {
               }}
               navigation
             >
-              {categoriesMock.map((category) => (
+              {categories.map((category) => (
                 <SwiperSlide key={category.id}>
                   <Card
                     borderRadius="8"
@@ -141,11 +142,11 @@ const Home = ({ title, className }) => {
                         weight="regular"
                         marginBottom="4"
                       >
-                        {category.name}
+                        {convertFirstLetterToUpperCase(category.name)}
                       </Title>
-                      <Text size="s" weight="light">
+                      {/* <Text size="s" weight="light">
                         {category.stock} productos
-                      </Text>
+                      </Text> */}
                     </CardBody>
                   </Card>
                 </SwiperSlide>
@@ -204,7 +205,7 @@ const Home = ({ title, className }) => {
                   <CardHeader>
                     <Image
                       source={product.images[0]}
-                      alternativeText={product.title}
+                      alternativeText={product.name}
                       containerHeight={isMobile ? "150px" : "200px"}
                       maxHeight={isMobile ? "150px" : "200px"}
                       maxWidth={isMobile ? "150px" : "200px"}
@@ -220,7 +221,7 @@ const Home = ({ title, className }) => {
                       transform="uppercase"
                       marginBottom="4"
                     >
-                      {product.title}
+                      {product.name}
                     </Title>
                     <Text size="s" weight="light" alignment="left">
                       $ {product.price}

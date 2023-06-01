@@ -22,7 +22,7 @@ const useProducts = (category) => {
       } else {
         data = await ProductsService.getAllProducts();
       }
-      setData(data.products);
+      setData(data);
       setLoading(false);
     } catch (error) {
       setErrors(error);

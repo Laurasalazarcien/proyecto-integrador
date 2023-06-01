@@ -63,7 +63,10 @@ const Admin = ({ className }) => {
               <TagsFill />
               <Text>Categorías</Text>
             </ListItem>
-            <ListItem>
+            <ListItem
+              selected={pathName === "/admin/brands"}
+              onClick={() => navigate("/admin/brands")}
+            >
               <BoomBoxFill />
               <Text>Marcas</Text>
             </ListItem>

@@ -243,16 +243,6 @@ const AdminProducts = ({ className }) => {
                 helperMessage={errors.name}
                 modifier={errors.name && "error"}
               />
-              <NumericInput
-                id="stock"
-                name="stock"
-                label="Existencias"
-                value={stock}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.stock}
-                modifier={errors.stock && "error"}
-              />
               <TextInput
                 id="price"
                 name="price"
@@ -262,6 +252,16 @@ const AdminProducts = ({ className }) => {
                 onBlur={handleBlur}
                 helperMessage={errors.price}
                 modifier={errors.price && "error"}
+              />
+              <NumericInput
+                id="stock"
+                name="stock"
+                label="Existencias"
+                value={stock}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperMessage={errors.stock}
+                modifier={errors.stock && "error"}
               />
               <TextArea
                 id="descriptiom"
@@ -307,16 +307,6 @@ const AdminProducts = ({ className }) => {
                 }}
                 fullWidth
               />
-              {/* <TextInput
-                id="image"
-                name="image"
-                label="Imagen URL"
-                value={image}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.image}
-                modifier={errors.image && "error"}
-              /> */}
               <FileLoader
                 id="imagea"
                 name="images"

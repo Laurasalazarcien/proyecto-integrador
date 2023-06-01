@@ -3,7 +3,7 @@ import config from "./config";
 
 class ProductsService {
   static async getAllProducts() {
-    return axios.get(`${config.apiUrl}/products`).then((resp) => {
+    return axios.get(`${config.apiUrl}/instruments`).then((resp) => {
       const { data } = resp;
       return data;
     });

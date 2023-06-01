@@ -7,6 +7,7 @@ import AdminPage, {
   AdminCategories,
   AdminProducts,
   AdminUsers,
+  AdminBrands,
 } from "../pages/Admin";
 
 import LoginPage from "../pages/Login";
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route path="products" element={<AdminProducts />} />
         <Route path="categories" element={<AdminCategories />} />
         <Route path="users" element={<AdminUsers />} />
+        <Route path="brands" element={<AdminBrands />} />
       </Route>
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>

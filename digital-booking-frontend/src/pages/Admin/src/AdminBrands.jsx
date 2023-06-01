@@ -151,7 +151,7 @@ const AdminProducts = ({ className }) => {
         element="section"
       >
         <Title size={isMobile ? "m" : "xl"} weight="light">
-          Gestionar categorías
+          Gestionar marcas
         </Title>
         <Button modifier="success" onClick={(e) => handleOpenModal("add")}>
           Agregar
@@ -225,7 +225,7 @@ const AdminProducts = ({ className }) => {
         </Container>
       </Container>
       <Modal
-        title={action === "add" ? "Agregar categoría" : "Editar categoría"}
+        title={action === "add" ? "Agregar marca" : "Editar marca"}
         isOpen={openModal}
         onCancel={handleCloseModal}
         onConfirm={handlConfirm}
