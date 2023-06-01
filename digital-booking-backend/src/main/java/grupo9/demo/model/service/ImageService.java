@@ -14,37 +14,37 @@ import java.util.Optional;
 public class ImageService implements IImageService {
 
     @Autowired
-    private IImage imagenesRepository;
+    private IImage imageRepository;
 
     @Autowired
     ObjectMapper mapper;
 
-    private void guardarImagenes (ImageDTO imageDTO){
+    private void saveImage(ImageDTO imageDTO){
         Image image =mapper.convertValue(imageDTO, Image.class);
-        imagenesRepository.save(image);
+        imageRepository.save(image);
     }
 
     @Override
     public void createImage(ImageDTO imageDTO) {
-        guardarImagenes(imageDTO);
+        saveImage(imageDTO);
     }
 
     @Override
     public ImageDTO readImage(Long id) {
-        Optional<Image> imagenes = imagenesRepository.findById(id);
+        Optional<Image> image = imageRepository.findById(id);
         ImageDTO imageDTO = null;
-        if(imagenes.isPresent())
-            imageDTO = mapper.convertValue(imagenes, ImageDTO.class);
+        if(image.isPresent())
+            imageDTO = mapper.convertValue(image, ImageDTO.class);
         return imageDTO;
     }
 
     @Override
     public void modifyImage(ImageDTO imageDTO) {
-        guardarImagenes(imageDTO);
+        saveImage(imageDTO);
     }
 
     @Override
     public void removeImage(Long id) {
-        imagenesRepository.deleteById(id);
+        imageRepository.deleteById(id);
     }
 }

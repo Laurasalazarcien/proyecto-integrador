@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class ImageDTO {
 
+
     private Long id;
     private String url;
     private Instrument instrument;
