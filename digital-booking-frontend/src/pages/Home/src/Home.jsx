@@ -1,143 +1,251 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import Button from "../../../components/Button";
+import Skeleton from "../../../components/Skeleton";
+import SearchBox from "../../../components/SearchBox";
+import Pagination from "../../../components/Pagination";
 import { Title, Text } from "../../../components/Typography";
-import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
-import { productsListMock, categoriesMock } from "../../../mocks/mocks";
+
 import { useMobile } from "../../../hooks/useMobile";
+import { generateArray } from "../../../helpers";
+import useProducts from "../../../hooks/useProducts";
+import useCategories from "../../../hooks/useCategories";
+
+import { productsListMock, categoriesMock } from "../../../mocks/mocks";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "home-page";
 
 const Home = ({ title, className }) => {
-  const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
   const isMobile = useMobile();
+  const componentClassnames = classNames(namespace, className);
+  const {
+    products,
+    loading: loadingProducts,
+    error: errorProducts,
+  } = useProducts();
+  const {
+    categories,
+    loading: loadingCategories,
+    error: errorCategories,
+  } = useCategories();
+  console.log({ categories });
 
   const handleClick = (id) => {
     console.log("id: ", id);
     navigate(`/detail/${id}`);
   };
 
+  const handleClickCategory = (categoryName) => {
+    navigate(`/categories/${categoryName}`);
+  };
+
+  const handleSearch = (searchTerm) => {
+    console.log("Search ---> ", searchTerm);
+  };
+
+  const handleClickSearch = (searchTerm) => {
+    console.log("Search ---> ", searchTerm);
+  };
+
   return (
-    <div className={componentClassnames}>
-      <Container
-        element="section"
-        display="flex"
-        alignItems="center"
-        className="search"
-      >
-        <TextInput
-          id="title"
-          name="title"
-          value="Hola"
-          placeholder=" ¿Qué estás buscando?"
-          onChange={() => {}}
-          onBlur={() => {}}
-          helperMessage=""
-          modifier=""
-        />
-        <Button>Buscar</Button>
-      </Container>
-      <Container element="section" className="categories">
-        <Container className="categories-list">
-          {categoriesMock.map((category) => (
-            <Card
-              key={category.id}
-              shadow="elevated"
-              className="category-card"
-              paddingSize="0"
-              borderRadius="8"
-              clickeable
-              animated
-            >
-              <CardHeader paddingSize="0">
-                <Image
-                  source={category.image}
-                  alternativeText={category.name}
-                  width="100%"
-                  height="180px"
-                  containerWidth="100%"
-                  containerHeight="180px"
-                  paddingSize="0"
-                  borderTopRadius="8"
-                  onClick={() => console.log("img click")}
-                />
-              </CardHeader>
-              <CardBody paddingSize="16">
-                <Title element="h2" size="m" weight="regular" marginBottom="4">
-                  {category.name}
-                </Title>
-                <Text size="s" weight="light">
-                  {category.stock} productos
-                </Text>
-              </CardBody>
-            </Card>
-          ))}
+    <Container className={componentClassnames}>
+      <Container className={`${namespace}__container`}>
+        <Container element="section" className="finder" marginBottom="20">
+          <SearchBox
+            searchPlaceholder="¿Qué estás buscando?"
+            onChange={handleSearch}
+            onClick={handleClickSearch}
+          />
         </Container>
-      </Container>
-      <Container element="section" className="products">
-        <Title
-          element="h2"
-          weight="light"
-          marginTop="24"
-          marginBottom="8"
-          size={isMobile ? "l" : "l"}
-        >
-          Nuestros productos
-        </Title>
-        <Text
-          weight="light"
-          color="secondary"
-          marginBottom="16"
-          size={isMobile ? "s" : "m"}
-        >
-          Te listamos algunos productos que te pueden interesar
-        </Text>
-        <Container className="instruments-list">
-          {productsListMock.map((product) => (
-            <Card
-              key={product.id}
-              shadow="elevated"
-              className="instrument-card"
-              onClick={() => handleClick(product.id)}
-              clickeable
-              animated
+        <Container element="section" className="categories">
+          {loadingCategories && (
+            <Container
+              display="grid"
+              columns="4"
+              spaceBetweenItems="20"
+              className="categories-list-skeleton"
             >
-              <CardHeader>
-                <Image
-                  source={product.image}
-                  alternativeText={product.name}
-                  containerHeight={isMobile ? "150px" : "200px"}
-                  maxHeight={isMobile ? "150px" : "200px"}
-                  maxWidth={isMobile ? "150px" : "200px"}
-                  onClick={() => console.log("img click")}
-                />
-              </CardHeader>
-              <CardBody>
-                <Title
-                  size="s"
-                  element="h2"
-                  weight="semibold"
-                  alignment="left"
-                  transform="uppercase"
-                  marginBottom="4"
+              {generateArray(4).map((index, item) => (
+                <Card key={`category-${index}`}>
+                  <CardHeader paddingSize="0">
+                    <Skeleton height="186px" />
+                  </CardHeader>
+                  <CardBody>
+                    <Skeleton />
+                    <Skeleton width="50%" />
+                  </CardBody>
+                </Card>
+              ))}
+            </Container>
+          )}
+          {categories && !loadingCategories && (
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={4}
+              className="categories-carousel"
+              modules={[Navigation]}
+              breakpoints={{
+                380: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                600: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                920: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 20,
+                },
+              }}
+              navigation
+            >
+              {categories.map((category) => (
+                <SwiperSlide key={category.id}>
+                  <Card
+                    borderRadius="8"
+                    onClick={() => handleClickCategory(category.urlLabel)}
+                    clickeable
+                  >
+                    <CardHeader paddingSize="0">
+                      <Image
+                        width="100%"
+                        height="180px"
+                        containerWidth="100%"
+                        containerHeight="180px"
+                        borderTopRadius="8"
+                        paddingSize="0"
+                        source={category.image}
+                        alternativeText={category.name}
+                        onClick={() => console.log("img click")}
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <Title
+                        element="h2"
+                        size="m"
+                        weight="regular"
+                        marginBottom="4"
+                      >
+                        {convertFirstLetterToUpperCase(category.name)}
+                      </Title>
+                      {/* <Text size="s" weight="light">
+                        {category.stock} productos
+                      </Text> */}
+                    </CardBody>
+                  </Card>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </Container>
+        <Container element="section" className="products" marginBottom="32">
+          <Title
+            element="h2"
+            weight="light"
+            marginTop="24"
+            marginBottom="8"
+            size={isMobile ? "l" : "l"}
+          >
+            Nuestros productos
+          </Title>
+          <Text
+            weight="light"
+            color="secondary"
+            marginBottom="16"
+            size={isMobile ? "s" : "m"}
+          >
+            Te listamos algunos productos que te pueden interesar
+          </Text>
+          <Container
+            display="grid"
+            spaceBetweenItems="20"
+            columnsInSmallDevices="1"
+            columnsInMediumDevices="2"
+            columnsInLargeDevices="3"
+            columnsInExtraLargeDevices="4"
+          >
+            {loadingProducts &&
+              generateArray(10).map((index, item) => (
+                <Card key={`product-${index}`}>
+                  <CardHeader>
+                    <Skeleton height="200px" />
+                  </CardHeader>
+                  <CardBody>
+                    <Skeleton />
+                    <Skeleton width="50%" />
+                  </CardBody>
+                </Card>
+              ))}
+            {products &&
+              products.map((product) => (
+                <Card
+                  key={product.id}
+                  shadow="elevated"
+                  className="instrument-card"
+                  onClick={() => handleClick(product.id)}
+                  clickeable
+                  animated
                 >
-                  {product.title}
-                </Title>
-                <Text size="s" weight="light" alignment="left">
-                  {product.price}
-                </Text>
-              </CardBody>
-            </Card>
-          ))}
+                  <CardHeader>
+                    <Image
+                      source={product.images[0]}
+                      alternativeText={product.name}
+                      containerHeight={isMobile ? "150px" : "200px"}
+                      maxHeight={isMobile ? "150px" : "200px"}
+                      maxWidth={isMobile ? "150px" : "200px"}
+                      onClick={() => console.log("img click")}
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <Title
+                      size="s"
+                      element="h2"
+                      weight="semibold"
+                      alignment="left"
+                      transform="uppercase"
+                      marginBottom="4"
+                    >
+                      {product.name}
+                    </Title>
+                    <Text size="s" weight="light" alignment="left">
+                      $ {product.price}
+                    </Text>
+                  </CardBody>
+                </Card>
+              ))}
+          </Container>
+        </Container>
+        <Container
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          element="section"
+          className="pagination"
+        >
+          <Pagination
+            prevButtonLabel="Anterior"
+            nextButtonLabel="Siguiente"
+            nummerOfPages={5}
+          />
         </Container>
       </Container>
-    </div>
+    </Container>
   );
 };
 

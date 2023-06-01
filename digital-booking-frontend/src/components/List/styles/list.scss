@@ -25,6 +25,12 @@
     }
   }
 
+  &--padding-4 {
+    .list__item {
+      padding: $db-spacing-4;
+    }
+  }
+
   &--padding-8 {
     .list__item {
       padding: $db-spacing-8;
@@ -43,6 +49,12 @@
     }
   }
 
+  &--padding-20 {
+    .list__item {
+      padding: $db-spacing-20;
+    }
+  }
+
   &--padding-24 {
     .list__item {
       padding: $db-spacing-24;
@@ -56,28 +68,22 @@
   }
 
   &--border {
-    border: 1px solid $db-gray-100;
-
     .list__item {
-      border-bottom: 1px solid $db-gray-100;
-
-      &:last-child {
-        border-bottom: none;
-      }
+      border: 1px solid $db-gray-100;
     }
   }
 
   &--rounded {
-    border-radius: 6px;
+    border-radius: $db-spacing-6;
 
-    & > .list__item:first-child {
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-    }
+    // & > .list__item:first-child {
+    //   border-top-left-radius: 6px;
+    //   border-top-right-radius: 6px;
+    // }
 
-    & > .list__item:last-child {
-      border-bottom-left-radius: 6px;
-      border-bottom-right-radius: 6px;
-    }
+    // & > .list__item:last-child {
+    //   border-bottom-left-radius: 6px;
+    //   border-bottom-right-radius: 6px;
+    // }
   }
 }

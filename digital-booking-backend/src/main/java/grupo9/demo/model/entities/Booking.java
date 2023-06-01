@@ -5,9 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
@@ -15,10 +17,11 @@ import javax.persistence.*;
 public class Booking {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "booking_sequence", sequenceName = "booking_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "booking_sequence")
     private Long id;
-    private Date startDate;
-    private Date finalDate;
+    private LocalDate startDate;
+    private LocalDate finalDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,6 +33,5 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
-
 
 }

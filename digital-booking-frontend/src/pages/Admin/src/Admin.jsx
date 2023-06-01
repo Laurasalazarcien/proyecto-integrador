@@ -1,227 +1,96 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState } from "react";
 import classNames from "classnames";
-import Swal from 'sweetalert2';
-import { useNavigate } from "react-router-dom";
-import Button from "../../../components/Button";
-import Image from "../../../components/Image";
+import { useEffect } from "react";
+import { Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
 import Container from "../../../components/Container";
+import Separator from "../../../components/Separator";
 import { Title, Text } from "../../../components/Typography";
-import Table, {
-  TableHead,
-  TableHeading,
-  TableBody,
-  TableRow,
-  TableData,
-} from "../../../components/Table";
-import Form from "../../../components/Form";
-import {
-  Text as TextInput,
-  Numeric as NumericInput,
-  TextArea,
-} from "../../../components/TextField";
-import Card, { CardHeader, CardBody } from "../../../components/Card";
-import Dropdown from "../../../components/Dropdown";
-import ImageLoader from "../../../components/ImageLoader";
-import Modal from "../../../components/Modal";
-import icons from "../../../components/icons";
-
-import {
-  productsListMock,
-  categoriesMock,
-  categoriesDropdownMock,
-  brandsDropdownMock,
-} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
+import List, { ListItem } from "../../../components/List";
+import icons from "../../../components/icons";
 
 const namespace = "admin-page";
 
-const AddProduct = ({ title, className }) => {
-  const isMobile = useMobile();
-  const { Trash, TrashPill, PencilPill, PencilSquare } = icons;
-  const [openModal, setModalVisibility] = useState(false);
+const Admin = ({ className }) => {
+  const { MusicNote, PeopleFill, TagsFill, CalendarFill, BoomBoxFill } = icons;
   const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
+  const { pathname: pathName } = useLocation();
 
-  const handleOpenModal = () => {
-    setModalVisibility(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalVisibility(false);
-  };
-
-  const handleDeleteProduct = () => {
-    // Swal.fire("Eliminar producto", "¿Estás seguro de eliminar este producto?", "warning");
-    Swal.fire({
-      title: "Eliminar producto",
-      text: "¿Estás seguro de eliminar este producto?",
-      icon: "error",
-      showCancelButton: true,
-    }).then(resp => {
-      if (resp.isConfirmed) {
-        console.log('Delete product ...');
-      }
-    });
-  }
+  useEffect(() => {
+    navigate("/admin/products");
+  }, []);
 
   return (
-    <div className={componentClassnames}>
-      <Title size={isMobile ? "xl" : "xxl"} weight="light" marginBottom="8">
-        Panel de administración
-      </Title>
-      <Text weight="light" marginBottom="16">
-        Desde aqui vas a poder gestionar tus productos.
-      </Text>
-      <Button modifier="success" onClick={handleOpenModal}>
-        Agregar producto
-      </Button>
-      <Container>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading>#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData>{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.title}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData className="table__data--stock">
-                  {product.stock}
-                </TableData>
-                <TableData className="table__data--actions">
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleOpenModal}
-                  >
-                    <PencilSquare />
-                  </Button>
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleDeleteProduct}
-                  >
-                    <TrashPill />
-                  </Button>
-                </TableData>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+    <Container className={componentClassnames}>
+      <Container className={`${namespace}__menu`}>
+        <Container element="nav" className={`${namespace}__aside`}>
+          <Title
+            size="xl"
+            element="h2"
+            color="white"
+            weight="bold"
+            padding="20"
+            alignment="center"
+            className={`${namespace}__aside-text`}
+          >
+            DB{" "}
+            <Text size="xl" element="span" marginLeft="4">
+              Admin
+            </Text>
+          </Title>
+          <Separator marginBottom="24" />
+          <List rounded={false} showBorder={false}>
+            <ListItem
+              selected={pathName === "/admin/products"}
+              onClick={() => navigate("/admin/products")}
+            >
+              <MusicNote />
+              <Text>Instrumentos</Text>
+            </ListItem>
+            <ListItem
+              selected={pathName === "/admin/users"}
+              onClick={() => navigate("/admin/users")}
+            >
+              <PeopleFill />
+              <Text>Usuarios</Text>
+            </ListItem>
+            <ListItem
+              selected={pathName === "/admin/categories"}
+              onClick={() => navigate("/admin/categories")}
+            >
+              <TagsFill />
+              <Text>Categorías</Text>
+            </ListItem>
+            <ListItem
+              selected={pathName === "/admin/brands"}
+              onClick={() => navigate("/admin/brands")}
+            >
+              <BoomBoxFill />
+              <Text>Marcas</Text>
+            </ListItem>
+            <ListItem>
+              <CalendarFill />
+              <Text>Reservas</Text>
+            </ListItem>
+          </List>
+        </Container>
       </Container>
-      <Modal
-        title="Agregar producto"
-        isOpen={openModal}
-        onCancel={handleCloseModal}
-      >
-        <Card shadow="none" paddingSize="0">
-          <CardBody paddingSize="0">
-            <Form shadow="none" paddingSize="0" onSubmit={() => {}}>
-              <TextInput
-                id="title"
-                name="title"
-                label="Title"
-                value="Hola"
-                placeholder="Enter the product title"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <NumericInput
-                id="stock"
-                name="stock"
-                label="Stock"
-                value="Hola"
-                placeholder="Enter the product stock"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <TextArea
-                id="descriptiom"
-                name="description"
-                label="Description"
-                value=""
-                placeholder="Enter the product description"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-              <Dropdown
-                id="category"
-                name="category"
-                label="Category"
-                searchPlaceholder="Search a category"
-                options={categoriesDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-              <Dropdown
-                id="brand"
-                name="brand"
-                label="Brand"
-                searchPlaceholder="Search a brand"
-                options={brandsDropdownMock}
-                modifier=""
-                helperMessage=""
-                selectedOption="3"
-                onSelectOption={(option) => {
-                  console.log("Option ---> ", option);
-                }}
-                fullWidth
-              />
-              <ImageLoader
-                id="image"
-                name="image"
-                label="Image"
-                value=""
-                placeholder="Enter the product image"
-                onChange={() => {}}
-                onBlur={() => {}}
-                helperMessage=""
-                modifier=""
-              />
-            </Form>
-          </CardBody>
-        </Card>
-      </Modal>
-    </div>
+      <Container className={`${namespace}__dashboard`}>
+        <Outlet />
+      </Container>
+    </Container>
   );
 };
 
-AddProduct.propTypes = {
+Admin.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-AddProduct.defaultProps = {
-  title: "",
+Admin.defaultProps = {
   className: "",
 };
 
-export default AddProduct;
+export default Admin;

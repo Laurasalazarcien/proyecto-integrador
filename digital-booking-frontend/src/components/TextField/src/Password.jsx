@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Label, HelperMessage } from '../../Form';
+import { Label, HelperMessage } from "../../Form";
 
 const namespace = "textfield";
 
-const TextField = ({
+const Password = ({
   id,
+  type,
   name,
   value,
   label,
@@ -17,19 +18,22 @@ const TextField = ({
   onBlur,
   className,
 }) => {
-  const componentClassNames = classNames(namespace, className, {
-    [`${namespace}--${modifier}`]: modifier,
-  });
-
+  const componentClassNames = classNames(
+    namespace,
+    `${namespace}--password`,
+    className,
+    {
+      [`${namespace}--${modifier}`]: modifier,
+      [`${namespace}--${type}`]: type,
+    }
+  );
+  
   return (
     <div className={componentClassNames}>
-      {label && (
-        <label htmlFor={id} className={`${namespace}__label`}>
-          {label}
-        </label>
-      )}
+      {label && <Label id={id} label={label} />}
       <input
-        type="text"
+        id={id}
+        type="password"
         name={name}
         value={value}
         className={`${namespace}__input`}
@@ -38,15 +42,15 @@ const TextField = ({
         onBlur={onBlur}
       />
       {helperMessage && (
-        <span className={`${namespace}__helper-message`}>{helperMessage}</span>
+        <HelperMessage modifier={modifier} message={helperMessage} />
       )}
     </div>
   );
 };
 
-TextField.propTypes = {
+Password.propTypes = {
   id: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(["full-width", "inline"]),
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -58,11 +62,12 @@ TextField.propTypes = {
   className: PropTypes.string,
 };
 
-TextField.defaultProps = {
+Password.defaultProps = {
+  type: "full-width",
   modifier: "",
   placeholder: "",
   helperMessage: "",
   className: "",
 };
 
-export default TextField;
+export default Password;

@@ -3,14 +3,14 @@ import classNames from "classnames";
 
 const namespace = "list";
 
-const List = ({ 
-  type, 
-  paddingSize, 
+const List = ({
+  type,
+  paddingSize,
   itemsalignment,
   rounded,
   showBorder,
-  className, 
-  children 
+  className,
+  children,
 }) => {
   const componentClassNames = classNames(namespace, className, {
     [`${namespace}--${type}`]: type,
@@ -33,7 +33,7 @@ const List = ({
 
 List.propTypes = {
   type: PropTypes.oneOf(["ordered", "unordered"]),
-  paddingSize: PropTypes.oneOf(["0", "8", "12", "16", "24", "32"]),
+  paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
   itemsalignment: PropTypes.oneOf(["row", "column"]),
   rounded: PropTypes.bool,
   showBorder: PropTypes.string,

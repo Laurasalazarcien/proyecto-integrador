@@ -1,20 +1,64 @@
 .admin-page {
-  margin-top: 120px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 40px;
-  max-width: 1200px;
-  padding: $db-spacing-20;
+  margin-top: 80px;
+  min-height: 100vh;
+  background-color: $db-page-background;
+  display: flex;
 
-  .table {
-    margin-top: 24px;
+  &__aside {
+    width: 300px;
+    height: 100%;
+    color: $db-white;
+    background-color: $db-gray-750;
+
+    &-text {
+      span.typography--color-primary {
+        color: $db-white-700;
+      }
+    }
+
+    .list__item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $db-white-250;
+
+      .typography--color-primary {
+        color: $db-white-700;
+      }
+
+      svg {
+        display: flex;
+        margin-right: $db-spacing-12;
+        color: $db-white-700;
+      }
+
+      &--selected {
+        svg,
+        .typography--color-primary {
+          color: $db-white;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $db-white-250;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__dashboard {
+    width: 100%;
+    padding: $db-spacing-24 $db-spacing-32;
   }
 }
 
 // Media Queries
 @media screen and (max-width: 768px) {
   .admin-page {
-    margin: $db-spacing-8;
-    margin-top: 100px;
+    margin-top: 90px;
   }
 }

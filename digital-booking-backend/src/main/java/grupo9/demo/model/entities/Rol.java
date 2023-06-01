@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.util.Set;
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
@@ -14,14 +15,13 @@ import javax.persistence.*;
 public class Rol {
 
     @Id
-    @GeneratedValue
-
+    @SequenceGenerator(name = "rol_sequence", sequenceName = "rol_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "rol_sequence")
     private Long id;
     private String name;
 
     @OneToMany(mappedBy = "rol")
     @JsonIgnore
     private Set<User> user;
-
 
 }

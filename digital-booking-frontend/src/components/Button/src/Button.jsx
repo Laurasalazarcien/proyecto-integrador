@@ -8,6 +8,7 @@ const Button = ({
   type,
   size,
   href,
+  icon,
   modifier,
   hierarchy,
   disabled,
@@ -26,6 +27,7 @@ const Button = ({
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
     [`${namespace}--rounded-${borderRadius}`]: borderRadius,
     [`${namespace}--disabled`]: disabled,
+    [`${namespace}--loading`]: loading,
     [`${namespace}--full-width`]: fullWidth,
     [`${namespace}--link`]: href,
   });
@@ -51,7 +53,8 @@ const Button = ({
       onClick={handleClick}
     >
       <div className={`${namespace}__content`}>
-        {loading ? <Spinner /> : children}
+        {icon && <span className={`${namespace}__icon`}>{icon}</span>}
+        {loading ? <Spinner borderWidth="2px" /> : children}
       </div>
     </button>
   );
@@ -61,6 +64,7 @@ Button.propTypes = {
   type: PropTypes.string,
   size: PropTypes.oneOf(["small", "medium", "large"]),
   href: PropTypes.string,
+  icon: PropTypes.element,
   modifier: PropTypes.oneOf(["neutral", "success", "warning", "error"]),
   hierarchy: PropTypes.oneOf("loud", "quiet", "transparent"),
   borderRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "24", "32"]),

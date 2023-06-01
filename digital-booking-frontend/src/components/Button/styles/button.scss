@@ -4,7 +4,6 @@
   box-sizing: border-box;
   color: $db-white;
   font-weight: $font-weight-regular;
-  background-color: $db-color-neutral;
   transition: 0.18s ease-out;
   font-weight: $font-weight-semibold;
 
@@ -19,6 +18,10 @@
     height: 100%;
   }
 
+  &__icon {
+    margin-right: $db-spacing-8;
+  }
+
   &--padding-0 {
     padding: 0;
   }
@@ -28,6 +31,10 @@
     padding: 0 $db-spacing-8;
     font-size: $font-size-12;
     line-height: $line-height-12;
+
+    &.button--padding-0 {
+      padding: 0;
+    }
 
     &.button--rounded {
       border-radius: $border-radius-4;
@@ -40,6 +47,10 @@
     font-size: $font-size-14;
     line-height: $line-height-14;
 
+    &.button--padding-0 {
+      padding: 0;
+    }
+
     &.button--rounded {
       border-radius: $border-radius-5;
     }
@@ -51,6 +62,10 @@
     font-size: $font-size-16;
     line-height: $line-height-16;
 
+    &.button--padding-0 {
+      padding: 0;
+    }
+
     &.button--rounded {
       border-radius: $border-radius-6;
     }
@@ -58,31 +73,83 @@
 
   &--loud {
     color: $db-white;
-    background-color: $db-color-neutral; // rgba(52, 131, 250, 1)
+    background-color: $db-color-neutral;
+    transition: background-color 0.2s ease-out;
 
-    // &:hover {
-    //   cursor: pointer;
-    //   background-color: dodgerblue;
-    // }
-  }
-
-  &--success {
-    background-color: $db-color-positive;
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-neutral-dark;
+    }
   }
 
   &--quiet {
     color: $db-color-neutral;
-    background-color: $db-white;
-    border: 1px solid $db-color-neutral;
+    background-color: rgba(65, 137, 230, 0.15);
+    transition: background-color 0.2s ease-out;
 
     &:hover {
       cursor: pointer;
+      background-color: rgba(65, 137, 230, 0.2);
     }
   }
 
-  &--transparent {
+  &--white {
+    color: $db-color-neutral;
+    background-color: $db-white;
+    border: 1px solid $db-color-neutral;
+    transition: background-color 0.2s ease-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($db-white, 0.85);
+    }
+  }
+
+  &--success {
+    background-color: $db-color-positive;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-positive-dark;
+    }
+  }
+
+  &--warning {
+    background-color: $db-color-caution;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-caution-dark;
+    }
+  }
+
+  &--error {
+    background-color: $db-color-negative;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $db-color-negative-dark;
+    }
+  }
+
+  &--trasparent {
     background-color: transparent;
     box-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+
+  &--disabled {
+    background-color: $db-gray-100;
+    color: $db-gray-250;
+
+    &:hover {
+      cursor: initial;
+      background-color: $db-gray-100;
+    }
   }
 
   &--rounded-0 {
@@ -129,21 +196,37 @@
     background-color: $db-positive;
   }
 
-  &--warning {
-    background-color: $db-warning;
-  }
-
-  &--error {
-    background-color: $db-error;
-  }
-
-  &--disabled {
-    background-color: $db-gray-100;
-    color: $db-gray-250;
-  }
-
   &--full-width {
     display: block;
     width: 100%;
   }
+
+  // &--dropdown {
+  //   position: relative;
+
+  //   .button__list {
+  //     width: max-content;
+  //     position: absolute;
+  //     right: 0;
+  //     top: 36px;
+  //     background-color: $db-white;
+
+  //     .list__item {
+  //       width: 100%;
+  //       color: $db-gray-550;
+  //       font-size: $db-spacing-12;
+  //       padding: $db-spacing-8 $db-spacing-12;
+  //     }
+  //   }
+
+  //   &__mask {
+  //     width: 100%;
+  //     height: 100%;
+  //     position: fixed;
+  //     top: 0;
+  //     left: 0;
+  //     z-index: 0;
+  //     background: transparent;
+  //   }
+  // }
 }

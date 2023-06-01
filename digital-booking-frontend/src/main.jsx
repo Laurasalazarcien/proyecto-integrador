@@ -4,7 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.scss";
 import "./styles/app.scss";
-import 'react-slideshow-image/dist/styles.css'
+
+// External dependencies styles
+import "swiper/css";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import "react-slideshow-image/dist/styles.css";
 
 // Context
 import { ContextProvider } from "./context/AppContext";

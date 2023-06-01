@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
@@ -13,7 +14,8 @@ import javax.persistence.*;
 public class Status {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "status_sequence", sequenceName = "status_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "status_sequence")
     private Long id;
     private String name;
 
@@ -25,5 +27,6 @@ public class Status {
     @OneToMany(mappedBy = "status")
     @JsonIgnore
     private  Set<Instrument> instrument;
+
 
 }

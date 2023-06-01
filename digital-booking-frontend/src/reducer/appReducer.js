@@ -13,6 +13,17 @@ export const appReducer = (state = [], action) => {
         ...state,
         loading: payload,
       };
+    case actionTypes.SET_ERRORS:
+      return {
+        ...state,
+        errors: payload,
+      };
+    case actionTypes.SET_DATA:
+      return {
+        ...state,
+        // data: Array.isArray(payload) ? [...state.data, ...payload] : payload,
+        data: [...payload],
+      };
     default:
       return state;
   }

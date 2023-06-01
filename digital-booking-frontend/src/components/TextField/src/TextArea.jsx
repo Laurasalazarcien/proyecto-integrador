@@ -36,10 +36,13 @@ const TextArea = ({
       <textarea
         id={id}
         name={name}
+        value={value}
         cols={cols}
         rows={rows}
-        placeholder={placeholder}
         className={`${namespace}__textarea`}
+        placeholder={placeholder}
+        onChange={onChange}
+        onBlur={onBlur}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />

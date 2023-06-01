@@ -53,17 +53,17 @@ const Modal = ({
         <div className={`${namespace}__actions`}>
           <Button
             size="medium"
-            disabled={disableConfirmButton}
             onClick={onConfirm}
+            disabled={disableConfirmButton}
             className={`${namespace}__confirm-button`}
           >
             Aceptar
           </Button>
           <Button
-            hierarchy="quiet"
             size="medium"
-            disabled={disableCancelButton}
+            hierarchy="quiet"
             onClick={onCancel}
+            disabled={disableCancelButton}
             className={`${namespace}__cancel-button`}
           >
             Cancelar

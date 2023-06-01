@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @Entity
@@ -16,13 +17,13 @@ import javax.persistence.*;
 public class Image {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "image_sequence", sequenceName = "image_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "image_sequence")
     private Long id;
     private String url;
 
     @ManyToOne
     @JoinColumn(name = "instrument_id")
     private Instrument instrument;
-
 
 }

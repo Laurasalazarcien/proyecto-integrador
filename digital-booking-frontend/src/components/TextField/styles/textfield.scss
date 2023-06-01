@@ -18,11 +18,12 @@
 
   &__input,
   &__textarea {
-    padding: $db-spacing-12 $db-spacing-16;
     border: none;
     outline: none;
-    border-radius: 8px;
+    color: $db-gray-450;
+    border-radius: $db-spacing-8;
     border: 1px solid $db-gray-100;
+    padding: $db-spacing-12 $db-spacing-16;
 
     &::placeholder {
       font-family: $font-family-primary;
@@ -35,11 +36,15 @@
     }
   }
 
+  #password ~ input {
+    width: 100%;
+  }
+
   &--error {
-    .textfield__input,
-    .textfield__textarea {
-      border: 1px solid $db-color-negative;
-    }
+    // .textfield__input,
+    // .textfield__textarea {
+    //   border: 1px solid $db-color-negative;
+    // }
   }
 
   &--success {
@@ -52,6 +57,7 @@
   &--textarea {
     .textfield__textarea {
       resize: none;
+      font-family: $font-family-primary;
     }
   }
 }

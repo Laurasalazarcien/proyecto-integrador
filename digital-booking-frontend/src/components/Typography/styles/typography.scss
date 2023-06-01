@@ -18,7 +18,7 @@
 
   &--size-l {
     font-size: $font-size-20;
-    line-height:  $line-height-24;
+    line-height: $line-height-24;
   }
 
   &--size-xl {
@@ -69,6 +69,7 @@
 
   &--color-link {
     color: $db-color-link;
+    cursor: pointer;
   }
 
   &--color-positive {
@@ -160,6 +161,10 @@
     padding: $db-spacing-24;
   }
 
+  &--padding-32 {
+    padding: $db-spacing-32;
+  }
+
   // Padding left
   &--padding-left-2 {
     padding-left: $db-spacing-2;
@@ -187,6 +192,10 @@
 
   &--padding-left-24 {
     padding-left: $db-spacing-24;
+  }
+
+  &--padding-left-32 {
+    padding-left: $db-spacing-32;
   }
 
   // Padding right
@@ -218,6 +227,10 @@
     padding-right: $db-spacing-24;
   }
 
+  &--padding-right-32 {
+    padding-right: $db-spacing-32;
+  }
+
   // Padding top
   &--padding-top-2 {
     padding-left: $db-spacing-2;
@@ -247,6 +260,10 @@
     padding-top: $db-spacing-24;
   }
 
+  &--padding-top-32 {
+    padding-top: $db-spacing-32;
+  }
+
   // Padding bottom
   &--padding-bottom-2 {
     padding-left: $db-spacing-2;
@@ -274,6 +291,10 @@
 
   &--padding-bottom-24 {
     padding-bottom: $db-spacing-24;
+  }
+
+  &--padding-bottom-32 {
+    padding-bottom: $db-spacing-32;
   }
 
   // Margin

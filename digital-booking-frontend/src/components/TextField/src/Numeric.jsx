@@ -41,11 +41,11 @@ const Numeric = ({
         min={minValue}
         max={maxValue}
         step={stepValue}
-        // value={value}
+        value={value}
         className={`${namespace}__input`}
         placeholder={placeholder}
-        // onChange={onChange}
-        // onBlur={onBlur}
+        onChange={onChange}
+        onBlur={onBlur}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />
@@ -76,7 +76,7 @@ Numeric.defaultProps = {
   modifier: "",
   placeholder: "",
   helperMessage: "",
-  minValue: "1",
+  minValue: "0",
   maxValue: "20",
   stepValue: "1",
   className: "",

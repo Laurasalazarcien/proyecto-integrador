@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Set;
+
 
 @Getter
 @Setter
@@ -14,13 +16,23 @@ import java.util.Set;
 public class Instrument {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "instrument_sequence", sequenceName = "instrument_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "instrument_sequence")
     private Long id;
     private String name;
     private Double price;
     private String description;
     private String images;
     private String characteristics;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String characteristics;
+
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String images;
+
+    private Integer stock;
+
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -42,5 +54,6 @@ public class Instrument {
     @OneToMany(mappedBy = "instrument")
     @JsonIgnore
     private Set<Image> image;
+
 
 }
