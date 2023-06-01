@@ -17,12 +17,17 @@ import { Title, Text } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
 import logo from "../../../assets/icons/logo-no-background-inverted.svg";
+import useUsers from "../../../hooks/useUsers";
 
 const namespace = "register-page";
 
 const valideteForm = (form) => {
   let errors = {};
   const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+
+  if (form.dni.trim().length === 0) {
+    errors.dni = "Este campo no puede quedar vacio.";
+  }
 
   if (form.name.trim().length === 0) {
     errors.name = "Este campo no puede quedar vacio.";
@@ -50,21 +55,21 @@ const valideteForm = (form) => {
 const Register = ({ title, className }) => {
   const isMobile = useMobile();
   const navigate = useNavigate();
-  const componentClassnames = classNames(namespace, className);
   const {
     form,
+    dni,
     name,
     lastname,
     email,
     address,
     password,
     errors,
-    submited,
     handleChange,
     handleBlur,
     setErrors,
   } = useForm(
     {
+      dni: "",
       name: "",
       lastname: "",
       email: "",
@@ -73,6 +78,7 @@ const Register = ({ title, className }) => {
     },
     valideteForm
   );
+  const { createUser } = useUsers();
 
   const handleSubmit = () => {
     const errors = valideteForm(form);
@@ -80,18 +86,27 @@ const Register = ({ title, className }) => {
       setErrors(errors);
       return;
     }
-    console.log("submit", {
-      name,
-      lastname,
-      email,
-      address,
-      password,
-    });
+    const user = {
+      ...form,
+      rol: {
+        id: "2",
+        name: "user",
+      },
+    };
+    createUser(user)
+      .then((resp) => {
+        console.log("Resp ---> ", resp);
+      })
+      .catch((error) => {
+        console.log("Error --> ", error);
+      });
   };
 
   const handleClickLink = () => {
     navigate("/login");
   };
+
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>
@@ -112,15 +127,16 @@ const Register = ({ title, className }) => {
           >
             Crear cuenta
           </Title>
-          <Message
+          {/* <Message
             type="success"
             hierarchy="quiet"
             marginTop="8"
             marginBottom="0"
             closable
           >
-            Se ha creado tu cuenta de manera exitosa. Por favor revisa tu correo electrónico para validarla.
-          </Message>
+            Se ha creado tu cuenta de manera exitosa. Por favor revisa tu correo
+            electrónico para validarla.
+          </Message> */}
         </CardHeader>
         <CardBody paddingSize="20">
           <Form
@@ -129,6 +145,16 @@ const Register = ({ title, className }) => {
             onSubmit={handleSubmit}
             className={`${namespace}__form`}
           >
+            <TextInput
+              id="dni"
+              name="dni"
+              label="DNI"
+              value={dni}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              helperMessage={errors.dni}
+              modifier={errors.dni && "error"}
+            />
             <TextInput
               id="name"
               name="name"

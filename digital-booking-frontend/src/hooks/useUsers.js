@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import UsersService from "../services/users";
 
 const useUsers = ({ id } = {}) => {
-  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
@@ -12,11 +11,11 @@ const useUsers = ({ id } = {}) => {
     try {
       let data = [];
       if (id) {
-        data = await UsersService.getProductById(id);
+        data = await UsersService.getUserById(id);
       } else {
-        data = await UsersService.getAllProducts();
+        data = await UsersService.getAllUsers();
       }
-      setProducts(data);
+      setUsers(data);
       setLoading(false);
     } catch (error) {
       setErrors(error);
@@ -28,35 +27,27 @@ const useUsers = ({ id } = {}) => {
     fetchData();
   }, []);
 
-  const createProduct = async (product) => {
-    setLoading(true);
-    try {
-      const resp = await ProductsService.createProduct(product);
-      console.log("POST response");
-      setLoading(false);
-    } catch (error) {
-      setErrors(error);
-      setLoading(false);
-    }
+  const createUser = async (user) => {
+    return UsersService.createUser(user);
   };
 
-  const updateProduct = (productId) => {
-    // TODO: Implements function
+  const updateUser = (user) => {
+    return UsersService.updateUser(user);
   };
 
-  const deleteProduct = (productId) => {
-    // TODO: Implements function
+  const deleteUser = (userId) => {
+    return UsersService.deleteUser(userId);
   };
 
   return {
-    products,
-    setProducts,
-    createProduct,
-    updateProduct,
-    deleteProduct,
+    users,
+    setUsers,
+    createUser,
+    updateUser,
+    deleteUser,
     loading,
     errors,
   };
 };
 
-export default useProducts;
+export default useUsers;

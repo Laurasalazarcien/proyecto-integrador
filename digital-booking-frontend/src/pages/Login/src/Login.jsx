@@ -83,7 +83,7 @@ const Login = ({ title, className }) => {
           >
             Iniciar sesión
           </Title>
-          <Message
+          {/* <Message
             type="error"
             hierarchy="quiet"
             marginTop="8"
@@ -91,7 +91,7 @@ const Login = ({ title, className }) => {
             closable
           >
             Usuario o contraseña incorrectos.
-          </Message>
+          </Message> */}
         </CardHeader>
         <CardBody paddingSize="20">
           <Form

@@ -17,7 +17,7 @@ class UsersService {
   }
 
   static async createUser(user) {
-    return axios.post(`instruments`, user, config).then((resp) => {
+    return axios.post(`users`, user, config).then((resp) => {
       const { data } = resp;
       return data;
     });
