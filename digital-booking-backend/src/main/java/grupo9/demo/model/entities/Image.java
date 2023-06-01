@@ -22,7 +22,7 @@ public class Image {
     private Long id;
     private String url;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instrument_id")
     private Instrument instrument;
 
