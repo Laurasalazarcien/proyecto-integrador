@@ -193,14 +193,16 @@ const Home = ({ title, className }) => {
               ))}
             {products &&
               products.map((product) => {
-                const productImages = product.images
-                  .slice(1)
-                  .slice(0, product.images.length - 2)
-                  .split(", ")
-                  .map((img) => img.slice(1).slice(0, img.length - 2));
-                  if (product.id === 107) {
-                    console.log('Images product ---> ', JSON.parse(product.images));
-                  }
+                let productImages = [];
+                if (product.id > 100) {
+                  productImages = JSON.parse(product.images);
+                } else {
+                  productImages = product.images
+                    .slice(1)
+                    .slice(0, product.images.length - 2)
+                    .split(", ")
+                    .map((img) => img.slice(1).slice(0, img.length - 2));
+                }
                 return (
                   <Card
                     key={product.id}

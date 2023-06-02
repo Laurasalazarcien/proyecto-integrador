@@ -90,6 +90,8 @@ const AdminProducts = ({ className }) => {
     products,
     setProducts,
     createProduct,
+    updateProduct,
+    deleteProduct,
     loading: loadingProducts,
     error: errorProducts,
   } = useProducts();
@@ -421,20 +423,25 @@ const AdminProducts = ({ className }) => {
               {products
                 .sort((a, b) => a.id - b.id)
                 .map((product) => {
-                  // const productImages = product.images
-                  //   .slice(1)
-                  //   .slice(0, product.images.length - 2)
-                  //   .split(", ")
-                  //   .map((img) => img.slice(1).slice(0, img.length - 2));
+                  let productImages = [];
+                  if (product.id > 100) {
+                    productImages = JSON.parse(product.images);
+                  } else {
+                    productImages = product.images
+                    .slice(1)
+                    .slice(0, product.images.length - 2)
+                    .split(", ")
+                    .map((img) => img.slice(1).slice(0, img.length - 2));
+                  }
                   return (
                     <TableRow key={product.id}>
                       <TableData alignment="center">{product.id}</TableData>
                       <TableData>
-                        {/* <Image
+                        <Image
                           source={productImages[0]}
                           maxHeight="50px"
                           paddingSize="0"
-                        /> */}
+                        />
                       </TableData>
                       <TableData>
                         {convertFirstLetterToUpperCase(product.name)}
