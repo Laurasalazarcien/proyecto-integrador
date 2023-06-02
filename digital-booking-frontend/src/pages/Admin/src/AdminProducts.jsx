@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
-import Form from "../../../components/Form";
+import Form, { HelperMessage, Label } from "../../../components/Form";
 import Dropdown from "../../../components/Dropdown";
 import FileLoader from "../../../components/FileUploader";
 import Pagination from "../../../components/Pagination";
@@ -26,13 +27,8 @@ import {
   TextArea,
 } from "../../../components/TextField";
 import Card, { CardBody } from "../../../components/Card";
+import Message from "../../../components/Message";
 import { Title } from "../../../components/Typography";
-
-import {
-  productsListMock,
-  categoriesDropdownMock,
-  brandsDropdownMock,
-} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
 import useProducts from "../../../hooks/useProducts";
@@ -52,11 +48,12 @@ const valideteForm = (form) => {
   }
 
   if (parseInt(form.stock) === 0) {
-    errors.stock = "Selecciona un valor mayor a cero.";
+    errors.stock = "Ingresa un valor mayor a cero.";
   }
 
-  if (form.price.trim().length === 0) {
-    errors.price = "Este campo no puede quedar vacio.";
+  console.log("Price ", form.price);
+  if (parseFloat(form.price) === 0) {
+    errors.price = "Ingresa un valor mayor a cero.";
   }
 
   if (form.description.trim().length <= 15) {
@@ -67,19 +64,34 @@ const valideteForm = (form) => {
   //   errors.image = "Ingresa almenos 15 caracteres.";
   // }
 
+  if (form.characteristics.length === 0) {
+    errors.characteristics = "Agrega al menos una característica.";
+  }
+
+  if (form.images.length === 0) {
+    errors.images = "Agrega al menos una imagen.";
+  }
+
   return errors;
 };
 
 const AdminProducts = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilSquare } = icons;
-  const [openModal, setModalVisibility] = useState(false);
+
   const [action, setAction] = useState("");
+  const [openModal, setModalVisibility] = useState(false);
+  const [characteristicsFields, setCharacteristicsFields] = useState([]);
+  const [imagesFields, setImagesFields] = useState([]);
+
   const componentClassnames = classNames(namespace, className);
 
   const {
     products,
+    setProducts,
     createProduct,
+    updateProduct,
+    deleteProduct,
     loading: loadingProducts,
     error: errorProducts,
   } = useProducts();
@@ -96,6 +108,8 @@ const AdminProducts = ({ className }) => {
     stock,
     price,
     description,
+    category,
+    brand,
     image,
     errors,
     handleChange,
@@ -109,86 +123,101 @@ const AdminProducts = ({ className }) => {
       stock: 0,
       price: 0,
       description: "",
-      image: "",
+      category: 1,
+      brand: 1,
+      images: [],
+      characteristics: [],
     },
     valideteForm
   );
 
+  // Modal Inputs handlers
   const handlConfirm = () => {
     const errors = valideteForm(form);
+    console.log({ form, errors });
     if (Object.entries(errors).length > 0) {
       setErrors(errors);
       return;
     }
-    // createProduct({
-    //   name: form.name,
-    //   price: form.price,
-    //   description: form.description,
-    //   category: categories.find(category => category.id === form.category),
-    //   brand: brands.find(brand => brand.id === form.brand)
-    // })
-    ProductsService.createProduct({
-      name: form.name,
-      stock: parseFloat(form.stock),
-      price: parseFloat(form.price),
-      description: form.description,
-      category: categories.find((category) => category.id === form.category),
-      brand: brands.find((brand) => brand.id === form.brand),
-      instrumentDetail: {
-        id: 1,
-        description: null,
-      },
-      status: {
-        id: 1,
-        name: "Comprado",
-      },
-      characteristics: "",
-    })
-    // fetch("http://localhost:8080/instruments", {
-    //   method: "POST",  
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Headers": "Content-Type",
-    //     "Access-Control-Allow-Origin": "https://www.example.com",
-    //     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-    //   },
-    //   body: JSON.stringify({
-    //     name: form.name,
-    //     stock: parseFloat(form.stock),
-    //     price: parseFloat(form.price),
-    //     description: form.description,
-    //     category: categories.find((category) => category.id === form.category),
-    //     brand: brands.find((brand) => brand.id === form.brand),
-    //     instrumentDetail: {
-    //       id: 1,
-    //       description: null,
-    //     },
-    //     status: {
-    //       id: 1,
-    //       name: "Comprado",
-    //     },
-    //     characteristics: "",
-    //   }),
-    // })
-      .then((resp) => {
-        console.log("Resp --> ", resp);
-      })
-      .catch((error) => {
-        console.log("Error ---> ", error);
-      });
-    // console.log({
-    //   name: form.name,
-    //   stock: parseFloat(form.stock),
-    //   price: parseFloat(form.price),
-    //   description: form.description,
-    //   category: categories.find((category) => category.id === form.category),
-    //   brand: brands.find((brand) => brand.id === form.brand),
-    // });
+    if (action === "edit") {
+      // ProductsService.editProduct({
+      //   id: 3,
+      //   name: "Saxofón Alto Yamaha Yas-480",
+      //   price: 750000,
+      //   description: "Instrumento de viento Yamaha",
+      //   characteristics: "",
+      //   images:
+      //     "['https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/diseno-sin-titulo-381-53541b3ea19ddfbaff16148453475630-640-0.png', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/1sxaym0480l_5_10241-314398e0944a83b0a016011040464796-640-0.jpg', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/1sxaym0480l_2_10241-002470f2076c6542e916011040463259-640-0.jpg', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/480thumb__21340-1467728555-1280-12801-729e075ac27432abed16011040466247-640-0.jpg']",
+      //   stock: 10,
+      //   category: {
+      //     id: 2,
+      //     name: "viento",
+      //     description:
+      //       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius eum at repudiandae recusandae quos ipsa cupiditate eaque perferendis modi veniam aliquid culpa dolorum doloribus, cum voluptas, harum, esse porro officia.",
+      //     image:
+      //       "https://img.freepik.com/foto-gratis/detalle-instrumento-trompeta-metal_150588-88.jpg?w=740&t=st=1685485276~exp=1685485876~hmac=6eba76446f2a2aa6201a7a70d1cbd32129ad37358169993fff6f51e8a1b02659",
+      //   },
+      //   brand: {
+      //     id: 3,
+      //     name: "pearl",
+      //   },
+      //   instrumentDetail: {
+      //     id: 1,
+      //     description: "En cromo",
+      //   },
+      //   status: {
+      //     id: 2,
+      //     name: "comprado",
+      //   },
+      //   bookings: null,
+      //   image: null,
+      // })
+      //   .then((resp) => {
+      //     console.log("Resp --> ", resp);
+      //   })
+      //   .catch((error) => {
+      //     console.log("Error ---> ", error);
+      //   });
+    } else {
+      const newProduct = {
+        name: form.name,
+        stock: parseFloat(form.stock),
+        price: parseFloat(form.price),
+        images: form.images,
+        description: form.description,
+        category: categories.find((category) => category.id === form.category),
+        brand: brands.find((brand) => brand.id === form.brand),
+        instrumentDetail: {
+          id: 1,
+          description: null,
+        },
+        status: {
+          id: 4,
+          name: "disponible",
+        },
+        characteristics: form.characteristics,
+      };
+      createProduct(newProduct)
+        .then((resp) => {
+          setModalVisibility(false);
+          setProducts([...products, newProduct]);
+          Swal.fire({
+            text: "Producto creado con éxito.",
+            icon: "success",
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "Ocurrió un error al crear el producto.",
+            icon: "error",
+          });
+        });
+    }
   };
 
   const handleOpenModal = (action) => {
-    setModalVisibility(true);
     setAction(action);
+    setModalVisibility(true);
   };
 
   const handleCloseModal = () => {
@@ -197,30 +226,159 @@ const AdminProducts = ({ className }) => {
   };
 
   const handleEditProduct = (productId) => {
-    handleOpenModal("edit");
-    const product = products.find(
-      (product) => product.id === productId
-    );
+    const product = products.find((product) => product.id === productId);
     setForm({
       ...form,
       ...product,
-      brand: form.brand,
-      category: form.category
+      brand: product.brand.id,
+      category: 3,
     });
+    setTimeout(() => {
+      handleOpenModal("edit");
+      console.log("Product ---> ", product);
+    }, 900);
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = (productId) => {
     Swal.fire({
       title: "Eliminar producto",
       text: "¿Estás seguro de eliminar este producto?",
-      icon: "error",
+      icon: "info",
       showCancelButton: true,
     }).then((resp) => {
       if (resp.isConfirmed) {
-        console.log("Delete product ...");
+        ProductsService.deleteProduct(productId)
+          .then((resp) => {
+            setModalVisibility(false);
+            setProducts(products.filter((product) => product.id !== productId));
+            Swal.fire({
+              text: "Producto eliminado con éxito.",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Ocurrió un error al eliminar el producto.",
+              icon: "error",
+            });
+          });
       }
     });
   };
+
+  // Characterustics Inputs handlers
+  const handleAddCharacteristicInput = () => {
+    const fieldId = uuidv4();
+    setCharacteristicsFields([
+      ...characteristicsFields,
+      {
+        id: fieldId,
+        inputs: [
+          {
+            label: "Característica",
+            property: "name",
+            value: "",
+          },
+          {
+            label: "Valor de la característica",
+            property: "value",
+            value: "",
+          },
+        ],
+      },
+    ]);
+  };
+
+  const handleDeleteCharacteristicInput = (inputId) => {
+    setCharacteristicsFields(
+      characteristicsFields.filter(
+        (characteristicInput) => characteristicInput.id !== inputId
+      )
+    );
+  };
+
+  const handleChangeCharacteristicField = (
+    fieldId,
+    propertyName,
+    propertyValue
+  ) => {
+    setCharacteristicsFields(
+      characteristicsFields.map((field) =>
+        field.id === fieldId
+          ? {
+              ...field,
+              inputs: field.inputs.map((input) =>
+                input.property === propertyName
+                  ? {
+                      ...input,
+                      value: propertyValue,
+                    }
+                  : {
+                      ...input,
+                    }
+              ),
+            }
+          : { ...field }
+      )
+    );
+  };
+
+  // Characterustics Inputs handlers
+  const handleAddImageInput = () => {
+    const fieldId = uuidv4();
+    setImagesFields([
+      ...imagesFields,
+      {
+        id: fieldId,
+        label: "Ingresa la URL de la imagen",
+        url: "",
+      },
+    ]);
+  };
+
+  const handleDeleteImageInput = (inputId) => {
+    setImagesFields(
+      imagesFields.filter((imageInput) => imageInput.id !== inputId)
+    );
+  };
+
+  const handleChangeImageField = (fieldId, propertyValue) => {
+    setImagesFields(
+      imagesFields.map((field) =>
+        field.id === fieldId
+          ? {
+              ...field,
+              url: propertyValue,
+            }
+          : { ...field }
+      )
+    );
+  };
+
+  useEffect(() => {
+    const characterusticsData = characteristicsFields.map((field) => ({
+      name: field.inputs.find((input) => input.property === "name").value,
+      value: field.inputs.find((input) => input.property === "value").value,
+    }));
+    if (characterusticsData.length > 0) {
+      setErrors(valideteForm(form));
+      setForm({
+        ...form,
+        characteristics: JSON.stringify(characterusticsData),
+      });
+    }
+  }, [characteristicsFields]);
+
+  useEffect(() => {
+    const imagesData = imagesFields.map((image) => image.url);
+    if (imagesData.length > 0) {
+      setErrors(valideteForm(form));
+      setForm({
+        ...form,
+        images: JSON.stringify(imagesData),
+      });
+    }
+  }, [imagesFields]);
 
   return (
     <Container className={componentClassnames}>
@@ -246,28 +404,35 @@ const AdminProducts = ({ className }) => {
         element="section"
       >
         {loadingProducts ? (
-          <div>Cargando...</div>
+          <TableSkeleton className="products-table" />
         ) : (
           <Table>
             <TableHead>
               <TableRow>
                 <TableHeading alignment="center">#</TableHeading>
-                <TableHeading>Image</TableHeading>
-                <TableHeading>Name</TableHeading>
-                <TableHeading>Description</TableHeading>
-                <TableHeading>Stock</TableHeading>
-                <TableHeading>Actions</TableHeading>
+                <TableHeading alignment="center">Imagen</TableHeading>
+                <TableHeading>Nombre</TableHeading>
+                <TableHeading>Descripción</TableHeading>
+                <TableHeading alignment="center">Existencias</TableHeading>
+                <TableHeading alignment="center">Marca</TableHeading>
+                <TableHeading>Categoría</TableHeading>
+                <TableHeading alignment="center">Acciones</TableHeading>
               </TableRow>
             </TableHead>
             <TableBody>
               {products
                 .sort((a, b) => a.id - b.id)
                 .map((product) => {
-                  const productImages = product.images
+                  let productImages = [];
+                  if (product.id > 100) {
+                    productImages = JSON.parse(product.images);
+                  } else {
+                    productImages = product.images
                     .slice(1)
                     .slice(0, product.images.length - 2)
                     .split(", ")
                     .map((img) => img.slice(1).slice(0, img.length - 2));
+                  }
                   return (
                     <TableRow key={product.id}>
                       <TableData alignment="center">{product.id}</TableData>
@@ -285,6 +450,12 @@ const AdminProducts = ({ className }) => {
                         {convertFirstLetterToUpperCase(product.description)}
                       </TableData>
                       <TableData alignment="center">{product.stock}</TableData>
+                      <TableData alignment="center">
+                        {convertFirstLetterToUpperCase(product.brand.name)}
+                      </TableData>
+                      <TableData>
+                        {convertFirstLetterToUpperCase(product.category.name)}
+                      </TableData>
                       <TableData
                         alignment="center"
                         className="table__data--actions"
@@ -299,7 +470,7 @@ const AdminProducts = ({ className }) => {
                         <Button
                           paddingSize="0"
                           hierarchy="transparent"
-                          onClick={handleDeleteProduct}
+                          onClick={() => handleDeleteProduct(product.id)}
                         >
                           <TrashFill />
                         </Button>
@@ -310,7 +481,7 @@ const AdminProducts = ({ className }) => {
             </TableBody>
           </Table>
         )}
-        {/* {!loadingProducts && (
+        {!loadingProducts && products.length > 0 && (
           <Container
             display="flex"
             alignItems="center"
@@ -324,7 +495,7 @@ const AdminProducts = ({ className }) => {
               nummerOfPages={5}
             />
           </Container>
-        )} */}
+        )}
       </Container>
       <Modal
         title={action === "add" ? "Agregar producto" : "Editar producto"}
@@ -375,6 +546,16 @@ const AdminProducts = ({ className }) => {
                 helperMessage={errors.description}
                 modifier={errors.description && "error"}
               />
+              {errorCategories && (
+                <Message hierarchy="quiet" type="error" marginBottom="8">
+                  Ocurrió un error al cargar las categorías.
+                </Message>
+              )}
+              {errorBrands && (
+                <Message hierarchy="quiet" type="error" marginBottom="8">
+                  Ocurrió un error al cargar las marcas.
+                </Message>
+              )}
               {!loadingCategories && categories.length > 0 && (
                 <Dropdown
                   id="category"
@@ -387,7 +568,7 @@ const AdminProducts = ({ className }) => {
                   }))}
                   modifier=""
                   helperMessage=""
-                  selectedOption={1}
+                  selectedOption={category}
                   onSelectOption={(option) => {
                     setForm({
                       ...form,
@@ -409,7 +590,7 @@ const AdminProducts = ({ className }) => {
                   }))}
                   modifier=""
                   helperMessage=""
-                  selectedOption={1}
+                  selectedOption={brand}
                   onSelectOption={(option) => {
                     setForm({
                       ...form,
@@ -419,13 +600,122 @@ const AdminProducts = ({ className }) => {
                   fullWidth
                 />
               )}
-              <FileLoader
+              <Container className="characteristics-inputs" marginBottom="12">
+                <Label label="Caracerísticas" />
+                <Container
+                  display="flex"
+                  flexDirection="column"
+                  spaceBetweenItems="8"
+                  marginBottom={characteristicsFields.length > 0 ? "8" : "0"}
+                >
+                  {characteristicsFields.map((field, fieldIndex) => (
+                    <Container
+                      key={field.id}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      spaceBetweenItems="12"
+                      className="characteristics__field"
+                    >
+                      <Container className="characteristics__field-inputs">
+                        {field.inputs.map((input) => {
+                          return (
+                            <TextInput
+                              key={input.property}
+                              placeholder={input.label}
+                              value={input.value}
+                              helperMessage=""
+                              modifier=""
+                              onChange={(e) =>
+                                handleChangeCharacteristicField(
+                                  field.id,
+                                  input.property,
+                                  e.target.value
+                                )
+                              }
+                            />
+                          );
+                        })}
+                      </Container>
+                      {characteristicsFields.length > 1 && fieldIndex !== 0 && (
+                        <Button
+                          modifier="error"
+                          onClick={() =>
+                            handleDeleteCharacteristicInput(field.id)
+                          }
+                        >
+                          <TrashFill />
+                        </Button>
+                      )}
+                    </Container>
+                  ))}
+                </Container>
+                <Container display="flex">
+                  <Button
+                    onClick={handleAddCharacteristicInput}
+                    marginRight="8"
+                  >
+                    Agregar
+                  </Button>
+                  {errors.characteristics && (
+                    <HelperMessage
+                      message={errors.characteristics}
+                      modifier={errors.characteristics && "error"}
+                    />
+                  )}
+                </Container>
+              </Container>
+              <Container className="images-inputs">
+                <Label label="Imágenes" />
+                <Container
+                  display="flex"
+                  flexDirection="column"
+                  spaceBetweenItems="8"
+                  marginBottom={imagesFields.length > 0 ? "8" : "0"}
+                >
+                  {imagesFields.map((field, fieldIndex) => (
+                    <Container key={field.id} className="image__field">
+                      <TextInput
+                        key={field.id}
+                        placeholder={field.label}
+                        value={field.value}
+                        helperMessage=""
+                        modifier=""
+                        fullWidth
+                        onChange={(e) =>
+                          handleChangeImageField(field.id, e.target.value)
+                        }
+                      />
+                      {imagesFields.length > 1 && fieldIndex !== 0 && (
+                        <Button
+                          modifier="error"
+                          onClick={() => handleDeleteImageInput(field.id)}
+                        >
+                          <TrashFill />
+                        </Button>
+                      )}
+                    </Container>
+                  ))}
+                </Container>
+                <Container display="flex">
+                  <Button onClick={handleAddImageInput} marginRight="8">
+                    Agregar
+                  </Button>
+                  {errors.images && (
+                    <HelperMessage
+                      message={errors.images}
+                      modifier={errors.images && "error"}
+                    />
+                  )}
+                </Container>
+              </Container>
+              {/* <FileLoader
                 id="imagea"
                 name="images"
                 label="Imáganes"
                 helperMessage=""
                 modifier=""
-              />
+              /> */}
             </Form>
           </CardBody>
         </Card>

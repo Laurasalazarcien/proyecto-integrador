@@ -57,12 +57,6 @@ public class BrandService implements IBrandService {
 
     @Override
     public Set<BrandDTO> getAll() {
-//        List<Category> categories = categoryRepository.findAll();
-//        Set<CategoryDTO> categoryDTO = new HashSet<>();
-//
-//        for (Category category : categories) {
-//            categoryDTO.add(mapper.convertValue(category, CategoryDTO.class));
-//        }
         List<Brand> brands = brandRepository.findAll();
         Set<BrandDTO> brandDTO = new HashSet<>();
 

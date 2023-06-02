@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import CategoriesService from "../services/categories";
 
-const useCategories = () => {
+const useCategories = ({ id } = {}) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -10,11 +9,14 @@ const useCategories = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await CategoriesService.getAllCategories();
-      setTimeout(() => {
-        setCategories(data);
-        setLoading(false);
-      }, 500);
+      let data = [];
+      if (id) {
+        data = await CategoriesService.getCategoryById(id);
+      } else {
+        data = await CategoriesService.getAllCategories();
+      }
+      setCategories(data);
+      setLoading(false);
     } catch (error) {
       setErrors(error);
       setLoading(false);
@@ -25,20 +27,21 @@ const useCategories = () => {
     fetchData();
   }, []);
 
-  const createCategory = () => {
-    // TODO: Implements function
+  const createCategory = (category) => {
+    return CategoriesService.createCategory(category);
   };
 
-  const updateCategory = (productId) => {
-    // TODO: Implements function
+  const updateCategory = (category) => {
+    return CategoriesService.updateCategory(category);
   };
 
-  const deleteCategory = (productId) => {
-    // TODO: Implements function
+  const deleteCategory = (categoryId) => {
+    return CategoriesService.deleteCategory(categoryId);
   };
 
   return {
     categories,
+    setCategories,
     createCategory,
     updateCategory,
     deleteCategory,

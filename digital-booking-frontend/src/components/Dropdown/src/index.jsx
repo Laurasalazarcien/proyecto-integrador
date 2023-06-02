@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import VariantDropdown from "./Dropdown";
 import { DropdownProvider } from "./context/DropdownContext";
+import { useEffect } from 'react';
 
 const DropdownContainer = ({
   id,
@@ -24,6 +25,11 @@ const DropdownContainer = ({
     isOpen: false,
     isLoading: false,
   };
+
+  useEffect(() => {
+    console.log('Change selected: ', selectedOption);
+  }, [selectedOption])
+  
 
   return (
     <DropdownProvider

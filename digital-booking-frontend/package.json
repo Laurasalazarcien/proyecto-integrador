@@ -27,7 +27,8 @@
     "react-slideshow-image": "^4.2.1",
     "sass": "^1.62.1",
     "sweetalert2": "^11.7.5",
-    "swiper": "^9.3.2"
+    "swiper": "^9.3.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

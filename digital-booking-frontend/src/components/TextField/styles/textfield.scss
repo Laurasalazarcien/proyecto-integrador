@@ -2,6 +2,8 @@
   margin-bottom: $db-spacing-12;
 
   &--full-width {
+    width: 100%;
+    
     .textfield__input,
     .textfield__textarea {
       width: 100%;

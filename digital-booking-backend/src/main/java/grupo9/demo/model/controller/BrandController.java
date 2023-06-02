@@ -17,28 +17,32 @@ public class BrandController {
     @Autowired
     IBrandService brandService;
 
-
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createBrand(@RequestBody BrandDTO brandDTO){
         brandService.createBrand(brandDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
     public BrandDTO getBrand(@PathVariable Long id){return brandService.readBrand(id);}
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
     public ResponseEntity<?> modifyBrand(@RequestBody BrandDTO brandDTO){
         brandService.modifyBrand(brandDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeBrand(@PathVariable Long id) {
         brandService.removeBrand(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping
     public Collection<BrandDTO> getallBrands(){
         return brandService.getAll();

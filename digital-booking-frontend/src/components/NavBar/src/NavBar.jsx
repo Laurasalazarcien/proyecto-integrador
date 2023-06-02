@@ -101,7 +101,7 @@ const NavBar = ({
               Iniciar sesión
             </Button>
           </ListItem>
-          <ListItem>
+          {/* <ListItem>
             <Button
               icon={<BoxArrowLeft />}
               onClick={() => {
@@ -111,7 +111,7 @@ const NavBar = ({
             >
               Salir
             </Button>
-          </ListItem>
+          </ListItem> */}
         </List>
       </Container>
     </nav>

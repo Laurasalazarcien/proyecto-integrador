@@ -16,30 +16,34 @@ public class InstrumentController {
     @Autowired
     IInstrumentService instrumentService;
 
-
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createInstrument(@RequestBody InstrumentDTO instrumentDTO){
         instrumentService.createInstrument(instrumentDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
     public InstrumentDTO getInstrument(@PathVariable Long id){
         return instrumentService.readInstrument(id);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
     public ResponseEntity<?> modifyInstrument(@RequestBody InstrumentDTO instrumentDTO){
         instrumentService.modifyInstrument(instrumentDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeInstrument(@PathVariable Long id) {
         instrumentService.removeInstrument(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping
     public Collection<InstrumentDTO> getAllInstruments(){
         return instrumentService.getAll();

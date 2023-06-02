@@ -17,30 +17,34 @@ public class UserController {
     @Autowired
     IUserService userService;
 
-
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
         userService.createUser(userDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
     public UserDTO getUser(@PathVariable Long id){
         return userService.readUser(id);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
     public ResponseEntity<?> modifyUser(@RequestBody UserDTO userDTO){
         userService.modifyUser(userDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeUser(@PathVariable Long id) {
         userService.removeUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping
     public Collection<UserDTO> getallUsers(){
         return userService.getAll();
