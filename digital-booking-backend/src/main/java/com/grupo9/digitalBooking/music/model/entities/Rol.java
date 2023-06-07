@@ -24,4 +24,13 @@ public class Rol {
     @JsonIgnore
     private Set<User> user;
 
+
+    @Override
+    public String toString() {
+        return "Rol{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

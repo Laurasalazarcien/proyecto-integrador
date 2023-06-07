@@ -7,9 +7,9 @@ import java.util.Set;
 
 public interface IRolService {
 
-    Boolean createRol(RolDTO rolDTO);
+    RolDTO createRol(RolDTO rolDTO);
     RolDTO readRol(Long id);
-    Boolean modifyRol(RolDTO rolDTO);
-    void removeRol(Long id);
+    RolDTO modifyRol(RolDTO rolDTO);
+    Boolean removeRol(Long id);
     Set<RolDTO> getAll();
 }

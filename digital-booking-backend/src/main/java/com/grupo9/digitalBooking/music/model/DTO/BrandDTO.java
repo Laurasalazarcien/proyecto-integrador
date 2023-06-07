@@ -10,6 +10,14 @@ public class BrandDTO {
 
     private Long id;
     private String name;
+    private String icon;
 
-
+    @Override
+    public String toString() {
+        return "BrandDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                '}';
+    }
 }

@@ -12,9 +12,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Service
 public class BrandService implements IBrandService {
+
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(BrandService.class));
 
     @Autowired
     private IBrand brandRepository;
@@ -23,14 +26,25 @@ public class BrandService implements IBrandService {
     ObjectMapper mapper;
 
 
-    private void saveBrand(BrandDTO brandDTO){
-        Brand brand =mapper.convertValue(brandDTO, Brand.class);
-        brandRepository.save(brand);
+    private BrandDTO saveBrand(BrandDTO brandDTO){
+        Brand brand = mapper.convertValue(brandDTO, Brand.class);
+        BrandDTO result = mapper.convertValue(brandRepository.save(brand), BrandDTO.class);
+        return result;
+    }
+
+    private Boolean existById(Long id) {
+        return brandRepository.findById(id).isPresent();
     }
 
     @Override
-    public void createBrand(BrandDTO brandDTO) {
-        saveBrand(brandDTO);
+    public BrandDTO createBrand(BrandDTO brandDTO) {
+        BrandDTO response = null;
+        Boolean existBrand = brandRepository.findByName(brandDTO.getName()).isPresent();
+        if(!existBrand) {
+            response = saveBrand(brandDTO);
+        }
+        LOGGER.info("respuesta: " + response);
+        return response;
     }
 
     @Override
@@ -44,13 +58,25 @@ public class BrandService implements IBrandService {
     }
 
     @Override
-    public void modifyBrand(BrandDTO brandDTO) {
-        saveBrand(brandDTO);
+    public BrandDTO modifyBrand(BrandDTO brandDTO) {
+        BrandDTO response = null;
+        Boolean existBrand = existById(brandDTO.getId());
+        if(existBrand) {
+            response = saveBrand(brandDTO);
+        }
+        return response;
     }
 
     @Override
-    public void removeBrand(Long id) {
-        brandRepository.deleteById(id);
+    public Boolean removeBrand(Long id) {
+        Boolean response = false;
+        Boolean existBrand = existById(id);
+
+        if(existBrand) {
+            brandRepository.deleteById(id);
+            response = true;
+        }
+        return response;
     }
 
     @Override

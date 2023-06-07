@@ -18,10 +18,19 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "brand_sequence")
     private Long id;
     private String name;
+    private String icon;
 
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
     private Set<Instrument> instrument;
 
-
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                ", instrument=" + instrument +
+                '}';
+    }
 }

@@ -6,10 +6,10 @@ import java.util.Set;
 
 public interface ICategoryService {
 
-    void createCategory(CategoryDTO categoryDTO);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
     CategoryDTO readCategory(Long id);
-    void modifyCategory(CategoryDTO categoryDTO);
-    void removeCategory(Long id);
+    CategoryDTO modifyCategory(CategoryDTO categoryDTO);
+    Boolean removeCategory(Long id);
     Set<CategoryDTO> getAll();
 
 }

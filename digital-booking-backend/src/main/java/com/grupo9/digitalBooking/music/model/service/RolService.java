@@ -27,21 +27,23 @@ public class RolService implements IRolService {
      * Realiza la acción de guardar y actualizar
      *
      * */
-    private void saveRol(RolDTO rolDTO){
+    private RolDTO saveRol(RolDTO rolDTO){
         Rol rol = mapper.convertValue(rolDTO, Rol.class);
-        rolRepository.save(rol);
+        RolDTO result = mapper.convertValue(rolRepository.save(rol), RolDTO.class);
+        return result;
+    }
+    private Boolean existById(Long id) {
+        return rolRepository.findById(id).isPresent();
     }
 
     @Override
-    public Boolean createRol(RolDTO rolDTO) {
-        Boolean response = false;
+    public RolDTO createRol(RolDTO rolDTO) {
+        RolDTO response = null;
         Boolean existRol = rolRepository.findByName(rolDTO.getName()).isPresent();
         if(!existRol) {
-            // rolRepository.save(mapper.convertValue(rolDTO, Rol.class));
-            saveRol(rolDTO);
-            response = true;
+            response = saveRol(rolDTO);
         }
-        LOGGER.info("existe: " + existRol);
+        LOGGER.info("respuesta: " + response);
         return response;
     }
 
@@ -68,22 +70,30 @@ public class RolService implements IRolService {
     }
 
     @Override
-    public Boolean modifyRol(RolDTO rolDTO) {
+    public RolDTO modifyRol(RolDTO rolDTO) {
 
         LOGGER.info("Update Rol..." + " - " + rolDTO.getId());
-        Boolean response = false;
-        Boolean validateRol = rolRepository.findById(rolDTO.getId()).isPresent();
+        RolDTO response = null;
+        Boolean validateRol = existById(rolDTO.getId());
 
         if(validateRol) {
-            response = true;
-            saveRol(rolDTO);
+            response = saveRol(rolDTO);
         }
+        LOGGER.info("response: " + response);
         return response;
     }
 
     @Override
-    public void removeRol(Long id) {
-        rolRepository.deleteById(id);
+    public Boolean removeRol(Long id) {
+
+        Boolean response = false;
+        Boolean exist = existById(id);
+        if(exist) {
+            rolRepository.deleteById(id);
+            response = true;
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
 }
