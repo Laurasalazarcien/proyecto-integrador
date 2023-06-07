@@ -2,6 +2,7 @@ package com.grupo9.digitalBooking.music.model.service.InterfacesService;
 
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
 
+import java.util.List;
 import java.util.Set;
 
 public interface IInstrumentService {
@@ -11,4 +12,5 @@ public interface IInstrumentService {
     void modifyInstrument(InstrumentDTO instrumentDTO);
     void removeInstrument(Long id);
     Set<InstrumentDTO> getAll();
+    List<InstrumentDTO> getInstrumentsByCategory(Long id);
 }
