@@ -20,8 +20,15 @@ public class UserController {
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
-        userService.createUser(userDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The role already exists");
+        UserDTO createUser = userService.createUser(userDTO);
+        if(createUser != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(createUser);
+
+        }
+        return response;
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")

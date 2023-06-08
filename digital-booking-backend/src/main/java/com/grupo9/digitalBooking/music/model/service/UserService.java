@@ -1,6 +1,7 @@
 package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
 import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
 import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @Service
 public class UserService implements IUserService {
@@ -19,19 +21,32 @@ public class UserService implements IUserService {
     @Autowired
     private IUser userRepository;
 
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(UserService.class));
+
     @Autowired
     ObjectMapper mapper;
 
-    private void saveUser(UserDTO userDTO){
-        User user =mapper.convertValue(userDTO, User.class);
-        userRepository.save(user);
+    private UserDTO saveUser(UserDTO userDTO){
+        User user = mapper.convertValue(userDTO, User.class);
+        UserDTO result = mapper.convertValue(userRepository.save(user), UserDTO.class);
+
+        return result;
     }
 
-
+    private Boolean existById(Long id) {
+        return userRepository.findById(id).isPresent();
+    }
 
     @Override
-    public void createUser(UserDTO userDTO) {
-        saveUser(userDTO);
+    public UserDTO createUser(UserDTO userDTO) {
+        UserDTO response = null;
+        Boolean existRol = userRepository.findByEmail(userDTO.getEmail()).isPresent();
+        if(!existRol) {
+
+            response = saveUser(userDTO);
+        }
+        LOGGER.info("respuesta: " + response);
+        return response;
     }
 
     @Override

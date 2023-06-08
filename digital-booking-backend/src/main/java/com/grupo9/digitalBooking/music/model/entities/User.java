@@ -23,7 +23,8 @@ public class User {
     private String lastName;
     private String dni;
     private String password;
-
+    private String email;
+    private Boolean verify = false;
 
     @ManyToOne
     @JoinColumn(name = "rol_id")
