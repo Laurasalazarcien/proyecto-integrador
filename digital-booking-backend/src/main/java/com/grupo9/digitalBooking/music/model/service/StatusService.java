@@ -8,7 +8,11 @@ import com.grupo9.digitalBooking.music.model.service.InterfacesService.IStatusSe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.logging.Logger;
 
 @Service
 public class StatusService implements IStatusService {
@@ -16,12 +20,19 @@ public class StatusService implements IStatusService {
     @Autowired
     private IStatus statusRepository;
 
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(RolService.class));
+
     @Autowired
     ObjectMapper mapper;
 
-    private void saveStatus(StatusDTO statusDTO){
+    private StatusDTO saveStatus(StatusDTO statusDTO){
         Status status =mapper.convertValue(statusDTO, Status.class);
-        statusRepository.save(status);
+        StatusDTO result = mapper.convertValue(statusRepository.save(status), StatusDTO.class);
+        return result;
+    }
+
+    private Boolean existById(Long id) {
+        return statusRepository.findById(id).isPresent();
     }
 
     @Override
@@ -35,17 +46,46 @@ public class StatusService implements IStatusService {
         StatusDTO statusDTO = null;
         if(status.isPresent())
             statusDTO = mapper.convertValue(status, StatusDTO.class);
+
         return statusDTO;
     }
 
+
     @Override
-    public void modifyStatus(StatusDTO statusDTO) {
-        saveStatus(statusDTO);
+    public StatusDTO modifyStatus(StatusDTO statusDTO) {
+
+        StatusDTO response = null;
+        Boolean validateStatus = existById(statusDTO.getId());
+
+        if(validateStatus) {
+            response = saveStatus(statusDTO);
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
     @Override
-    public void removeStatus(Long id) {
-        statusRepository.deleteById(id);
+    public Boolean removeStatus(Long id) {
+        Boolean response = false;
+        Boolean exist = existById(id);
+        if(exist) {
+            statusRepository.deleteById(id);
+            response = true;
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
+    @Override
+    public Set<StatusDTO> getAll() {
+        List<Status> status = statusRepository.findAll();
+        Set<StatusDTO> statusDTO = new HashSet<>();
+
+        for (Status status1 : status) {
+            statusDTO.add(mapper.convertValue(status1, StatusDTO.class));
+        }
+
+        return statusDTO;
+
+    }
 }

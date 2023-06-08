@@ -1,35 +1,40 @@
 package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.grupo9.digitalBooking.music.model.service.InterfacesService.IDetailInstrumentService;
+import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentDetailService;
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDetailDTO;
 import com.grupo9.digitalBooking.music.model.entities.InstrumentDetail;
 import com.grupo9.digitalBooking.music.model.repository.IInstrumentDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.logging.Logger;
 
 @Service
-public class InstrumentDetailService implements IDetailInstrumentService {
+public class InstrumentDetailService implements IInstrumentDetailService {
 
     @Autowired
     private IInstrumentDetail instrumentDetailRepository;
 
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(RolService.class));
+
     @Autowired
     ObjectMapper mapper;
 
-    private void saveDetail(InstrumentDetailDTO instrumentDetailDTO){
-        InstrumentDetail instrumentDetail =mapper.convertValue(instrumentDetailDTO, InstrumentDetail.class);
-        instrumentDetailRepository.save(instrumentDetail);
+    private InstrumentDetailDTO saveInstrumentDetail(InstrumentDetailDTO InstrumentDetailDTO){
+        InstrumentDetail instrumentDetail =mapper.convertValue(InstrumentDetailDTO, InstrumentDetail.class);
+        InstrumentDetailDTO result = mapper.convertValue(instrumentDetailRepository.save(instrumentDetail), InstrumentDetailDTO.class);
+        return result;
+    }
+
+    private Boolean existById(Long id) {
+        return instrumentDetailRepository.findById(id).isPresent();
     }
 
     @Override
     public void createInstrumentDetail(InstrumentDetailDTO instrumentDetailDTO) {
-        saveDetail(instrumentDetailDTO);
+        saveInstrumentDetail(instrumentDetailDTO);
     }
 
     @Override
@@ -44,26 +49,53 @@ public class InstrumentDetailService implements IDetailInstrumentService {
 
 
     @Override
-    public void modifyDetail(InstrumentDetailDTO instrumentDetailDTO) {
-        saveDetail(instrumentDetailDTO);
+    public InstrumentDetailDTO modifyInstrumentDetail(InstrumentDetailDTO instrumentDetailDTO) {
+
+        InstrumentDetailDTO response = null;
+        Boolean validateInstrumentDetail = existById(instrumentDetailDTO.getId());
+
+        if(validateInstrumentDetail) {
+            response = saveInstrumentDetail(instrumentDetailDTO);
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
     @Override
-    public void removeDetail(Long id) {
-        instrumentDetailRepository.deleteById(id);
+    public Boolean removeInstrumentDetail(Long id) {
+        Boolean response = false;
+        Boolean exist = existById(id);
+        if(exist) {
+            instrumentDetailRepository.deleteById(id);
+            response = true;
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
     @Override
     public Set<InstrumentDetailDTO> getAll() {
-        List<InstrumentDetail> instrumentDetails = instrumentDetailRepository.findAll();
-        Set<InstrumentDetailDTO> instrumentDetailDTOS = new HashSet<>();
+        List<InstrumentDetail> instrumentDetail = instrumentDetailRepository.findAll();
+        Set<InstrumentDetailDTO> instrumentDetailDTO = new HashSet<>();
 
-        for (InstrumentDetail instrumentDetail : instrumentDetails) {
-            instrumentDetailDTOS.add(mapper.convertValue(instrumentDetail, InstrumentDetailDTO.class));
+        for (InstrumentDetail InstrumentDetails : instrumentDetail) {
+            instrumentDetailDTO.add(mapper.convertValue(InstrumentDetails, InstrumentDetailDTO.class));
         }
 
-        return instrumentDetailDTOS;
+        return instrumentDetailDTO;
 
     }
+    @Override
+    public List<InstrumentDetailDTO> getInstrumentDetailsByInstrument(Long id) {
+        // Category category = mapper.convertValue(instrumentRepository.findById(id), Category.class);
+        // LOGGER.info("categoryId2: " + category);
+        List<InstrumentDetail> instrumentDetails = instrumentDetailRepository.findByInstrumentDetailId(id);
+        List<InstrumentDetailDTO> instrumentDetailDTOList = new ArrayList<>();
+        instrumentDetails.forEach(instrument -> instrumentDetailDTOList
+                .add(mapper.convertValue(instrumentDetails, InstrumentDetailDTO.class)));
 
+        System.out.println("===== Instruments =====");
+        instrumentDetailDTOList.forEach((instrumentDetail) -> LOGGER.info("InstrumentDetail: " + instrumentDetail));
+        return instrumentDetailDTOList;
+    }
 }

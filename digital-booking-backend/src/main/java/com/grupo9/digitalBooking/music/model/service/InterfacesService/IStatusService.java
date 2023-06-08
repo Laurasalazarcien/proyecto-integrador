@@ -1,11 +1,15 @@
 package com.grupo9.digitalBooking.music.model.service.InterfacesService;
 
+
 import com.grupo9.digitalBooking.music.model.DTO.StatusDTO;
+
+import java.util.Set;
 
 public interface IStatusService {
     void createStatus(StatusDTO statusDTO);
     StatusDTO readStatus(Long id);
-    void modifyStatus(StatusDTO statusDTO);
-    void removeStatus(Long id);
+    StatusDTO modifyStatus(StatusDTO statusDTO);
+    Boolean removeStatus(Long id);
+    Set<StatusDTO> getAll();
 
 }

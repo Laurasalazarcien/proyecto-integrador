@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/status")
 public class StatusController {
@@ -16,27 +18,71 @@ public class StatusController {
     IStatusService statusService;
 
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createStatus(@RequestBody StatusDTO statusDTO){
-        statusService.createStatus(statusDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The category already exists");
+        StatusDTO isExist = statusService.createStatus(statusDTO);
+        if(isExist != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(isExist);
+        }
+        return response;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
-    public StatusDTO getStatus(@PathVariable Long id){
-        return statusService.readStatus(id);
+    public ResponseEntity<?> getStatus(@PathVariable Long id){
+
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The status with " + id + " does not exist");
+        StatusDTO isExist = statusService.readStatus(id);
+        if(isExist != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(isExist);
+        }
+        return response;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
     public ResponseEntity<?> modifyStatus(@RequestBody StatusDTO statusDTO){
-        statusService.modifyStatus(statusDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Message: The status "+ statusDTO.getId() +" does not exist");
+        StatusDTO isModified = statusService.modifyStatus(statusDTO);
+        if(isModified != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body("Message: Status " + statusDTO.getId() + " was update");
+        }
+        return response;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeStatus(@PathVariable Long id) {
-        statusService.removeStatus(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Message: The category " + id + " does not exist");
+        Boolean wasDelete = statusService.removeStatus(id);
+        if(wasDelete) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body("Message: Status was delete");
+        }
+        return response;
+    }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
+    @GetMapping
+    public ResponseEntity<?> getallStatus(){
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: There are not information");
+        Set<StatusDTO> status = statusService.getAll();
+
+        if(status.size() > 0) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(status);
+        }
+        return response;
     }
 
 }

@@ -9,9 +9,13 @@
         <module name="music" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="digital-booking-backend" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="digital-booking-backend" options="-parameters" />
       <module name="music" options="-parameters" />
     </option>
   </component>

@@ -1,48 +1,64 @@
 package com.grupo9.digitalBooking.music.model.controller;
 
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDetailDTO;
-import com.grupo9.digitalBooking.music.model.service.InterfacesService.IDetailInstrumentService;
+import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/instrumentDetails")
 
 public class InstrumentDetailController {
     @Autowired
-    IDetailInstrumentService detailInstrumentService;
+    IInstrumentDetailService instrumentDetailService;
+
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(InstrumentController.class));
 
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
-    public ResponseEntity<?> createDetail(@RequestBody InstrumentDetailDTO instrumentDetailDTO){
-        detailInstrumentService.createInstrumentDetail(instrumentDetailDTO);
+    public ResponseEntity<?> createInstrumentDetail(@RequestBody InstrumentDetailDTO instrumentDetailDTO){
+        instrumentDetailService.createInstrumentDetail(instrumentDetailDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
-    public InstrumentDetailDTO getDetail(@PathVariable Long id){
-        return detailInstrumentService.readInstrumentDetail(id);
+    public InstrumentDetailDTO getInstrumentDetail(@PathVariable Long id){
+        return instrumentDetailService.readInstrumentDetail(id);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
-    public ResponseEntity<?> modifyDetail(@RequestBody InstrumentDetailDTO instrumentDetailDTO){
-        detailInstrumentService.modifyDetail(instrumentDetailDTO);
+    public ResponseEntity<?> modifyInstrumentDetail(@RequestBody InstrumentDetailDTO instrumentDetailDTO){
+        instrumentDetailService.modifyInstrumentDetail(instrumentDetailDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeDetail(@PathVariable Long id) {
-        detailInstrumentService.removeDetail(id);
+    public ResponseEntity<?> removeInstrumentDetail(@PathVariable Long id) {
+        instrumentDetailService.removeInstrumentDetail(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping
-    public Collection<InstrumentDetailDTO> getAllDetails(){
-        return detailInstrumentService.getAll();
+    public Collection<InstrumentDetailDTO> getAllInstrumentDetails(){
+        return instrumentDetailService.getAll();
+    }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
+    @GetMapping("/category/{categoryId}")
+    public List<InstrumentDetailDTO> getInstrumentsDetailByInstrument(@PathVariable Long instrumentDetailId) {
+        LOGGER.info("categoryId: " + instrumentDetailId);
+        return instrumentDetailService.getInstrumentDetailsByInstrument(instrumentDetailId);
     }
 
 }
