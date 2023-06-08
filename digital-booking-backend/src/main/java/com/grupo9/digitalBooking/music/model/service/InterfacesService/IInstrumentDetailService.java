@@ -13,6 +13,4 @@ public interface IInstrumentDetailService {
     InstrumentDetailDTO modifyInstrumentDetail(InstrumentDetailDTO instrumentDetailDTO);
     Boolean removeInstrumentDetail(Long id);
     Set<InstrumentDetailDTO> getAll();
-    List<InstrumentDetailDTO> getInstrumentDetailsByInstrument(Long id);
-
 }

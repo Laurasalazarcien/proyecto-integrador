@@ -6,7 +6,7 @@ import com.grupo9.digitalBooking.music.model.DTO.StatusDTO;
 import java.util.Set;
 
 public interface IStatusService {
-    void createStatus(StatusDTO statusDTO);
+    StatusDTO createStatus(StatusDTO statusDTO);
     StatusDTO readStatus(Long id);
     StatusDTO modifyStatus(StatusDTO statusDTO);
     Boolean removeStatus(Long id);

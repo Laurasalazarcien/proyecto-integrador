@@ -54,11 +54,6 @@ public class InstrumentDetailController {
         return instrumentDetailService.getAll();
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:5173")
-    @GetMapping("/category/{categoryId}")
-    public List<InstrumentDetailDTO> getInstrumentsDetailByInstrument(@PathVariable Long instrumentDetailId) {
-        LOGGER.info("categoryId: " + instrumentDetailId);
-        return instrumentDetailService.getInstrumentDetailsByInstrument(instrumentDetailId);
-    }
+
 
 }

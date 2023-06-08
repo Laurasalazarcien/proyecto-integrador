@@ -85,17 +85,4 @@ public class InstrumentDetailService implements IInstrumentDetailService {
         return instrumentDetailDTO;
 
     }
-    @Override
-    public List<InstrumentDetailDTO> getInstrumentDetailsByInstrument(Long id) {
-        // Category category = mapper.convertValue(instrumentRepository.findById(id), Category.class);
-        // LOGGER.info("categoryId2: " + category);
-        List<InstrumentDetail> instrumentDetails = instrumentDetailRepository.findByInstrumentDetailId(id);
-        List<InstrumentDetailDTO> instrumentDetailDTOList = new ArrayList<>();
-        instrumentDetails.forEach(instrument -> instrumentDetailDTOList
-                .add(mapper.convertValue(instrumentDetails, InstrumentDetailDTO.class)));
-
-        System.out.println("===== Instruments =====");
-        instrumentDetailDTOList.forEach((instrumentDetail) -> LOGGER.info("InstrumentDetail: " + instrumentDetail));
-        return instrumentDetailDTOList;
-    }
 }

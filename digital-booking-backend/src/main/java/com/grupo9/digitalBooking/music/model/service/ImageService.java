@@ -36,8 +36,8 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public void createImage(ImageDTO imageDTO) {
-        saveImage(imageDTO);
+    public ImageDTO createImage(ImageDTO imageDTO) {
+        return saveImage(imageDTO);
     }
 
     @Override

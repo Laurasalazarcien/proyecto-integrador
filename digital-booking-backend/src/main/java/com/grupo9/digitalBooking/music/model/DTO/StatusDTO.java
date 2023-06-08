@@ -10,4 +10,11 @@ public class StatusDTO {
     private Long id;
     private String name;
 
+    @Override
+    public String toString() {
+        return "StatusDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

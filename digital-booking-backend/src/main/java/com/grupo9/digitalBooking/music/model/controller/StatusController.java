@@ -3,12 +3,14 @@ package com.grupo9.digitalBooking.music.model.controller;
 
 import com.grupo9.digitalBooking.music.model.DTO.StatusDTO;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IStatusService;
+import com.grupo9.digitalBooking.music.model.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/status")
@@ -17,6 +19,8 @@ public class StatusController {
     @Autowired
     IStatusService statusService;
 
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(StatusController.class));
+
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
@@ -24,6 +28,7 @@ public class StatusController {
         ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("Message: The category already exists");
         StatusDTO isExist = statusService.createStatus(statusDTO);
+        LOGGER.info("status creado: " + isExist);
         if(isExist != null) {
             response = ResponseEntity.status(HttpStatus.OK)
                     .body(isExist);

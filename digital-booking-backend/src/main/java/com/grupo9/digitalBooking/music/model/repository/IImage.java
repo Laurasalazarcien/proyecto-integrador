@@ -11,5 +11,4 @@ import java.util.Optional;
 @Repository
 public interface IImage extends JpaRepository<Image, Long> {
 
-    List<Image> findByImageId(Long imageId);
 }

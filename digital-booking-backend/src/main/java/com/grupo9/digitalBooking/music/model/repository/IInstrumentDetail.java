@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface IInstrumentDetail extends JpaRepository<InstrumentDetail, Long> {
 
-    List<InstrumentDetail> findByInstrumentDetailId(Long instrumentDetailId);
 }

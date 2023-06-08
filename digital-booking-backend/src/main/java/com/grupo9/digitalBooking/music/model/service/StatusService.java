@@ -20,7 +20,7 @@ public class StatusService implements IStatusService {
     @Autowired
     private IStatus statusRepository;
 
-    private static final Logger LOGGER = Logger.getLogger(String.valueOf(RolService.class));
+    private static final Logger LOGGER = Logger.getLogger(String.valueOf(StatusService.class));
 
     @Autowired
     ObjectMapper mapper;
@@ -36,8 +36,14 @@ public class StatusService implements IStatusService {
     }
 
     @Override
-    public void createStatus(StatusDTO statusDTO) {
-        saveStatus(statusDTO);
+    public StatusDTO createStatus(StatusDTO statusDTO) {
+        StatusDTO response = null;
+        Boolean existRol = statusRepository.findByName(statusDTO.getName()).isPresent();
+        if(!existRol) {
+            response = saveStatus(statusDTO);
+        }
+        LOGGER.info("respuesta: " + response);
+        return response;
     }
 
     @Override

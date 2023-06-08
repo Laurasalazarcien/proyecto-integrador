@@ -20,6 +20,7 @@ public class Image {
     @SequenceGenerator(name = "image_sequence", sequenceName = "image_sequence")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "image_sequence")
     private Long id;
+    private String name;
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
