@@ -60,13 +60,28 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void modifyUser(UserDTO userDTO) {
-        saveUser(userDTO);
+    public UserDTO modifyUser(UserDTO userDTO) {
+        LOGGER.info("Update Rol..." + " - " + userDTO.getId());
+        UserDTO response = null;
+        Boolean validateUser = existById(userDTO.getId());
+
+        if(validateUser) {
+            response = saveUser(userDTO);
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
     @Override
-    public void removeUser(Long id) {
-        userRepository.deleteById(id);
+    public Boolean removeUser(Long id) {
+        Boolean response = false;
+        Boolean exist = existById(id);
+        if(exist) {
+            userRepository.deleteById(id);
+            response = true;
+        }
+        LOGGER.info("response: " + response);
+        return response;
     }
 
     @Override

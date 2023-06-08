@@ -7,8 +7,8 @@ import java.util.Set;
 public interface IUserService {
     UserDTO createUser(UserDTO userDTO);
     UserDTO readUser(Long id);
-    void modifyUser(UserDTO userDTO);
-    void removeUser(Long id);
+    UserDTO modifyUser(UserDTO userDTO);
+    Boolean removeUser(Long id);
     Set<UserDTO> getAll();
 
     // @Query("SELECT * FROM user as where name=?")

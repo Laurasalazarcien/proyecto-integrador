@@ -75,7 +75,7 @@ public class RolController {
         RolDTO isModified = rolService.modifyRol(rolDTO);
         if(isModified != null) {
             response = ResponseEntity.status(HttpStatus.OK)
-                    .body("Message: Role " + rolDTO.getId() + " was update");
+                    .body(isModified);
         }
         return response;
     }

@@ -58,7 +58,7 @@ public class StatusController {
         StatusDTO isModified = statusService.modifyStatus(statusDTO);
         if(isModified != null) {
             response = ResponseEntity.status(HttpStatus.OK)
-                    .body("Message: Status " + statusDTO.getId() + " was update");
+                    .body(isModified);
         }
         return response;
     }

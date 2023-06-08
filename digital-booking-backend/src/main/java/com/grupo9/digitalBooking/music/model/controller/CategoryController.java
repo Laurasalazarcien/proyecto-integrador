@@ -53,7 +53,7 @@ public class CategoryController {
         CategoryDTO isModified = categoryService.modifyCategory(categoryDTO);
         if(isModified != null) {
             response = ResponseEntity.status(HttpStatus.OK)
-                    .body("Message: Category " + categoryDTO.getId() + " was update");
+                    .body(isModified);
         }
         return response;
     }
