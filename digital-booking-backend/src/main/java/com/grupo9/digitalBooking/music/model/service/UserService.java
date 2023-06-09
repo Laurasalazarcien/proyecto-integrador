@@ -42,8 +42,7 @@ public class UserService implements IUserService {
         UserDTO response = null;
         Boolean existRol = userRepository.findByEmail(userDTO.getEmail()).isPresent();
         if(!existRol) {
-            MailService mailService = new MailService();
-            mailService.sendEmail();
+
             response = saveUser(userDTO);
         }
         LOGGER.info("respuesta: " + response);
