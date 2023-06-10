@@ -12,6 +12,6 @@ public class ImageDTO {
     private Long id;
     private String name;
     private String url;
-    private Instrument instrument;
+    private InstrumentDTO instrument;
 
 }

@@ -1,5 +1,6 @@
 package com.grupo9.digitalBooking.music.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +24,9 @@ public class Image {
     private String name;
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instrument_id")
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "instrument_id", nullable = false)
     private Instrument instrument;
 
 }

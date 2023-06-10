@@ -4,6 +4,7 @@ import com.grupo9.digitalBooking.music.model.entities.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -15,14 +16,13 @@ public class InstrumentDTO {
     private Double price;
     private String description;
     private String characteristics;
-    private String images;
     private Integer stock;
     private Category category;
     private Brand brand;
     private InstrumentDetail instrumentDetail;
     private Status status;
     private Set<Booking> bookings;
-    private Set<Image> image;
+    private List<ImageDTO> images;
 
 
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -24,9 +25,6 @@ public class Instrument {
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String characteristics;
-
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String images;
 
     private Integer stock;
 
@@ -49,8 +47,7 @@ public class Instrument {
     private Set<Booking> booking;
 
     @OneToMany(mappedBy = "instrument")
-    @JsonIgnore
-    private Set<Image> image;
+    private List<Image> images;
 
 
 }
