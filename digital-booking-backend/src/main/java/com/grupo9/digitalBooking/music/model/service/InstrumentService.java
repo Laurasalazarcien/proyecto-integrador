@@ -2,7 +2,10 @@ package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo9.digitalBooking.music.model.DTO.CategoryDTO;
+import com.grupo9.digitalBooking.music.model.DTO.ImageDTO;
 import com.grupo9.digitalBooking.music.model.entities.Category;
+import com.grupo9.digitalBooking.music.model.entities.Image;
+import com.grupo9.digitalBooking.music.model.repository.IImage;
 import com.grupo9.digitalBooking.music.model.repository.IInstrument;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentService;
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
@@ -20,19 +23,44 @@ public class InstrumentService implements IInstrumentService {
     private IInstrument instrumentRepository;
 
     @Autowired
+    private IImage imageRepository;
+    @Autowired
     ObjectMapper mapper;
 
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(InstrumentService.class));
 
 
-    private void saveInstrument(InstrumentDTO instrumentDTO){
+    private InstrumentDTO saveInstrument(InstrumentDTO instrumentDTO){
         Instrument instrument =mapper.convertValue(instrumentDTO, Instrument.class);
-        instrumentRepository.save(instrument);
+        return mapper.convertValue(instrumentRepository.save(instrument), InstrumentDTO.class);
+    }
+
+    private Boolean existById(Long id) {
+        return instrumentRepository.findById(id).isPresent();
     }
 
     @Override
-    public void createInstrument(InstrumentDTO instrumentDTO) {
-        saveInstrument(instrumentDTO);
+    public InstrumentDTO createInstrument(InstrumentDTO instrumentDTO) {
+
+        InstrumentDTO response = null;
+        Boolean existInstrument = instrumentRepository.findByName(instrumentDTO.getName()).isPresent();
+
+        if(!existInstrument) {
+            InstrumentDTO newInstrument = saveInstrument(instrumentDTO);
+            List<ImageDTO> imageDTOList = new ArrayList<>();
+
+            instrumentDTO.getImages().forEach(imageDTO -> {
+                Image image = mapper.convertValue(imageDTO, Image.class);
+                image.setInstrument(mapper.convertValue(newInstrument, Instrument.class));
+                imageRepository.save(image);
+                imageDTOList.add(mapper.convertValue(imageRepository.save(image), ImageDTO.class));
+            });
+            newInstrument.setImages(imageDTOList);
+
+            response = newInstrument;
+        }
+
+        return response;
     }
 
     @Override
@@ -55,9 +83,9 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public Set<InstrumentDTO> getAll() {
+    public List<InstrumentDTO> getAll() {
         List<Instrument> instruments = instrumentRepository.findAll();
-        Set<InstrumentDTO> instrumentDTOS = new HashSet<>();
+        List<InstrumentDTO> instrumentDTOS = new ArrayList<>();
 
         for (Instrument instrument1 : instruments) {
             instrumentDTOS.add(mapper.convertValue(instrument1, InstrumentDTO.class));

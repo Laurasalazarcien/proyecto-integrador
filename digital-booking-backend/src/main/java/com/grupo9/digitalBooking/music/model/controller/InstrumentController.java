@@ -25,14 +25,37 @@ public class InstrumentController {
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createInstrument(@RequestBody InstrumentDTO instrumentDTO){
-        instrumentService.createInstrument(instrumentDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The instrument already exists");
+
+        InstrumentDTO newInstrument = instrumentService.createInstrument(instrumentDTO);
+        if (newInstrument != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(newInstrument);
+        }
+
+        if(instrumentDTO == null) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Message: Error, request data is empty");
+        }
+        return response;
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping("/{id}")
-    public InstrumentDTO getInstrument(@PathVariable Long id){
-        return instrumentService.readInstrument(id);
+    public ResponseEntity<?> getInstrument(@PathVariable Long id){
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The instrument with " + id + " does not exist");
+
+        InstrumentDTO instrument = instrumentService.readInstrument(id);
+
+        if(instrument != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(instrument);
+        }
+
+        return response;
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
@@ -51,8 +74,17 @@ public class InstrumentController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @GetMapping
-    public Collection<InstrumentDTO> getAllInstruments(){
-        return instrumentService.getAll();
+    public ResponseEntity<?> getAllInstruments(){
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: There are not information");
+
+        List<InstrumentDTO> instruments = instrumentService.getAll();
+        if(instruments.size() > 0) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(instruments);
+        }
+
+        return response;
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
