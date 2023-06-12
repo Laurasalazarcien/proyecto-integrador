@@ -1,10 +1,13 @@
 .image-viewer {
   display: flex;
-  height: 500px;
+  max-height: 450px;
+  max-width: 600px;
 
   &__list {
     display: flex;
     flex-direction: column;
+    gap: $db-spacing-8;
+    margin-right: $db-spacing-24;
 
     &-image {
       cursor: pointer;
