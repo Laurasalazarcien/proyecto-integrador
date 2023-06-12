@@ -43,7 +43,6 @@ const namespace = "admin-page-products";
 
 const valideteForm = (form) => {
   let errors = {};
-  const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
 
   if (form.name.trim().length === 0) {
     errors.name = "Este campo no puede quedar vacio.";
@@ -188,12 +187,11 @@ const AdminProducts = ({ className }) => {
         });
       })
       .catch((error) => {
-        console.log({ error });
         Swal.fire({
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"
           } el producto.`,
-          text: "error.response.data",
+          text: error.response.data.message,
           icon: "error",
         });
       });
@@ -270,7 +268,7 @@ const AdminProducts = ({ className }) => {
       showCancelButton: true,
     }).then((resp) => {
       if (resp.isConfirmed) {
-        ProductsService.deleteProduct(productId)
+        deleteProduct(productId)
           .then((resp) => {
             setModalVisibility(false);
             setProducts(products.filter((product) => product.id !== productId));
@@ -280,8 +278,10 @@ const AdminProducts = ({ className }) => {
             });
           })
           .catch((error) => {
+            console.log("error ---> ", error);
             Swal.fire({
               title: "Ocurrió un error al eliminar el producto.",
+              text: error.response.data.message,
               icon: "error",
             });
           });

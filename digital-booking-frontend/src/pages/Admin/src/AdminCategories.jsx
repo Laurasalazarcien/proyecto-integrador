@@ -121,7 +121,7 @@ const AdminCategories = ({ className }) => {
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"
           } la categoría.`,
-          text: error.response.data,
+          text: error.response.data.message,
           icon: "error",
         });
       });
@@ -182,7 +182,7 @@ const AdminCategories = ({ className }) => {
           .catch((error) => {
             Swal.fire({
               title: "Ocurrió un error al eliminar la categoría.",
-              text: error.response.data,
+              text: error.response.data.message,
               icon: "error",
             });
           });
