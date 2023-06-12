@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
+import Message from "../../../components/Message";
 import Image from "../../../components/Image";
 import FileLoader from "../../../components/FileUploader";
 import Container from "../../../components/Container";
@@ -42,7 +43,7 @@ const valideteForm = (form) => {
   }
 
   if (form.image.trim().length === 0) {
-    errors.image = "Este campo no puede quedar vacio.";
+    errors.image = "Carga una imagen.";
   }
 
   return errors;
@@ -70,7 +71,6 @@ const AdminCategories = ({ className }) => {
     form,
     name,
     description,
-    image,
     errors,
     handleChange,
     handleBlur,
@@ -92,20 +92,22 @@ const AdminCategories = ({ className }) => {
       setErrors(errors);
       return;
     }
+
     const category = { ...form };
     const response =
       action === "edit" ? updateCategory(category) : createCategory(category);
+
     response
       .then((resp) => {
         setModalVisibility(false);
         if (action === "edit") {
           setCategories(
             categories.map((cat) =>
-              cat.id === category.id ? { ...category } : cat
+              cat.id === category.id ? { ...resp } : cat
             )
           );
         } else {
-          setCategories([...categories, category]);
+          setCategories([...categories, resp]);
         }
         Swal.fire({
           text: `Categoría ${
@@ -117,8 +119,9 @@ const AdminCategories = ({ className }) => {
       .catch((error) => {
         Swal.fire({
           title: `Ocurrió un error al ${
-            action === "edit" ? "actualizada" : "creada"
+            action === "edit" ? "actualizar" : "crear"
           } la categoría.`,
+          text: error.response.data,
           icon: "error",
         });
       });
@@ -129,8 +132,9 @@ const AdminCategories = ({ className }) => {
       const imageUrls = await uploadFiles(target.files, "dbooking");
       setForm({
         ...form,
-        image: imageUrls.length > 1 ? imageUrls : imageUrls[0],
+        image: imageUrls.length > 1 ? [...imageUrls] : imageUrls[0],
       });
+      setErrors(form);
     }
   };
 
@@ -174,7 +178,8 @@ const AdminCategories = ({ className }) => {
           })
           .catch((error) => {
             Swal.fire({
-              title: "Ocurrió un error al eliminar la categoría",
+              title: "Ocurrió un error al eliminar la categoría.",
+              text: error.response.data,
               icon: "error",
             });
           });
@@ -207,6 +212,16 @@ const AdminCategories = ({ className }) => {
         justifyContent="center"
         element="section"
       >
+        {errorCategories && (
+          <Message
+            type="error"
+            hierarchy="quiet"
+            marginTop="0"
+            marginBottom="8"
+          >
+            No fue posible cargar las categorías.
+          </Message>
+        )}
         {loadingCategories ? (
           <TableSkeleton numberOfRows={5} />
         ) : (
@@ -308,22 +323,13 @@ const AdminCategories = ({ className }) => {
                 helperMessage={errors.description}
                 modifier={errors.description && "error"}
               />
-              <TextInput
-                id="image"
-                name="image"
-                label="Imagen"
-                value={image}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.name}
-                modifier={errors.name && "error"}
-              />
               <FileLoader
                 id="image"
                 name="image"
                 label="Imagen"
-                helperMessage=""
-                modifier=""
+                previewFiles={form.image}
+                helperMessage={errors.image}
+                modifier={errors.image && "error"}
                 onChange={handleChangeFiles}
                 loading={loadingFiles}
               />

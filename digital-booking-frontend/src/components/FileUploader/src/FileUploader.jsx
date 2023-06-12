@@ -2,6 +2,7 @@
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Spinner from "../../Spinner";
+import Image from "../../Image";
 import icons from "../../icons";
 import { Label, HelperMessage } from "../../Form";
 
@@ -15,6 +16,7 @@ const FileUploader = ({
   modifier,
   loading,
   maxFileSize,
+  previewFiles,
   maxNumberOfFiles,
   allowedFileFormats,
   helperMessage,
@@ -67,6 +69,30 @@ const FileUploader = ({
           </div>
         </div>
       </div>
+      {previewFiles && (
+        <div className={`${namespace}__preview-files`}>
+          {Array.isArray(previewFiles) &&
+            previewFiles.map((file, index) => (
+              <Image
+                key={index}
+                maxHeight="120px"
+                alignment="left"
+                paddingSize="0"
+                borderRadius="4"
+                source={file}
+              />
+            ))}
+          {previewFiles && (
+            <Image
+              maxWidth="120px"
+              alignment="left"
+              paddingSize="0"
+              borderRadius="4"
+              source={previewFiles}
+            />
+          )}
+        </div>
+      )}
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />
       )}
@@ -80,6 +106,7 @@ FileUploader.propTypes = {
   value: PropTypes.string.isRequired,
   modifier: PropTypes.string,
   loading: PropTypes.bool,
+  previewFiles: PropTypes.arrayOf(PropTypes.string),
   maxFileSize: PropTypes.string,
   maxNumberOfFiles: PropTypes.number,
   allowedFileFormats: PropTypes.arrayOf(PropTypes.string),
@@ -93,6 +120,7 @@ FileUploader.defaultProps = {
   modifier: "",
   helperMessage: "",
   maxFileSize: "100KB",
+  previewFiles: [],
   maxNumberOfFiles: 10,
   allowedFileFormats: ["jpg", "png", "pdf"],
   loading: false,
