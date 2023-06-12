@@ -29,7 +29,7 @@ import useCategories from "../../../hooks/useCategories";
 import useFiles from "../../../hooks/useFiles";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
-const namespace = "admin-page-products";
+const namespace = "admin-page-brands";
 
 const valideteForm = (form) => {
   let errors = {};

@@ -18,7 +18,7 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "brand_sequence")
     private Long id;
     private String name;
-    private String icon;
+    private String image;
 
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
@@ -29,7 +29,7 @@ public class Brand {
         return "Brand{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", icon='" + icon + '\'' +
+                ", icon='" + image + '\'' +
                 ", instrument=" + instrument +
                 '}';
     }

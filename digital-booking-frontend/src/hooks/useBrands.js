@@ -42,6 +42,7 @@ const useBrands = ({ id } = {}) => {
 
   return {
     brands,
+    setBrands,
     createBrand,
     updateBrand,
     deleteBrand,
