@@ -52,6 +52,7 @@ public class InstrumentService implements IInstrumentService {
             instrumentDTO.getImages().forEach(imageDTO -> {
                 Image image = mapper.convertValue(imageDTO, Image.class);
                 image.setInstrument(mapper.convertValue(newInstrument, Instrument.class));
+                image.setName(newInstrument.getName());
                 imageRepository.save(image);
                 imageDTOList.add(mapper.convertValue(imageRepository.save(image), ImageDTO.class));
             });

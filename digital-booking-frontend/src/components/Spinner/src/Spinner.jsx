@@ -33,8 +33,8 @@ Spinner.propTypes = {
 };
 
 Spinner.defaultProps = {
-  width: "16px",
-  height: "16px",
+  width: "20px",
+  height: "20px",
   className: "",
   borderWidth: "1px",
   borderColor: "#fff",

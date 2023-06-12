@@ -5,7 +5,6 @@ class CategoriesService {
   static async getAllCategories() {
     return axios.get("categories", config).then((resp) => {
       const { data } = resp;
-      console.log({ resp });
       return data;
     });
   }

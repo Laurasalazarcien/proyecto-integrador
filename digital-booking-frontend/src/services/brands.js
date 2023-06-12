@@ -5,7 +5,6 @@ class BrandsService {
   static async getAllBrands() {
     return axios.get("brands", config).then((resp) => {
       const { data } = resp;
-      console.log({ resp });
       return data;
     });
   }

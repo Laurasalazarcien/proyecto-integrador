@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
+import FileLoader from "../../../components/FileUploader";
 import Container from "../../../components/Container";
 import Form from "../../../components/Form";
 import Pagination from "../../../components/Pagination";
@@ -23,7 +24,8 @@ import Card, { CardBody } from "../../../components/Card";
 import { Title } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
-import useCategories from "../../../hooks//useCategories";
+import useCategories from "../../../hooks/useCategories";
+import useFiles from "../../../hooks/useFiles";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "admin-page-products";
@@ -61,7 +63,8 @@ const AdminCategories = ({ className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
-  console.log({ categories });
+
+  const { uploadFiles, loading: loadingFiles } = useFiles();
 
   const {
     form,
@@ -119,6 +122,16 @@ const AdminCategories = ({ className }) => {
           icon: "error",
         });
       });
+  };
+
+  const handleChangeFiles = async ({ target }) => {
+    if (target.files.length > 0) {
+      const imageUrls = await uploadFiles(target.files, "dbooking");
+      setForm({
+        ...form,
+        image: imageUrls.length > 1 ? imageUrls : imageUrls[0],
+      });
+    }
   };
 
   const handleOpenModal = (action) => {
@@ -304,6 +317,15 @@ const AdminCategories = ({ className }) => {
                 onBlur={handleBlur}
                 helperMessage={errors.name}
                 modifier={errors.name && "error"}
+              />
+              <FileLoader
+                id="image"
+                name="image"
+                label="Imagen"
+                helperMessage=""
+                modifier=""
+                onChange={handleChangeFiles}
+                loading={loadingFiles}
               />
             </Form>
           </CardBody>
