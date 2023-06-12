@@ -19,7 +19,7 @@ const Form = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit && onSubmit();
   };
 
   return (

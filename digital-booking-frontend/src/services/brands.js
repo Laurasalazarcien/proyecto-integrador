@@ -23,7 +23,7 @@ class BrandsService {
     });
   }
 
-  static async editBrand(brand) {
+  static async updateBrand(brand) {
     return axios.put(`brands`, brand, config).then((resp) => {
       const { data } = resp;
       return data;

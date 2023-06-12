@@ -20,6 +20,19 @@
         transform: rotate(180deg);
       }
     }
+
+    &--disabled {
+      color: $db-gray-250;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      cursor: initial;
+
+      .dropdown__arrow {
+        color: $db-gray-100;
+        svg {
+          display: flex;
+        }
+      }
+    }
   }
 
   &__display-values {

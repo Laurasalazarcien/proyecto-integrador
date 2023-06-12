@@ -13,6 +13,7 @@ import PencilSquare from "./src/PencilSquare";
 import PencilFill from "./src/PencilFill";
 import ChevronLeft from "./src/ChevronLeft";
 import ChevronRight from "./src/ChevronRight";
+import ChevronDown from "./src/ChevronDown";
 import ArrowLeftShort from "./src/ArrrowLeftShort";
 import People from "./src/People";
 import PeopleFill from "./src/PeopleFill";
@@ -42,6 +43,7 @@ const icons = {
   PencilFill,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   ArrowLeftShort,
   People,
   PeopleFill,

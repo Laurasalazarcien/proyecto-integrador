@@ -193,16 +193,6 @@ const Home = ({ title, className }) => {
               ))}
             {products &&
               products.map((product) => {
-                let productImages = [];
-                if (product.id > 100) {
-                  productImages = JSON.parse(product.images);
-                } else {
-                  productImages = product.images
-                    .slice(1)
-                    .slice(0, product.images.length - 2)
-                    .split(", ")
-                    .map((img) => img.slice(1).slice(0, img.length - 2));
-                }
                 return (
                   <Card
                     key={product.id}
@@ -214,7 +204,7 @@ const Home = ({ title, className }) => {
                   >
                     <CardHeader>
                       <Image
-                        source={productImages[0]}
+                        source={product.images[0].url}
                         alternativeText={product.name}
                         containerHeight={isMobile ? "150px" : "200px"}
                         maxHeight={isMobile ? "150px" : "200px"}
@@ -242,7 +232,7 @@ const Home = ({ title, className }) => {
               })}
           </Container>
         </Container>
-        {!loadingProducts && !loadingCategories && (
+        {!loadingProducts && !loadingCategories && products.length > 10 && (
           <Container
             display="flex"
             alignItems="center"

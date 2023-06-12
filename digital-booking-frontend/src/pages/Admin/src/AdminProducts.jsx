@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
+import Message from "../../../components/Message";
 import Image from "../../../components/Image";
 import Container from "../../../components/Container";
-import Form, { HelperMessage, Label } from "../../../components/Form";
 import Dropdown from "../../../components/Dropdown";
 import FileLoader from "../../../components/FileUploader";
 import Pagination from "../../../components/Pagination";
@@ -27,15 +27,17 @@ import {
   TextArea,
 } from "../../../components/TextField";
 import Card, { CardBody } from "../../../components/Card";
-import Message from "../../../components/Message";
+import Form, { HelperMessage, Label } from "../../../components/Form";
 import { Title } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
 import useProducts from "../../../hooks/useProducts";
-import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 import useCategories from "../../../hooks/useCategories";
 import useBrands from "../../../hooks/useBrands";
+import useStatus from "../../../hooks/useStatus";
+import useFiles from "../../../hooks/useFiles";
 import ProductsService from "../../../services/products";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "admin-page-products";
 
@@ -51,7 +53,6 @@ const valideteForm = (form) => {
     errors.stock = "Ingresa un valor mayor a cero.";
   }
 
-  console.log("Price ", form.price);
   if (parseFloat(form.price) === 0) {
     errors.price = "Ingresa un valor mayor a cero.";
   }
@@ -60,16 +61,12 @@ const valideteForm = (form) => {
     errors.description = "Ingresa almenos 15 caracteres.";
   }
 
-  // if (form.image.trim().length <= 15) {
-  //   errors.image = "Ingresa almenos 15 caracteres.";
-  // }
-
   if (form.characteristics.length === 0) {
     errors.characteristics = "Agrega al menos una característica.";
   }
 
   if (form.images.length === 0) {
-    errors.images = "Agrega al menos una imagen.";
+    errors.images = "Carga al menos una imagen.";
   }
 
   return errors;
@@ -82,9 +79,6 @@ const AdminProducts = ({ className }) => {
   const [action, setAction] = useState("");
   const [openModal, setModalVisibility] = useState(false);
   const [characteristicsFields, setCharacteristicsFields] = useState([]);
-  const [imagesFields, setImagesFields] = useState([]);
-
-  const componentClassnames = classNames(namespace, className);
 
   const {
     products,
@@ -95,22 +89,31 @@ const AdminProducts = ({ className }) => {
     loading: loadingProducts,
     error: errorProducts,
   } = useProducts();
+
   const {
     categories,
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
+
+  const { uploadFiles, loading: loadingFiles } = useFiles();
   const { brands, loading: loadingBrands, error: errorBrands } = useBrands();
+  const {
+    status: productStatus,
+    loading: loadingStatus,
+    error: errorStatus,
+  } = useStatus();
 
   const {
     form,
     name,
     stock,
     price,
+    status,
     description,
     category,
     brand,
-    image,
+    images,
     errors,
     handleChange,
     handleBlur,
@@ -125,6 +128,7 @@ const AdminProducts = ({ className }) => {
       description: "",
       category: 1,
       brand: 1,
+      status: 1,
       images: [],
       characteristics: [],
     },
@@ -134,95 +138,96 @@ const AdminProducts = ({ className }) => {
   // Modal Inputs handlers
   const handlConfirm = () => {
     const errors = valideteForm(form);
-    console.log({ form, errors });
     if (Object.entries(errors).length > 0) {
       setErrors(errors);
       return;
     }
-    if (action === "edit") {
-      // ProductsService.editProduct({
-      //   id: 3,
-      //   name: "Saxofón Alto Yamaha Yas-480",
-      //   price: 750000,
-      //   description: "Instrumento de viento Yamaha",
-      //   characteristics: "",
-      //   images:
-      //     "['https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/diseno-sin-titulo-381-53541b3ea19ddfbaff16148453475630-640-0.png', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/1sxaym0480l_5_10241-314398e0944a83b0a016011040464796-640-0.jpg', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/1sxaym0480l_2_10241-002470f2076c6542e916011040463259-640-0.jpg', 'https://d3ugyf2ht6aenh.cloudfront.net/stores/216/260/products/480thumb__21340-1467728555-1280-12801-729e075ac27432abed16011040466247-640-0.jpg']",
-      //   stock: 10,
-      //   category: {
-      //     id: 2,
-      //     name: "viento",
-      //     description:
-      //       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius eum at repudiandae recusandae quos ipsa cupiditate eaque perferendis modi veniam aliquid culpa dolorum doloribus, cum voluptas, harum, esse porro officia.",
-      //     image:
-      //       "https://img.freepik.com/foto-gratis/detalle-instrumento-trompeta-metal_150588-88.jpg?w=740&t=st=1685485276~exp=1685485876~hmac=6eba76446f2a2aa6201a7a70d1cbd32129ad37358169993fff6f51e8a1b02659",
-      //   },
-      //   brand: {
-      //     id: 3,
-      //     name: "pearl",
-      //   },
-      //   instrumentDetail: {
-      //     id: 1,
-      //     description: "En cromo",
-      //   },
-      //   status: {
-      //     id: 2,
-      //     name: "comprado",
-      //   },
-      //   bookings: null,
-      //   image: null,
-      // })
-      //   .then((resp) => {
-      //     console.log("Resp --> ", resp);
-      //   })
-      //   .catch((error) => {
-      //     console.log("Error ---> ", error);
-      //   });
-    } else {
-      const newProduct = {
+
+    const product = {
+      ...form,
+      name: form.name,
+      stock: parseFloat(form.stock),
+      price: parseFloat(form.price),
+      images: form.images.map((image) => ({
         name: form.name,
-        stock: parseFloat(form.stock),
-        price: parseFloat(form.price),
-        images: form.images,
-        description: form.description,
-        category: categories.find((category) => category.id === form.category),
-        brand: brands.find((brand) => brand.id === form.brand),
-        instrumentDetail: {
-          id: 1,
-          description: null,
-        },
-        status: {
-          id: 4,
-          name: "disponible",
-        },
-        characteristics: form.characteristics,
-      };
-      createProduct(newProduct)
-        .then((resp) => {
-          setModalVisibility(false);
-          setProducts([...products, newProduct]);
-          Swal.fire({
-            text: "Producto creado con éxito.",
-            icon: "success",
-          });
-        })
-        .catch((error) => {
-          Swal.fire({
-            title: "Ocurrió un error al crear el producto.",
-            icon: "error",
-          });
+        url: image,
+      })),
+      description: form.description,
+      brand: brands.find((brand) => brand.id === form.brand),
+      status: productStatus.find((status) => status.id === form.status),
+      category: categories.find((category) => category.id === form.category),
+      characteristics: form.characteristics,
+      instrumentDetail: {
+        id: 1,
+        description: null,
+      },
+      bookings: null,
+    };
+
+    const response =
+      action === "edit" ? updateProduct(product) : createProduct(product);
+
+    response
+      .then((resp) => {
+        console.log({ resp });
+        setModalVisibility(false);
+        if (action === "edit") {
+          setProducts(
+            products.map((prod) =>
+              prod.id === product.id ? { ...product } : prod
+            )
+          );
+        } else {
+          setProducts([...products, resp]);
+        }
+        Swal.fire({
+          text: `Instrumento ${
+            action === "edit" ? "actualizado" : "creado"
+          } con éxito.`,
+          icon: "success",
         });
+      })
+      .catch((error) => {
+        console.log({ error });
+        Swal.fire({
+          title: `Ocurrió un error al ${
+            action === "edit" ? "actualizar" : "crear"
+          } el producto.`,
+          text: "error.response.data",
+          icon: "error",
+        });
+      });
+  };
+
+  const handleChangeFiles = async ({ target }) => {
+    if (target.files.length > 0) {
+      const imageUrls = await uploadFiles(target.files, "dbooking");
+      setForm({
+        ...form,
+        images: imageUrls.length > 1 ? [...imageUrls] : imageUrls[0],
+      });
+      setErrors({
+        ...errors,
+        images: "",
+      });
     }
   };
 
   const handleOpenModal = (action) => {
     setAction(action);
+    if (action === "add") {
+      setForm({
+        ...form,
+        status: productStatus.find((status) => status.name === "disponible").id,
+      });
+    }
     setModalVisibility(true);
   };
 
   const handleCloseModal = () => {
     handleReset();
     setModalVisibility(false);
+    setCharacteristicsFields([]);
   };
 
   const handleEditProduct = (productId) => {
@@ -231,12 +236,30 @@ const AdminProducts = ({ className }) => {
       ...form,
       ...product,
       brand: product.brand.id,
-      category: 3,
+      category: product.category.id,
+      status: product.status.id,
+      images: product.images.map((product) => product.url),
     });
-    setTimeout(() => {
-      handleOpenModal("edit");
-      console.log("Product ---> ", product);
-    }, 900);
+    const productCharacteristics = JSON.parse(product.characteristics);
+    const newCharacterusticsFields = productCharacteristics.map(
+      (characteristic) => ({
+        id: uuidv4(),
+        inputs: [
+          {
+            label: "Característica",
+            property: "name",
+            value: characteristic.name,
+          },
+          {
+            label: "Valor de la característica",
+            property: "value",
+            value: characteristic.value,
+          },
+        ],
+      })
+    );
+    setCharacteristicsFields(newCharacterusticsFields);
+    handleOpenModal("edit");
   };
 
   const handleDeleteProduct = (productId) => {
@@ -323,38 +346,6 @@ const AdminProducts = ({ className }) => {
     );
   };
 
-  // Characterustics Inputs handlers
-  const handleAddImageInput = () => {
-    const fieldId = uuidv4();
-    setImagesFields([
-      ...imagesFields,
-      {
-        id: fieldId,
-        label: "Ingresa la URL de la imagen",
-        url: "",
-      },
-    ]);
-  };
-
-  const handleDeleteImageInput = (inputId) => {
-    setImagesFields(
-      imagesFields.filter((imageInput) => imageInput.id !== inputId)
-    );
-  };
-
-  const handleChangeImageField = (fieldId, propertyValue) => {
-    setImagesFields(
-      imagesFields.map((field) =>
-        field.id === fieldId
-          ? {
-              ...field,
-              url: propertyValue,
-            }
-          : { ...field }
-      )
-    );
-  };
-
   useEffect(() => {
     const characterusticsData = characteristicsFields.map((field) => ({
       name: field.inputs.find((input) => input.property === "name").value,
@@ -369,16 +360,7 @@ const AdminProducts = ({ className }) => {
     }
   }, [characteristicsFields]);
 
-  useEffect(() => {
-    const imagesData = imagesFields.map((image) => image.url);
-    if (imagesData.length > 0) {
-      setErrors(valideteForm(form));
-      setForm({
-        ...form,
-        images: JSON.stringify(imagesData),
-      });
-    }
-  }, [imagesFields]);
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>
@@ -403,85 +385,98 @@ const AdminProducts = ({ className }) => {
         justifyContent="center"
         element="section"
       >
+        {!loadingProducts && errorProducts && (
+          <Message
+            type="error"
+            hierarchy="quiet"
+            marginTop="0"
+            marginBottom="8"
+          >
+            No fue posible cargar los productos.
+          </Message>
+        )}
+        {!loadingProducts && products.length === 0 && (
+          <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+            No se encontraron productos.
+          </Message>
+        )}
         {loadingProducts ? (
           <TableSkeleton className="products-table" />
         ) : (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeading alignment="center">#</TableHeading>
-                <TableHeading alignment="center">Imagen</TableHeading>
-                <TableHeading>Nombre</TableHeading>
-                <TableHeading>Descripción</TableHeading>
-                <TableHeading alignment="center">Existencias</TableHeading>
-                <TableHeading alignment="center">Marca</TableHeading>
-                <TableHeading>Categoría</TableHeading>
-                <TableHeading alignment="center">Acciones</TableHeading>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products
-                .sort((a, b) => a.id - b.id)
-                .map((product) => {
-                  let productImages = [];
-                  if (product.id > 100) {
-                    productImages = JSON.parse(product.images);
-                  } else {
-                    productImages = product.images
-                    .slice(1)
-                    .slice(0, product.images.length - 2)
-                    .split(", ")
-                    .map((img) => img.slice(1).slice(0, img.length - 2));
-                  }
-                  return (
-                    <TableRow key={product.id}>
-                      <TableData alignment="center">{product.id}</TableData>
-                      <TableData>
-                        <Image
-                          source={productImages[0]}
-                          maxHeight="50px"
-                          paddingSize="0"
-                        />
-                      </TableData>
-                      <TableData>
-                        {convertFirstLetterToUpperCase(product.name)}
-                      </TableData>
-                      <TableData>
-                        {convertFirstLetterToUpperCase(product.description)}
-                      </TableData>
-                      <TableData alignment="center">{product.stock}</TableData>
-                      <TableData alignment="center">
-                        {convertFirstLetterToUpperCase(product.brand.name)}
-                      </TableData>
-                      <TableData>
-                        {convertFirstLetterToUpperCase(product.category.name)}
-                      </TableData>
-                      <TableData
-                        alignment="center"
-                        className="table__data--actions"
-                      >
-                        <Button
-                          paddingSize="0"
-                          hierarchy="transparent"
-                          onClick={(e) => handleEditProduct(product.id)}
-                        >
-                          <PencilSquare />
-                        </Button>
-                        <Button
-                          paddingSize="0"
-                          hierarchy="transparent"
-                          onClick={() => handleDeleteProduct(product.id)}
-                        >
-                          <TrashFill />
-                        </Button>
-                      </TableData>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
+          <>
+            {products.length > 0 && (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeading alignment="center">#</TableHeading>
+                    <TableHeading alignment="center">Imagen</TableHeading>
+                    <TableHeading>Nombre</TableHeading>
+                    <TableHeading>Descripción</TableHeading>
+                    <TableHeading alignment="center">Existencias</TableHeading>
+                    <TableHeading alignment="center">Marca</TableHeading>
+                    <TableHeading>Categoría</TableHeading>
+                    <TableHeading alignment="center">Acciones</TableHeading>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {products
+                    .sort((a, b) => a.id - b.id)
+                    .map((product) => {
+                      return (
+                        <TableRow key={product.id}>
+                          <TableData alignment="center">{product.id}</TableData>
+                          <TableData>
+                            <Image
+                              source={product.images[0].url}
+                              maxHeight="50px"
+                              paddingSize="0"
+                            />
+                          </TableData>
+                          <TableData>
+                            {convertFirstLetterToUpperCase(product.name)}
+                          </TableData>
+                          <TableData>
+                            {convertFirstLetterToUpperCase(product.description)}
+                          </TableData>
+                          <TableData alignment="center">
+                            {product.stock}
+                          </TableData>
+                          <TableData alignment="center">
+                            {convertFirstLetterToUpperCase(product.brand.name)}
+                          </TableData>
+                          <TableData>
+                            {convertFirstLetterToUpperCase(
+                              product.category.name
+                            )}
+                          </TableData>
+                          <TableData
+                            alignment="center"
+                            className="table__data--actions"
+                          >
+                            <Button
+                              paddingSize="0"
+                              hierarchy="transparent"
+                              onClick={(e) => handleEditProduct(product.id)}
+                            >
+                              <PencilSquare />
+                            </Button>
+                            <Button
+                              paddingSize="0"
+                              hierarchy="transparent"
+                              onClick={() => handleDeleteProduct(product.id)}
+                            >
+                              <TrashFill />
+                            </Button>
+                          </TableData>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            )}
+          </>
         )}
-        {!loadingProducts && products.length > 0 && (
+        {!loadingProducts && products.length > 10 && (
           <Container
             display="flex"
             alignItems="center"
@@ -556,6 +551,11 @@ const AdminProducts = ({ className }) => {
                   Ocurrió un error al cargar las marcas.
                 </Message>
               )}
+              {errorStatus && (
+                <Message hierarchy="quiet" type="error" marginBottom="8">
+                  Ocurrió un error al cargar los estados.
+                </Message>
+              )}
               {!loadingCategories && categories.length > 0 && (
                 <Dropdown
                   id="category"
@@ -595,6 +595,28 @@ const AdminProducts = ({ className }) => {
                     setForm({
                       ...form,
                       brand: option,
+                    });
+                  }}
+                  fullWidth
+                />
+              )}
+              {!loadingStatus && productStatus.length > 0 && (
+                <Dropdown
+                  id="status"
+                  name="status"
+                  label="Estado"
+                  searchPlaceholder="Search a status"
+                  options={productStatus.map((status) => ({
+                    label: convertFirstLetterToUpperCase(status.name),
+                    value: status.id,
+                  }))}
+                  modifier=""
+                  helperMessage=""
+                  selectedOption={status}
+                  onSelectOption={(option) => {
+                    setForm({
+                      ...form,
+                      status: option,
                     });
                   }}
                   fullWidth
@@ -665,57 +687,16 @@ const AdminProducts = ({ className }) => {
                   )}
                 </Container>
               </Container>
-              <Container className="images-inputs">
-                <Label label="Imágenes" />
-                <Container
-                  display="flex"
-                  flexDirection="column"
-                  spaceBetweenItems="8"
-                  marginBottom={imagesFields.length > 0 ? "8" : "0"}
-                >
-                  {imagesFields.map((field, fieldIndex) => (
-                    <Container key={field.id} className="image__field">
-                      <TextInput
-                        key={field.id}
-                        placeholder={field.label}
-                        value={field.value}
-                        helperMessage=""
-                        modifier=""
-                        fullWidth
-                        onChange={(e) =>
-                          handleChangeImageField(field.id, e.target.value)
-                        }
-                      />
-                      {imagesFields.length > 1 && fieldIndex !== 0 && (
-                        <Button
-                          modifier="error"
-                          onClick={() => handleDeleteImageInput(field.id)}
-                        >
-                          <TrashFill />
-                        </Button>
-                      )}
-                    </Container>
-                  ))}
-                </Container>
-                <Container display="flex">
-                  <Button onClick={handleAddImageInput} marginRight="8">
-                    Agregar
-                  </Button>
-                  {errors.images && (
-                    <HelperMessage
-                      message={errors.images}
-                      modifier={errors.images && "error"}
-                    />
-                  )}
-                </Container>
-              </Container>
-              {/* <FileLoader
-                id="imagea"
+              <FileLoader
+                id="images"
                 name="images"
-                label="Imáganes"
-                helperMessage=""
-                modifier=""
-              /> */}
+                label="Imágenes"
+                previewFiles={form.images}
+                helperMessage={errors.images}
+                modifier={errors.images && "error"}
+                onChange={handleChangeFiles}
+                loading={loadingFiles}
+              />
             </Form>
           </CardBody>
         </Card>

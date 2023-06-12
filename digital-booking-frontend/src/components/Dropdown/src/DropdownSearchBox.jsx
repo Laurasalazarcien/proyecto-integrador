@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Spinner from "../../Spinner";
 import { useDropdown } from "./context/DropdownContext";
 import icons from "../../icons";
@@ -8,25 +9,26 @@ const namespace = "dropdown-search-box";
 
 const DropdownSearchBox = ({ searchValue, searchPlaceholder }) => {
   const { Close, Search } = icons;
-  const { setDropdownSearch, isLoading } = useDropdown();
+  const {
+    initialDropdownOptions,
+    resetDropdownOptions,
+    setDropdownOptions,
+    isLoading,
+  } = useDropdown();
   const [searchTerm, setSearchTerm] = useState(searchValue || "");
-
-  const moveUpScroll = () => {
-    const divScroll = document.querySelector(
-      ".metrics-variant-dropdown-groups"
-    );
-    divScroll.scrollTop = 0;
-  };
 
   const handleSearch = ({ target }) => {
     setSearchTerm(target.value);
-    setDropdownSearch(target.value !== "");
+    setDropdownOptions(
+      initialDropdownOptions.filter((option) =>
+        option.label.includes(target.value)
+      )
+    );
   };
 
   const handleResetSearch = () => {
     setSearchTerm("");
-    setDropdownSearch(false);
-    moveUpScroll();
+    resetDropdownOptions();
   };
 
   return (

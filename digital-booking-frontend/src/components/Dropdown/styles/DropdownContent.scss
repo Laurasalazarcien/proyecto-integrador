@@ -29,8 +29,15 @@
     list-style-type: none;
 
     &-container {
-      height: 200px;
+      max-height: 200px;
       overflow: auto;
     }
+  }
+
+  &__empty-results {
+    display: block;
+    padding: 0 $db-spacing-12;
+    padding-bottom: $db-spacing-12;
+    font-size: $font-size-12;
   }
 }

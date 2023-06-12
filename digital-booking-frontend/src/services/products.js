@@ -32,7 +32,7 @@ class ProductsService {
     });
   }
 
-  static async editProduct(product) {
+  static async updateProduct(product) {
     return axios.put(`instruments`, product, config).then((resp) => {
       const { data } = resp;
       return data;

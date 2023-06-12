@@ -28,16 +28,16 @@ const useBrands = ({ id } = {}) => {
     fetchData();
   }, []);
 
-  const createBrand = () => {
-    // TODO: Implements function
+  const createBrand = (brand) => {
+    return BrandsService.createBrand(brand);
   };
 
-  const updateBrand = (brandtId) => {
-    // TODO: Implements function
+  const updateBrand = (brand) => {
+    return BrandsService.updateBrand(brand);
   };
 
   const deleteBrand = (brandtId) => {
-    // TODO: Implements function
+    return BrandsService.deleteBrand(brandtId);
   };
 
   return {

@@ -17,10 +17,24 @@ const DropdownProvider = ({ children, initialState, onSelectOption }) => {
     });
   };
 
+  const resetDropdownOptions = () => {
+    dispatch({
+      type: actionTypes.SET_DROPDOWN_OPTIONS,
+      payload: initialState.dropdownOptions,
+    });
+  };
+
   const setDropdownVisibility = (isVisible) => {
     dispatch({
       type: actionTypes.SET_DROPDOWN_VISIBILITY,
       payload: isVisible,
+    });
+  };
+
+  const setDropdownDisabled = (disabled) => {
+    dispatch({
+      type: actionTypes.SET_DROPDOWN_DISABLED,
+      payload: disabled,
     });
   };
 
@@ -47,16 +61,20 @@ const DropdownProvider = ({ children, initialState, onSelectOption }) => {
       },
     });
     setDropdownVisibility(false);
+    resetDropdownOptions();
     onSelectOption(value);
   };
 
   const value = {
     ...variantDropdownState,
+    initialDropdownOptions: initialState.dropdownOptions,
     variantDropdownState,
     setDropdownVisibility,
     changeDropdownValue,
     setDropdownOptions,
+    resetDropdownOptions,
     setDropdownLoading,
+    setDropdownDisabled,
     setDropdownSearch,
   };
 
@@ -76,7 +94,19 @@ const useDropdown = () => {
 };
 
 DropdownProvider.propTypes = {
-  initialState: PropTypes.shape({}).isRequired,
+  initialState: PropTypes.shape({
+    dropdownOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      })
+    ),
+    dropdownValue: PropTypes.shape({
+      actual: PropTypes.string,
+      label: PropTypes.string,
+    }),
+    isOpen: PropTypes.bool,
+  }).isRequired,
   onSelectOption: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

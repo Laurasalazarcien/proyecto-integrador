@@ -36,7 +36,7 @@ const Message = ({
           <div className={`${namespace}__notification`}>
             <span className={`${namespace}__icon`}>
               {type === "success" && <Check />}
-              {type === "warning" && <Warning />}
+              {(type === "warning" || type === "neutral") && <Warning />}
               {type === "error" && <CloseCircle />}
             </span>
           </div>

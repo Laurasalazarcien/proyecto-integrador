@@ -134,7 +134,10 @@ const AdminCategories = ({ className }) => {
         ...form,
         image: imageUrls.length > 1 ? [...imageUrls] : imageUrls[0],
       });
-      setErrors(form);
+      setErrors({
+        ...errors,
+        image: "",
+      });
     }
   };
 
@@ -212,7 +215,7 @@ const AdminCategories = ({ className }) => {
         justifyContent="center"
         element="section"
       >
-        {errorCategories && (
+        {!loadingCategories && errorCategories && (
           <Message
             type="error"
             hierarchy="quiet"
@@ -222,61 +225,70 @@ const AdminCategories = ({ className }) => {
             No fue posible cargar las categorías.
           </Message>
         )}
+        {!loadingCategories && categories.length === 0 && (
+          <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+            No se encontraron categorías.
+          </Message>
+        )}
         {loadingCategories ? (
           <TableSkeleton numberOfRows={5} />
         ) : (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeading alignment="center">#</TableHeading>
-                <TableHeading>Imagen</TableHeading>
-                <TableHeading>Nombre</TableHeading>
-                <TableHeading>Descripción</TableHeading>
-                {/* <TableHeading>Stock</TableHeading> */}
-                <TableHeading>Acciones</TableHeading>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {categories
-                .sort((a, b) => a.id - b.id)
-                .map((category) => (
-                  <TableRow key={category.id}>
-                    <TableData alignment="center">{category.id}</TableData>
-                    <TableData>
-                      <Image
-                        source={category.image}
-                        maxHeight="50px"
-                        paddingSize="0"
-                      />
-                    </TableData>
-                    <TableData>
-                      {convertFirstLetterToUpperCase(category.name)}
-                    </TableData>
-                    <TableData>{category.description}</TableData>
-                    {/* <TableData alignment="center">{product.stock}</TableData> */}
-                    <TableData
-                      alignment="center"
-                      className="table__data--actions"
-                    >
-                      <Button
-                        paddingSize="0"
-                        hierarchy="transparent"
-                        onClick={(e) => handleEditCategory(category.id)}
-                      >
-                        <PencilSquare />
-                      </Button>
-                      <Button
-                        paddingSize="0"
-                        hierarchy="transparent"
-                        onClick={() => handleDeleteCategory(category.id)}
-                      >
-                        <TrashFill />
-                      </Button>
-                    </TableData>
+          <>
+            {categories.length > 0 && (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeading alignment="center">#</TableHeading>
+                    <TableHeading>Imagen</TableHeading>
+                    <TableHeading>Nombre</TableHeading>
+                    <TableHeading>Descripción</TableHeading>
+                    {/* <TableHeading>Stock</TableHeading> */}
+                    <TableHeading>Acciones</TableHeading>
                   </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+                </TableHead>
+                <TableBody>
+                  {categories
+                    .sort((a, b) => a.id - b.id)
+                    .map((category) => (
+                      <TableRow key={category.id}>
+                        <TableData alignment="center">{category.id}</TableData>
+                        <TableData>
+                          <Image
+                            source={category.image}
+                            maxHeight="50px"
+                            paddingSize="0"
+                          />
+                        </TableData>
+                        <TableData>
+                          {convertFirstLetterToUpperCase(category.name)}
+                        </TableData>
+                        <TableData>{category.description}</TableData>
+                        {/* <TableData alignment="center">{product.stock}</TableData> */}
+                        <TableData
+                          alignment="center"
+                          className="table__data--actions"
+                        >
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={(e) => handleEditCategory(category.id)}
+                          >
+                            <PencilSquare />
+                          </Button>
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={() => handleDeleteCategory(category.id)}
+                          >
+                            <TrashFill />
+                          </Button>
+                        </TableData>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
+          </>
         )}
         {!loadingCategories && categories.length > 10 && (
           <Container

@@ -6,7 +6,7 @@ const dropdownReducer = (state = {}, action = {}) => {
     case actionTypes.SET_DROPDOWN_OPTIONS:
       return {
         ...state,
-        options: [...payload],
+        dropdownOptions: [...payload],
       };
     case actionTypes.SET_DROPDOWN_VISIBILITY:
       return {
@@ -27,6 +27,11 @@ const dropdownReducer = (state = {}, action = {}) => {
       return {
         ...state,
         hasSearched: payload,
+      };
+    case actionTypes.SET_DROPDOWN_DISABLED:
+      return {
+        ...state,
+        disabled: payload,
       };
     default:
       return state;

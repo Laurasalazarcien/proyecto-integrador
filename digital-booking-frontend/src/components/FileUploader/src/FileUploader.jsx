@@ -71,24 +71,28 @@ const FileUploader = ({
       </div>
       {previewFiles && (
         <div className={`${namespace}__preview-files`}>
-          {Array.isArray(previewFiles) &&
-            previewFiles.map((file, index) => (
-              <Image
-                key={index}
-                maxHeight="120px"
-                alignment="left"
-                paddingSize="0"
-                borderRadius="4"
-                source={file}
-              />
-            ))}
-          {previewFiles && (
+          {Array.isArray(previewFiles) ? (
+            <>
+              {previewFiles.map((file, index) => (
+                <Image
+                  key={index}
+                  maxHeight="120px"
+                  alignment="left"
+                  paddingSize="0"
+                  borderRadius="4"
+                  source={file}
+                  showBorder
+                />
+              ))}
+            </>
+          ) : (
             <Image
               maxWidth="120px"
               alignment="left"
               paddingSize="0"
               borderRadius="4"
               source={previewFiles}
+              showBorder
             />
           )}
         </div>
