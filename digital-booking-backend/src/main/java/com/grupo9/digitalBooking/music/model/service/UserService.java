@@ -2,6 +2,7 @@ package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
+import com.grupo9.digitalBooking.music.model.repository.IRol;
 import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
 import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
@@ -20,6 +21,8 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUser userRepository;
+
+
 
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(UserService.class));
 
@@ -40,8 +43,9 @@ public class UserService implements IUserService {
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         UserDTO response = null;
-        Boolean existRol = userRepository.findByEmail(userDTO.getEmail()).isPresent();
-        if(!existRol) {
+        Boolean existUser = userRepository.findByEmail(userDTO.getEmail()).isPresent();
+
+        if(!existUser) {
 
             response = saveUser(userDTO);
         }

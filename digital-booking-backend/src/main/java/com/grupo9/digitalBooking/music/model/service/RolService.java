@@ -32,7 +32,7 @@ public class RolService implements IRolService {
         RolDTO result = mapper.convertValue(rolRepository.save(rol), RolDTO.class);
         return result;
     }
-    private Boolean existById(Long id) {
+    public Boolean existById(Long id) {
         return rolRepository.findById(id).isPresent();
     }
 

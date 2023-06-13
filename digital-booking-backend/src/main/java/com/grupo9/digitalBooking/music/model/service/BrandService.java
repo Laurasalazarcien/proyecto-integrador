@@ -32,7 +32,7 @@ public class BrandService implements IBrandService {
         return result;
     }
 
-    private Boolean existById(Long id) {
+    public Boolean existById(Long id) {
         return brandRepository.findById(id).isPresent();
     }
 

@@ -32,7 +32,7 @@ public class CategoryService implements ICategoryService {
         return result;
     }
 
-    private Boolean existById(Long id) {
+    public Boolean existById(Long id) {
         return categoryRepository.findById(id).isPresent();
     }
 

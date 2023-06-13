@@ -1,6 +1,7 @@
 package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grupo9.digitalBooking.music.model.DTO.CategoryDTO;
 import com.grupo9.digitalBooking.music.model.DTO.ImageDTO;
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
 import com.grupo9.digitalBooking.music.model.entities.Image;
@@ -9,6 +10,8 @@ import com.grupo9.digitalBooking.music.model.service.InterfacesService.IImageSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,9 @@ public class ImageService implements IImageService {
 
     @Autowired
     private IImage imageRepository;
+
+    @Autowired
+    private EntityManager entityManager;
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(RolService.class));
 
     @Autowired
@@ -31,13 +37,20 @@ public class ImageService implements IImageService {
         return result;
     }
 
-    private Boolean existById(Long id) {
+    public Boolean existById(Long id) {
         return imageRepository.findById(id).isPresent();
     }
 
     @Override
     public ImageDTO createImage(ImageDTO imageDTO) {
-        return saveImage(imageDTO);
+        ImageDTO response = null;
+        Boolean existImage = imageRepository.findByName(imageDTO.getName()).isPresent();
+        if(!existImage) {
+
+            response = saveImage(imageDTO);
+        }
+
+        return response;
     }
 
     @Override
@@ -46,10 +59,8 @@ public class ImageService implements IImageService {
         ImageDTO imageDTO = null;
         if(image.isPresent())
             imageDTO = mapper.convertValue(image, ImageDTO.class);
-
         return imageDTO;
     }
-
 
     @Override
     public ImageDTO modifyImage(ImageDTO imageDTO) {

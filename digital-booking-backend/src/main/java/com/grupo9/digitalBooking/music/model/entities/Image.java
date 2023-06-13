@@ -1,8 +1,10 @@
 package com.grupo9.digitalBooking.music.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,8 +27,10 @@ public class Image {
     private String url;
 
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "instrument_id", nullable = false)
     private Instrument instrument;
+    //@JoinColumn(name = "instrument_id", nullable = false)
 
 }

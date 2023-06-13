@@ -46,7 +46,9 @@ public class Instrument {
     @JsonIgnore
     private Set<Booking> booking;
 
-    @OneToMany(mappedBy = "instrument")
+    //@OneToMany(mappedBy = "instrument")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instrument_id")
     private List<Image> images;
 
 

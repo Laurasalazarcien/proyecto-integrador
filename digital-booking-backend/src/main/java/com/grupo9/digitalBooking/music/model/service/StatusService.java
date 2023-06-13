@@ -31,7 +31,7 @@ public class StatusService implements IStatusService {
         return result;
     }
 
-    private Boolean existById(Long id) {
+    public Boolean existById(Long id) {
         return statusRepository.findById(id).isPresent();
     }
 
