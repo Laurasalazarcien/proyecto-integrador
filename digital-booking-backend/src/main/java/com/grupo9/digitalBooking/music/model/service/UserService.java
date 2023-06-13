@@ -44,8 +44,8 @@ public class UserService implements IUserService {
     public UserDTO createUser(UserDTO userDTO) {
         UserDTO response = null;
         Boolean existUser = userRepository.findByEmail(userDTO.getEmail()).isPresent();
-
-        if(!existUser) {
+        Boolean existDNI = userRepository.findByDni(userDTO.getDni()).isPresent();
+        if(!existUser && !existDNI) {
 
             response = saveUser(userDTO);
         }
