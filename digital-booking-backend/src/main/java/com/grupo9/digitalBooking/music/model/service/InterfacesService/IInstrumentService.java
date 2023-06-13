@@ -9,8 +9,8 @@ public interface IInstrumentService {
 
     InstrumentDTO createInstrument(InstrumentDTO instrumentDTO);
     InstrumentDTO readInstrument(Long id);
-    void modifyInstrument(InstrumentDTO instrumentDTO);
-    void removeInstrument(Long id);
+    InstrumentDTO modifyInstrument(InstrumentDTO instrumentDTO);
+    Boolean removeInstrument(Long id);
     List<InstrumentDTO> getAll();
     List<InstrumentDTO> getInstrumentsByCategory(Long id);
 }

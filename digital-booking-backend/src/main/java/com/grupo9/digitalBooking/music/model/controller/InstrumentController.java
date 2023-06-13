@@ -1,13 +1,14 @@
 package com.grupo9.digitalBooking.music.model.controller;
 
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
-import com.grupo9.digitalBooking.music.model.service.InstrumentService;
+import com.grupo9.digitalBooking.music.model.service.*;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,10 +18,16 @@ import java.util.logging.Logger;
 public class InstrumentController {
 
     @Autowired
-    IInstrumentService instrumentService;
-
+    InstrumentService instrumentService;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    BrandService brandService;
+    @Autowired
+    StatusService statusService;
+    @Autowired
+    ImageService imageService;
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(InstrumentController.class));
-
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
@@ -61,13 +68,36 @@ public class InstrumentController {
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PutMapping
     public ResponseEntity<?> modifyInstrument(@RequestBody InstrumentDTO instrumentDTO){
-        instrumentService.modifyInstrument(instrumentDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+        Boolean category = categoryService.existById(instrumentDTO.getCategory().getId());
+        Boolean brand = brandService.existById(instrumentDTO.getBrand().getId());
+        Boolean status = statusService.existById(instrumentDTO.getStatus().getId());
+
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Message: The category "+ instrumentDTO.getId() +" does not exist");
+
+        InstrumentDTO newInstrument = null;
+
+        if(category && brand && status) {
+            newInstrument = instrumentService.modifyInstrument(instrumentDTO);
+        } else {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Message: Request Error");
+        }
+
+        if (newInstrument != null) {
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(newInstrument);
+        }
+
+        return response;
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeInstrument(@PathVariable Long id) {
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Message: The category " + id + " does not exist");
+
         instrumentService.removeInstrument(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }

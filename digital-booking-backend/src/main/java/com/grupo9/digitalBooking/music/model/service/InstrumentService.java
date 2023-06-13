@@ -10,7 +10,9 @@ import com.grupo9.digitalBooking.music.model.repository.IInstrument;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentService;
 import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
 import com.grupo9.digitalBooking.music.model.entities.Instrument;
+import org.aspectj.apache.bcel.generic.LOOKUPSWITCH;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,6 +26,9 @@ public class InstrumentService implements IInstrumentService {
 
     @Autowired
     private IImage imageRepository;
+
+    @Autowired
+    private ImageService imageService;
     @Autowired
     ObjectMapper mapper;
 
@@ -46,7 +51,12 @@ public class InstrumentService implements IInstrumentService {
         Boolean existInstrument = instrumentRepository.findByName(instrumentDTO.getName()).isPresent();
 
         if(!existInstrument) {
-            InstrumentDTO newInstrument = saveInstrument(instrumentDTO);
+
+            Instrument request = mapper.convertValue(instrumentDTO, Instrument.class);
+            request.setImages(null);
+            InstrumentDTO newInstrument = saveInstrument(mapper.convertValue(request, InstrumentDTO.class));
+
+            //InstrumentDTO newInstrument = saveInstrument(instrumentDTO);
             List<ImageDTO> imageDTOList = new ArrayList<>();
 
             instrumentDTO.getImages().forEach(imageDTO -> {
@@ -74,13 +84,38 @@ public class InstrumentService implements IInstrumentService {
     }
 
     @Override
-    public void modifyInstrument(InstrumentDTO instrumentDTO) {
-        saveInstrument(instrumentDTO);
+    public InstrumentDTO modifyInstrument(InstrumentDTO instrumentDTO) {
+        InstrumentDTO response = null;
+        Boolean validateInstrument = existById(instrumentDTO.getId());
+        List<ImageDTO> imagesExist = new ArrayList<>();
+
+        instrumentDTO.getImages().forEach(imageDTO -> {
+            LOGGER.info("ImageDTO: " + imageDTO);
+            imagesExist.add(imageService.modifyImage(imageDTO));
+        });
+
+        //instrumentDTO.setImages(imagesExist);
+        if(validateInstrument) {
+            response = saveInstrument(instrumentDTO);
+        }
+        return response;
     }
 
     @Override
-    public void removeInstrument(Long id) {
-        instrumentRepository.deleteById(id);
+    public Boolean removeInstrument(Long id) {
+        Boolean response = false;
+        Boolean exist = existById(id);
+        if(exist) {
+
+            InstrumentDTO instrumentDTO = readInstrument(id);
+            instrumentDTO.getImages().forEach(imageDTO -> {
+                imageService.removeImage(imageDTO.getId());
+            });
+
+            instrumentRepository.deleteById(id);
+            response = true;
+        }
+        return response;
     }
 
     @Override
@@ -96,7 +131,7 @@ public class InstrumentService implements IInstrumentService {
 
     @Override
     public List<InstrumentDTO> getInstrumentsByCategory(Long id) {
-        // Category category = mapper.convertValue(instrumentRepository.findById(id), Category.class);
+        // Category category = mapper.convertValue(nstrumentRepository.findById(id), Category.class);
         // LOGGER.info("categoryId2: " + category);
         List<Instrument> instruments = instrumentRepository.findByCategoryId(id);
         List<InstrumentDTO> instrumentDTOList = new ArrayList<>();

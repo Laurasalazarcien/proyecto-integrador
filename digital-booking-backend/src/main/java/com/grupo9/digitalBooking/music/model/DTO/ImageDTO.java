@@ -14,4 +14,13 @@ public class ImageDTO {
     private String url;
     private InstrumentDTO instrument;
 
+    @Override
+    public String toString() {
+        return "ImageDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", instrument=" + instrument +
+                '}';
+    }
 }

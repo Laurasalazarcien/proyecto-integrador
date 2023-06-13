@@ -5,6 +5,8 @@ import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
 import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IRolService;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
+import com.grupo9.digitalBooking.music.model.service.RolService;
+import com.grupo9.digitalBooking.music.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,23 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    IUserService userService;
-    IRolService rolService;
+    UserService userService;
+    @Autowired
+    RolService rolService;
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
         ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("Message: The user already exists");
-
-        UserDTO createUser = userService.createUser(userDTO);
+        Boolean existRol = rolService.existById(userDTO.getRol().getId());
+        UserDTO createUser = null;
+        if(existRol) {
+            createUser = userService.createUser(userDTO);
+        } else {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Message: The rol does not exist");
+        }
         if(createUser != null) {
             response = ResponseEntity.status(HttpStatus.OK)
                     .body(createUser);
