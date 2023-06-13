@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { useNavigate, useParams } from "react-router-dom";
 import Image from "../../../components/Image";
 import ImageViewer from "../../../components/ImageViewer";
-import Badge from "../../../components/Badge";
 import Button from "../../../components/Button";
 import Container from "../../../components/Container";
 import Card, {
@@ -13,21 +12,15 @@ import Card, {
   CardFooter,
 } from "../../../components/Card";
 import { Title, Text } from "../../../components/Typography";
-import List, { ListItem } from "../../../components/List";
 import { Layput, LayputColumns, LayputRows } from "../../../components/Layout";
 import BreadCrumb, { BreadCrumbLevel } from "../../../components/BreadCrumb";
-import {
-  productDetailMock,
-  productsListMock,
-  breadCrumbMock,
-} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import icons from "../../../components/icons";
 import useProducts from "../../../hooks/useProducts";
 
 const namespace = "detail-page";
 
-const Detail = ({ title, className }) => {
+const Detail = ({ className }) => {
   const isMobile = useMobile();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -38,7 +31,6 @@ const Detail = ({ title, className }) => {
     loading: loadingProduct,
     error: errorProducts,
   } = useProducts({ id });
-  console.log(product);
 
   const handleBackButton = () => {
     navigate(-1);
@@ -47,9 +39,8 @@ const Detail = ({ title, className }) => {
   const componentClassnames = classNames(namespace, className);
 
   return (
-    <div className={componentClassnames}>
+    <Container className={componentClassnames}>
       <Container className={`${namespace}__container`}>
-        {title && <Title>{title}</Title>}
         <Container element="section" marginTop="16" marginBottom="20">
           <BreadCrumb>
             <BreadCrumbLevel text="Home" redirectTo="/home" />
@@ -62,8 +53,8 @@ const Detail = ({ title, className }) => {
         </Container>
         <Container element="section" className="product-detail">
           <Button
-            hierarchy="transparent"
             paddingSize="0"
+            hierarchy="transparent"
             className="product-detail__back-button"
             onClick={handleBackButton}
           >
@@ -71,15 +62,22 @@ const Detail = ({ title, className }) => {
           </Button>
           {product && product.images && !loadingProduct && (
             <ImageViewer
-              images={JSON.parse(product.images).map((img, index) => ({
+              images={product.images.map((img, index) => ({
                 id: index,
-                url: img,
+                url: img.url,
               }))}
             />
           )}
           {product && !loadingProduct && (
-            <Card shadow="none" marginSize={isMobile ? "0" : "20"}>
+            <Card shadow="elevated" marginTop={isMobile ? "16" : "0"}>
               <CardHeader>
+                {product.brand && (
+                  <Image
+                    maxHeight="80px"
+                    paddingSize="8"
+                    source={product.brand.image}
+                  />
+                )}
                 <Title
                   size={isMobile ? "l" : "xl"}
                   color="secondary"
@@ -87,7 +85,6 @@ const Detail = ({ title, className }) => {
                   transform="capitalize"
                   letterSpacing="3"
                   marginBottom="4"
-                  className="product-detail__title"
                   alignment={isMobile ? "center" : "left"}
                 >
                   {product.name}
@@ -97,7 +94,6 @@ const Detail = ({ title, className }) => {
                   color="positive"
                   weight="light"
                   letterSpacing="1"
-                  className="product-detail__price"
                   alignment={isMobile ? "center" : "left"}
                 >
                   {`$ ${product.price}`}
@@ -128,7 +124,6 @@ const Detail = ({ title, className }) => {
               <CardFooter>
                 <Layput columns="2">
                   <LayputColumns start="1" end="2">
-                    {/* <input type="number" /> */}
                   </LayputColumns>
                   <LayputColumns start="3" end="4">
                     <Button fullWidth>Agregar al carrito</Button>
@@ -141,28 +136,34 @@ const Detail = ({ title, className }) => {
         <Container element="section" marginTop="20">
           <Title
             element="h2"
-            weight="light"
+            weight="regular"
             marginTop="24"
-            marginBottom="8"
-            size={isMobile ? "l" : "l"}
+            marginBottom="12"
+            size="l"
           >
             Características
           </Title>
           <Container
-            className="product-characteristics"
             display="grid"
-            columns="4"
+            columnsInSmallDevices="1"
+            columnsInMediumDevices="2"
+            columnsInLargeDevices="3"
+            columnsInExtraLargeDevices="4"
             spaceBetweenItems="8"
+            className="product-characteristics"
           >
             {product && product.characteristics && !loadingProduct && (
               <>
                 {JSON.parse(product.characteristics).map((characteristic) => (
-                  <Card key={characteristic.name} className="product-characteristics__card">
+                  <Card
+                    key={characteristic.name}
+                    className="product-characteristics__card"
+                  >
                     <CardBody paddingSize="24">
                       <Text weight="regular">
                         {characteristic.name}:
                         <Text element="span" color="secondary" marginLeft="8">
-                          { characteristic.value }
+                          {characteristic.value}
                         </Text>
                       </Text>
                     </CardBody>
@@ -173,17 +174,15 @@ const Detail = ({ title, className }) => {
           </Container>
         </Container>
       </Container>
-    </div>
+    </Container>
   );
 };
 
 Detail.propTypes = {
-  title: PropTypes.string,
   className: PropTypes.string,
 };
 
 Detail.defaultProps = {
-  title: "",
   className: "",
 };
 

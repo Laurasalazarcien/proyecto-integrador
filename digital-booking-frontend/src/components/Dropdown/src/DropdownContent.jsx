@@ -13,15 +13,19 @@ const DropdownContent = ({ searchPlaceholder }) => {
       {/* {dropdownOptions.lenght >= 10 && <DropdownSearchBox />} */}
       <DropdownSearchBox searchPlaceholder={searchPlaceholder} />
       <div className={`${namespace}__list-container`}>
-        <ul className={`${namespace}__list`}>
-          {dropdownOptions.map((option) => (
-            <DropdownItem
-              key={option.id}
-              selected={option.value === dropdownValue.actual}
-              {...option}
-            />
-          ))}
-        </ul>
+        {dropdownOptions && dropdownOptions.length > 0 ? (
+          <ul className={`${namespace}__list`}>
+            {dropdownOptions.map((option) => (
+              <DropdownItem
+                key={option.id}
+                selected={option.value === dropdownValue.actual}
+                {...option}
+              />
+            ))}
+          </ul>
+        ) : (
+          <span className={`${namespace}__empty-results`}>Sin resultados</span>
+        )}
       </div>
     </div>
   );

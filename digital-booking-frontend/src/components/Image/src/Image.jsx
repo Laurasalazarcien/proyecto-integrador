@@ -20,7 +20,7 @@ const Image = ({
   alignment,
   alternativeText,
   figcaption,
-  border,
+  showBorder,
   rounded,
   clickeable,
   className,
@@ -34,6 +34,7 @@ const Image = ({
     [`${namespace}--rounded-${borderRadius}`]: borderRadius,
     [`${namespace}--rounded-top-${borderTopRadius}`]: borderTopRadius,
     [`${namespace}--rounded-bottom-${borderBottomRadius}`]: borderBottomRadius,
+    [`${namespace}--border`]: showBorder,
   });
 
   const handleClick = () => {
@@ -91,7 +92,7 @@ Image.propTypes = {
   borderBottomRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "20"]),
   alternativeText: PropTypes.string.isRequired,
   figcaption: PropTypes.string,
-  border: PropTypes.string,
+  showBorder: PropTypes.boolean,
   rounded: PropTypes.bool,
   clickeable: PropTypes.bool,
   className: PropTypes.string,
@@ -105,6 +106,7 @@ Image.defaultProps = {
   className: "",
   rounded: false,
   clickeable: false,
+  showBorder: false,
 };
 
 export default Image;

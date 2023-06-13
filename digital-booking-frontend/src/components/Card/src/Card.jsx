@@ -6,6 +6,10 @@ const namespace = "card";
 const Card = ({
   shadow,
   marginSize,
+  marginTop,
+  marginLeft,
+  marginRight,
+  marginBottom,
   paddingSize,
   borderColor,
   borderRadius,
@@ -17,7 +21,11 @@ const Card = ({
 }) => {
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--shadow-${shadow}`]: shadow,
-    [`${namespace}--margin-${marginSize}`]: paddingSize,
+    [`${namespace}--margin-${marginSize}`]: marginSize,
+    [`${namespace}--margin-top-${marginTop}`]: marginTop,
+    [`${namespace}--margin-left-${marginLeft}`]: marginLeft,
+    [`${namespace}--margin-right-${marginRight}`]: marginRight,
+    [`${namespace}--margin-bottom-${marginBottom}`]: marginBottom,
     [`${namespace}--padding-${paddingSize}`]: paddingSize,
     [`${namespace}--clickeable`]: clickeable,
     [`${namespace}--animated`]: animated,
@@ -40,6 +48,10 @@ const Card = ({
 Card.propTypes = {
   shadow: PropTypes.oneOf(["none", "flat", "outline", "elevated"]),
   marginSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
+  marginTop: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
+  marginLeft: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
+  marginRight: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
+  marginBottom: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
   paddingSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
   borderRadius: PropTypes.oneOf(["0", "4", "6", "8", "12", "16", "24", "32"]),
   borderColor: PropTypes.oneOf([

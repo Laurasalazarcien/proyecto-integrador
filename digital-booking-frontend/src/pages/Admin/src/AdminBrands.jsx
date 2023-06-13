@@ -4,11 +4,11 @@ import { useState } from "react";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
+import Message from "../../../components/Message";
 import Image from "../../../components/Image";
+import FileLoader from "../../../components/FileUploader";
 import Container from "../../../components/Container";
 import Form from "../../../components/Form";
-import Dropdown from "../../../components/Dropdown";
-import FileLoader from "../../../components/FileUploader";
 import Pagination from "../../../components/Pagination";
 import Modal from "../../../components/Modal";
 import icons from "../../../components/icons";
@@ -20,66 +20,51 @@ import Table, {
   TableData,
   TableSkeleton,
 } from "../../../components/Table";
-import {
-  Text as TextInput,
-  Numeric as NumericInput,
-  TextArea,
-} from "../../../components/TextField";
+import { Text as TextInput, TextArea } from "../../../components/TextField";
 import Card, { CardBody } from "../../../components/Card";
 import { Title } from "../../../components/Typography";
-
-import {
-  productsListMock,
-  categoriesDropdownMock,
-  brandsDropdownMock,
-} from "../../../mocks/mocks";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
+import useBrands from "../../../hooks/useBrands";
+import useFiles from "../../../hooks/useFiles";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
-const namespace = "admin-page-products";
+const namespace = "admin-page-brands";
 
 const valideteForm = (form) => {
   let errors = {};
-  const emailRegex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
 
   if (form.name.trim().length === 0) {
     errors.name = "Este campo no puede quedar vacio.";
   }
 
-  if (parseInt(form.stock) === 0) {
-    errors.stock = "Selecciona un valor mayor a cero.";
-  }
-
-  if (form.price.trim().length === 0) {
-    errors.price = "Este campo no puede quedar vacio.";
-  }
-
-  if (form.description.trim().length <= 15) {
-    errors.description = "Ingresa almenos 15 caracteres.";
-  }
-
-  if (form.image.trim().length <= 15) {
-    errors.image = "Ingresa almenos 15 caracteres.";
+  if (form.image.trim().length === 0) {
+    errors.image = "Carga una imagen.";
   }
 
   return errors;
 };
 
-const AdminProducts = ({ className }) => {
+const AdminBrands = ({ className }) => {
   const isMobile = useMobile();
   const { TrashFill, PencilSquare } = icons;
   const [openModal, setModalVisibility] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [action, setAction] = useState("");
-  const componentClassnames = classNames(namespace, className);
+
+  const {
+    brands,
+    setBrands,
+    createBrand,
+    updateBrand,
+    deleteBrand,
+    loading: loadingBrands,
+    error: errorBrands,
+  } = useBrands();
+  const { uploadFiles, loading: loadingFiles } = useFiles();
 
   const {
     form,
     name,
-    stock,
-    price,
-    description,
-    image,
     errors,
     handleChange,
     handleBlur,
@@ -89,9 +74,6 @@ const AdminProducts = ({ className }) => {
   } = useForm(
     {
       name: "",
-      stock: "0",
-      price: "",
-      description: "",
       image: "",
     },
     valideteForm
@@ -103,7 +85,53 @@ const AdminProducts = ({ className }) => {
       setErrors(errors);
       return;
     }
-    console.log("submit", form);
+
+    const brand = { ...form };
+    console.log("BRAND ---> ", brand);
+    const response =
+      action === "edit" ? updateBrand(brand) : createBrand(brand);
+
+    response
+      .then((resp) => {
+        setModalVisibility(false);
+        if (action === "edit") {
+          setBrands(
+            brands.map((br) => (br.id === brand.id ? { ...resp } : br))
+          );
+        } else {
+          setBrands([...brands, resp]);
+        }
+        Swal.fire({
+          text: `Marca ${
+            action === "edit" ? "actualizada" : "creada"
+          } con éxito.`,
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        console.log({ error });
+        Swal.fire({
+          title: `Ocurrió un error al ${
+            action === "edit" ? "actualizar" : "crear"
+          } la marca.`,
+          text: error.response.data.message,
+          icon: "error",
+        });
+      });
+  };
+
+  const handleChangeFiles = async ({ target }) => {
+    if (target.files.length > 0) {
+      const imageUrls = await uploadFiles(target.files, "dbooking");
+      setForm({
+        ...form,
+        image: imageUrls.length > 1 ? [...imageUrls] : imageUrls[0],
+      });
+      setErrors({
+        ...errors,
+        image: "",
+      });
+    }
   };
 
   const handleOpenModal = (action) => {
@@ -116,30 +144,44 @@ const AdminProducts = ({ className }) => {
     setModalVisibility(false);
   };
 
-  const handleEditProduct = (productId) => {
-    handleOpenModal("edit");
-    const product = productsListMock.find(
-      (product) => product.id === productId
-    );
+  const handleEditBrand = (brandId) => {
+    const brand = brands.find((brand) => brand.id === brandId);
     setForm({
       ...form,
-      ...product,
+      ...brand,
     });
-    console.log(product);
+    handleOpenModal("edit");
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteBrand = (brandId) => {
     Swal.fire({
-      title: "Eliminar producto",
-      text: "¿Estás seguro de eliminar este producto?",
-      icon: "error",
+      title: "Eliminar marca",
+      text: "¿Estás seguro de eliminar esta marca?",
+      icon: "info",
       showCancelButton: true,
     }).then((resp) => {
       if (resp.isConfirmed) {
-        console.log("Delete product ...");
+        deleteBrand(brandId)
+          .then((resp) => {
+            setModalVisibility(false);
+            setBrands(brands.filter((brand) => brand.id !== brandId));
+            Swal.fire({
+              text: "Marca eliminada con éxito.",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Ocurrió un error al eliminar la marca.",
+              text: error.response.data.message,
+              icon: "error",
+            });
+          });
       }
     });
   };
+
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>
@@ -164,65 +206,92 @@ const AdminProducts = ({ className }) => {
         justifyContent="center"
         element="section"
       >
-        {/* <TableSkeleton/> */}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeading alignment="center">#</TableHeading>
-              <TableHeading>Image</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Description</TableHeading>
-              <TableHeading>Stock</TableHeading>
-              <TableHeading>Actions</TableHeading>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsListMock.map((product) => (
-              <TableRow key={product.id}>
-                <TableData alignment="center">{product.id}</TableData>
-                <TableData>
-                  <Image
-                    source={product.image}
-                    maxHeight="50px"
-                    paddingSize="0"
-                  />
-                </TableData>
-                <TableData>{product.name}</TableData>
-                <TableData>{product.description}</TableData>
-                <TableData alignment="center">{product.stock}</TableData>
-                <TableData alignment="center" className="table__data--actions">
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={(e) => handleEditProduct(product.id)}
-                  >
-                    <PencilSquare />
-                  </Button>
-                  <Button
-                    paddingSize="0"
-                    hierarchy="transparent"
-                    onClick={handleDeleteProduct}
-                  >
-                    <TrashFill />
-                  </Button>
-                </TableData>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Container
-          display="flex"
-          alignItems="center"
-          justifyContent="end"
-          className="pagination"
-          marginTop="20"
-        >
-          <Pagination
-            prevButtonLabel="Anterior"
-            nextButtonLabel="Siguiente"
-            nummerOfPages={5}
-          />
-        </Container>
+        {!loadingBrands && errorBrands && (
+          <Message
+            type="error"
+            hierarchy="quiet"
+            marginTop="0"
+            marginBottom="8"
+          >
+            No fue posible cargar las marcas.
+          </Message>
+        )}
+        {!loadingBrands && brands.length === 0 && (
+          <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+            No se encontraron marcas.
+          </Message>
+        )}
+        {loadingBrands ? (
+          <TableSkeleton numberOfRows={5} />
+        ) : (
+          <>
+            {brands.length > 0 && (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeading alignment="center">#</TableHeading>
+                    <TableHeading>Imagen</TableHeading>
+                    <TableHeading>Nombre</TableHeading>
+                    <TableHeading>Acciones</TableHeading>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {brands
+                    .sort((a, b) => a.id - b.id)
+                    .map((brand) => (
+                      <TableRow key={brand.id}>
+                        <TableData alignment="center">{brand.id}</TableData>
+                        <TableData>
+                          <Image
+                            source={brand.image}
+                            maxHeight="50px"
+                            paddingSize="0"
+                          />
+                        </TableData>
+                        <TableData>
+                          {convertFirstLetterToUpperCase(brand.name)}
+                        </TableData>
+                        <TableData
+                          alignment="center"
+                          className="table__data--actions"
+                        >
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={(e) => handleEditBrand(brand.id)}
+                          >
+                            <PencilSquare />
+                          </Button>
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={() => handleDeleteBrand(brand.id)}
+                          >
+                            <TrashFill />
+                          </Button>
+                        </TableData>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
+          </>
+        )}
+        {!loadingBrands && brands.length > 10 && (
+          <Container
+            display="flex"
+            alignItems="center"
+            justifyContent="end"
+            className="pagination"
+            marginTop="20"
+          >
+            <Pagination
+              prevButtonLabel="Anterior"
+              nextButtonLabel="Siguiente"
+              nummerOfPages={5}
+            />
+          </Container>
+        )}
       </Container>
       <Modal
         title={action === "add" ? "Agregar marca" : "Editar marca"}
@@ -243,22 +312,15 @@ const AdminProducts = ({ className }) => {
                 helperMessage={errors.name}
                 modifier={errors.name && "error"}
               />
-              <TextArea
-                id="descriptiom"
-                name="description"
-                label="Descripción"
-                value={description}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.description}
-                modifier={errors.description && "error"}
-              />
               <FileLoader
                 id="image"
                 name="image"
                 label="Imagen"
-                helperMessage=""
-                modifier=""
+                previewFiles={form.image}
+                helperMessage={errors.image}
+                modifier={errors.image && "error"}
+                onChange={handleChangeFiles}
+                loading={loadingFiles}
               />
             </Form>
           </CardBody>
@@ -268,13 +330,13 @@ const AdminProducts = ({ className }) => {
   );
 };
 
-AdminProducts.propTypes = {
+AdminBrands.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-AdminProducts.defaultProps = {
+AdminBrands.defaultProps = {
   className: "",
 };
 
-export default AdminProducts;
+export default AdminBrands;

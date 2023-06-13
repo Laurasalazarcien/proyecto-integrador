@@ -1,4 +1,3 @@
-// https://dummyjson.com/products?limit=10&skip=10&select=title,price
 const config = {
   baseURL: "http://localhost:8080",
   headers: {

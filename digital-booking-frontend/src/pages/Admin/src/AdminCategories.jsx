@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 import Swal from "sweetalert2";
 import Button from "../../../components/Button";
+import Message from "../../../components/Message";
 import Image from "../../../components/Image";
+import FileLoader from "../../../components/FileUploader";
 import Container from "../../../components/Container";
 import Form from "../../../components/Form";
 import Pagination from "../../../components/Pagination";
@@ -23,10 +25,11 @@ import Card, { CardBody } from "../../../components/Card";
 import { Title } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
-import useCategories from "../../../hooks//useCategories";
+import useCategories from "../../../hooks/useCategories";
+import useFiles from "../../../hooks/useFiles";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
-const namespace = "admin-page-products";
+const namespace = "admin-page-brands";
 
 const valideteForm = (form) => {
   let errors = {};
@@ -40,7 +43,7 @@ const valideteForm = (form) => {
   }
 
   if (form.image.trim().length === 0) {
-    errors.image = "Este campo no puede quedar vacio.";
+    errors.image = "Carga una imagen.";
   }
 
   return errors;
@@ -61,13 +64,13 @@ const AdminCategories = ({ className }) => {
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
-  console.log({ categories });
+
+  const { uploadFiles, loading: loadingFiles } = useFiles();
 
   const {
     form,
     name,
     description,
-    image,
     errors,
     handleChange,
     handleBlur,
@@ -89,20 +92,22 @@ const AdminCategories = ({ className }) => {
       setErrors(errors);
       return;
     }
+
     const category = { ...form };
     const response =
       action === "edit" ? updateCategory(category) : createCategory(category);
+
     response
       .then((resp) => {
         setModalVisibility(false);
         if (action === "edit") {
           setCategories(
             categories.map((cat) =>
-              cat.id === category.id ? { ...category } : cat
+              cat.id === category.id ? { ...resp } : cat
             )
           );
         } else {
-          setCategories([...categories, category]);
+          setCategories([...categories, resp]);
         }
         Swal.fire({
           text: `Categoría ${
@@ -114,11 +119,26 @@ const AdminCategories = ({ className }) => {
       .catch((error) => {
         Swal.fire({
           title: `Ocurrió un error al ${
-            action === "edit" ? "actualizada" : "creada"
+            action === "edit" ? "actualizar" : "crear"
           } la categoría.`,
+          text: error.response.data.message,
           icon: "error",
         });
       });
+  };
+
+  const handleChangeFiles = async ({ target }) => {
+    if (target.files.length > 0) {
+      const imageUrls = await uploadFiles(target.files, "dbooking");
+      setForm({
+        ...form,
+        image: imageUrls.length > 1 ? [...imageUrls] : imageUrls[0],
+      });
+      setErrors({
+        ...errors,
+        image: "",
+      });
+    }
   };
 
   const handleOpenModal = (action) => {
@@ -161,7 +181,8 @@ const AdminCategories = ({ className }) => {
           })
           .catch((error) => {
             Swal.fire({
-              title: "Ocurrió un error al eliminar la categoría",
+              title: "Ocurrió un error al eliminar la categoría.",
+              text: error.response.data.message,
               icon: "error",
             });
           });
@@ -194,61 +215,80 @@ const AdminCategories = ({ className }) => {
         justifyContent="center"
         element="section"
       >
+        {!loadingCategories && errorCategories && (
+          <Message
+            type="error"
+            hierarchy="quiet"
+            marginTop="0"
+            marginBottom="8"
+          >
+            No fue posible cargar las categorías.
+          </Message>
+        )}
+        {!loadingCategories && categories.length === 0 && (
+          <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+            No se encontraron categorías.
+          </Message>
+        )}
         {loadingCategories ? (
           <TableSkeleton numberOfRows={5} />
         ) : (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeading alignment="center">#</TableHeading>
-                <TableHeading>Imagen</TableHeading>
-                <TableHeading>Nombre</TableHeading>
-                <TableHeading>Descripción</TableHeading>
-                {/* <TableHeading>Stock</TableHeading> */}
-                <TableHeading>Acciones</TableHeading>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {categories
-                .sort((a, b) => a.id - b.id)
-                .map((category) => (
-                  <TableRow key={category.id}>
-                    <TableData alignment="center">{category.id}</TableData>
-                    <TableData>
-                      <Image
-                        source={category.image}
-                        maxHeight="50px"
-                        paddingSize="0"
-                      />
-                    </TableData>
-                    <TableData>
-                      {convertFirstLetterToUpperCase(category.name)}
-                    </TableData>
-                    <TableData>{category.description}</TableData>
-                    {/* <TableData alignment="center">{product.stock}</TableData> */}
-                    <TableData
-                      alignment="center"
-                      className="table__data--actions"
-                    >
-                      <Button
-                        paddingSize="0"
-                        hierarchy="transparent"
-                        onClick={(e) => handleEditCategory(category.id)}
-                      >
-                        <PencilSquare />
-                      </Button>
-                      <Button
-                        paddingSize="0"
-                        hierarchy="transparent"
-                        onClick={() => handleDeleteCategory(category.id)}
-                      >
-                        <TrashFill />
-                      </Button>
-                    </TableData>
+          <>
+            {categories.length > 0 && (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeading alignment="center">#</TableHeading>
+                    <TableHeading>Imagen</TableHeading>
+                    <TableHeading>Nombre</TableHeading>
+                    <TableHeading>Descripción</TableHeading>
+                    {/* <TableHeading>Stock</TableHeading> */}
+                    <TableHeading>Acciones</TableHeading>
                   </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+                </TableHead>
+                <TableBody>
+                  {categories
+                    .sort((a, b) => a.id - b.id)
+                    .map((category) => (
+                      <TableRow key={category.id}>
+                        <TableData alignment="center">{category.id}</TableData>
+                        <TableData>
+                          <Image
+                            source={category.image}
+                            maxHeight="50px"
+                            paddingSize="0"
+                          />
+                        </TableData>
+                        <TableData>
+                          {convertFirstLetterToUpperCase(category.name)}
+                        </TableData>
+                        <TableData>{category.description}</TableData>
+                        {/* <TableData alignment="center">{product.stock}</TableData> */}
+                        <TableData
+                          alignment="center"
+                          className="table__data--actions"
+                        >
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={(e) => handleEditCategory(category.id)}
+                          >
+                            <PencilSquare />
+                          </Button>
+                          <Button
+                            paddingSize="0"
+                            hierarchy="transparent"
+                            onClick={() => handleDeleteCategory(category.id)}
+                          >
+                            <TrashFill />
+                          </Button>
+                        </TableData>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
+          </>
         )}
         {!loadingCategories && categories.length > 10 && (
           <Container
@@ -295,15 +335,15 @@ const AdminCategories = ({ className }) => {
                 helperMessage={errors.description}
                 modifier={errors.description && "error"}
               />
-              <TextInput
+              <FileLoader
                 id="image"
                 name="image"
                 label="Imagen"
-                value={image}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                helperMessage={errors.name}
-                modifier={errors.name && "error"}
+                previewFiles={form.image}
+                helperMessage={errors.image}
+                modifier={errors.image && "error"}
+                onChange={handleChangeFiles}
+                loading={loadingFiles}
               />
             </Form>
           </CardBody>

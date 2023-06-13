@@ -8,15 +8,23 @@ import icons from "../../icons";
 const namespace = "dropdown";
 
 const DropdownTrigger = ({ id, name, label, modifier, helperMessage }) => {
-  const { ArrowDown } = icons;
-  const { isOpen, dropdownValue, setDropdownVisibility } = useDropdown();
-  const componentClassNames = classNames(`${namespace}__trigger`, {
-    [`${namespace}__trigger--open`]: isOpen,
-  });
+  const { ArrowDown, ChevronDown } = icons;
+  const { 
+    isOpen, 
+    disabled, 
+    dropdownValue, 
+    setDropdownVisibility 
+  } =  useDropdown();
 
   const handleOpenDropdown = () => {
+    if (disabled) return;
     setDropdownVisibility(!isOpen);
   };
+
+  const componentClassNames = classNames(`${namespace}__trigger`, {
+    [`${namespace}__trigger--open`]: isOpen,
+    [`${namespace}__trigger--disabled`]: disabled,
+  });
 
   return (
     <>
@@ -26,7 +34,7 @@ const DropdownTrigger = ({ id, name, label, modifier, helperMessage }) => {
           {dropdownValue.label || "dropdown"}
         </span>
         <span className={`${namespace}__arrow`}>
-          <ArrowDown />
+          <ChevronDown width="10" height="10" />
         </span>
       </button>
       {helperMessage && (

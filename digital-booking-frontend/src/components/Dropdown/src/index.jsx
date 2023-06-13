@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import VariantDropdown from "./Dropdown";
 import { DropdownProvider } from "./context/DropdownContext";
@@ -10,6 +11,7 @@ const DropdownContainer = ({
   options,
   modifier,
   fullWidth,
+  disabled,
   helperMessage,
   searchPlaceholder,
   selectedOption,
@@ -24,11 +26,12 @@ const DropdownContainer = ({
     },
     isOpen: false,
     isLoading: false,
+    disabled
   };
 
-  useEffect(() => {
-    console.log('Change selected: ', selectedOption);
-  }, [selectedOption])
+  // useEffect(() => {
+  //   console.log('Change selected: ', selectedOption);
+  // }, [selectedOption])
   
 
   return (
@@ -62,6 +65,7 @@ DropdownContainer.propTypes = {
   ),
   modifier: PropTypes.string,
   fullWidth: PropTypes.bool,
+  disabled: PropTypes.bool,
   helperMessage: PropTypes.string,
   searchPlaceholder: PropTypes.string,
   selectedOption: PropTypes.shape({
@@ -76,6 +80,8 @@ DropdownContainer.defaultProps = {
   label: "",
   modifier: "",
   helperMessage: "",
+  fullWidth: false,
+  disabled: false,
   className: "",
 };
 

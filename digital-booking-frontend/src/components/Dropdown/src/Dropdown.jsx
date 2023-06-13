@@ -20,11 +20,11 @@ const VariantsDropdown = ({
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--full-width`]: fullWidth,
   });
-  const { isOpen, setDropdownVisibility, setDropdownSearch } = useDropdown();
+  const { isOpen, setDropdownVisibility, resetDropdownOptions } = useDropdown();
 
   const handleCloseDropdown = () => {
     setDropdownVisibility(false);
-    setDropdownSearch(false);
+    resetDropdownOptions();
   };
 
   return (

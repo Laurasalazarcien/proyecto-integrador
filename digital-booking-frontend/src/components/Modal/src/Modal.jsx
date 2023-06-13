@@ -25,10 +25,6 @@ const Modal = ({
 }) => {
   const { Close } = icons;
 
-  const modalOverLayClassnames = classNames(`${namespace}__overlay`, {
-    [`${namespace}__overlay--open`]: isOpen,
-  });
-
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--${type}`]: type,
     [`${namespace}--shadow-${shadow}`]: shadow,
@@ -39,38 +35,42 @@ const Modal = ({
   });
 
   return (
-    <div className={modalOverLayClassnames}>
-      <div className={componentClassnames}>
-        <div className={`${namespace}__header`}>
-          <span className={`${namespace}__title`}>{title}</span>
-          {closable && (
-            <span className={`${namespace}__close-icon`} onClick={onCancel}>
-              <Close />
-            </span>
-          )}
+    <>
+      {isOpen && (
+        <div className={`${namespace}__overlay`}>
+          <div className={componentClassnames}>
+            <div className={`${namespace}__header`}>
+              <span className={`${namespace}__title`}>{title}</span>
+              {closable && (
+                <span className={`${namespace}__close-icon`} onClick={onCancel}>
+                  <Close />
+                </span>
+              )}
+            </div>
+            <div className={`${namespace}__content`}>{children}</div>
+            <div className={`${namespace}__actions`}>
+              <Button
+                size="medium"
+                onClick={onConfirm}
+                disabled={disableConfirmButton}
+                className={`${namespace}__confirm-button`}
+              >
+                Aceptar
+              </Button>
+              <Button
+                size="medium"
+                hierarchy="quiet"
+                onClick={onCancel}
+                disabled={disableCancelButton}
+                className={`${namespace}__cancel-button`}
+              >
+                Cancelar
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className={`${namespace}__content`}>{children}</div>
-        <div className={`${namespace}__actions`}>
-          <Button
-            size="medium"
-            onClick={onConfirm}
-            disabled={disableConfirmButton}
-            className={`${namespace}__confirm-button`}
-          >
-            Aceptar
-          </Button>
-          <Button
-            size="medium"
-            hierarchy="quiet"
-            onClick={onCancel}
-            disabled={disableCancelButton}
-            className={`${namespace}__cancel-button`}
-          >
-            Cancelar
-          </Button>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

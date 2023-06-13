@@ -65,7 +65,7 @@ const ImageViewer = ({ images, imageSelected, className }) => {
           source={currentImage.url}
           containerWidth="100%"
           containerHeight="100%"
-          width="100%"
+          maxWidth="400px"
           maxHeight={isMobile ? "175px" : ""}
         />
         <Button

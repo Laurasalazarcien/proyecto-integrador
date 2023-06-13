@@ -3,7 +3,7 @@
 
   &--full-width {
     width: 100%;
-    
+
     .textfield__input,
     .textfield__textarea {
       width: 100%;
@@ -60,6 +60,22 @@
     .textfield__textarea {
       resize: none;
       font-family: $font-family-primary;
+    }
+
+    .textfield__max-length {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: $db-spacing-4;
+
+      .helper-message {
+        margin-top: 0;
+      }
+
+      &-text {
+        font-size: $font-size-12;
+        line-height: $line-height-20;
+      }
     }
   }
 }

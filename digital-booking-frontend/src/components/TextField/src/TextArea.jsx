@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Label, HelperMessage } from "../../Form";
@@ -13,8 +12,9 @@ const TextArea = ({
   value,
   rows,
   cols,
-  placeholder,
   modifier,
+  maxLength,
+  placeholder,
   helperMessage,
   onChange,
   onBlur,
@@ -30,23 +30,37 @@ const TextArea = ({
     }
   );
 
+  const handleChange = (e) => {
+    // if (value.length >= maxLength) return;
+    onChange(e);
+  };
+
   return (
     <div className={componentClassNames}>
       {label && <Label id={id} label={label} />}
-      <textarea
-        id={id}
-        name={name}
-        value={value}
-        cols={cols}
-        rows={rows}
-        className={`${namespace}__textarea`}
-        placeholder={placeholder}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
-      {helperMessage && (
-        <HelperMessage modifier={modifier} message={helperMessage} />
-      )}
+      <div className={`${namespace}__content`}>
+        <textarea
+          id={id}
+          name={name}
+          value={value}
+          cols={cols}
+          rows={rows}
+          className={`${namespace}__textarea`}
+          placeholder={placeholder}
+          onChange={handleChange}
+          onBlur={onBlur}
+        />
+        <div className={`${namespace}__max-length`}>
+          <div>
+            {helperMessage && (
+              <HelperMessage modifier={modifier} message={helperMessage} />
+            )}
+          </div>
+          <span className={`${namespace}__max-length-text`}>
+            {`${value.length} / ${maxLength}`}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
@@ -59,8 +73,9 @@ TextArea.propTypes = {
   value: PropTypes.string.isRequired,
   rows: PropTypes.string,
   cols: PropTypes.string,
-  placeholder: PropTypes.string,
   modifier: PropTypes.string,
+  maxLength: PropTypes.number,
+  placeholder: PropTypes.string,
   helperMessage: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
@@ -70,11 +85,12 @@ TextArea.propTypes = {
 TextArea.defaultProps = {
   type: "full-width",
   label: "",
-  placeholder: "",
-  modifier: "",
-  helperMessage: "",
   rows: "5",
   cols: "30",
+  modifier: "",
+  maxLength: 120,
+  placeholder: "",
+  helperMessage: "",
   className: "",
 };
 
