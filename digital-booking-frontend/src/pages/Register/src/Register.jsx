@@ -16,8 +16,8 @@ import Card, { CardHeader, CardBody } from "../../../components/Card";
 import { Title, Text } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
-import logo from "../../../assets/icons/logo-no-background-inverted.svg";
 import useUsers from "../../../hooks/useUsers";
+import logo from "../../../assets/icons/logo-no-background-inverted.svg";
 
 const namespace = "register-page";
 
@@ -33,8 +33,8 @@ const valideteForm = (form) => {
     errors.name = "Este campo no puede quedar vacio.";
   }
 
-  if (form.lastname.trim().length === 0) {
-    errors.lastname = "Este campo no puede quedar vacio.";
+  if (form.lastName.trim().length === 0) {
+    errors.lastName = "Este campo no puede quedar vacio.";
   }
 
   if (!emailRegex.test(form.email)) {
@@ -59,7 +59,7 @@ const Register = ({ title, className }) => {
     form,
     dni,
     name,
-    lastname,
+    lastName,
     email,
     address,
     password,
@@ -71,7 +71,7 @@ const Register = ({ title, className }) => {
     {
       dni: "",
       name: "",
-      lastname: "",
+      lastName: "",
       email: "",
       address: "",
       password: "",
@@ -166,14 +166,14 @@ const Register = ({ title, className }) => {
               modifier={errors.name && "error"}
             />
             <TextInput
-              id="lastname"
-              name="lastname"
+              id="lastName"
+              name="lastName"
               label="Apellido"
-              value={lastname}
+              value={lastName}
               onChange={handleChange}
               onBlur={handleBlur}
-              helperMessage={errors.lastname}
-              modifier={errors.lastname && "error"}
+              helperMessage={errors.lastName}
+              modifier={errors.lastName && "error"}
             />
             <TextInput
               id="email"
