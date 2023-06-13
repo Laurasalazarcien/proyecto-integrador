@@ -3,6 +3,7 @@ package com.grupo9.digitalBooking.music.model.controller;
 
 import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
 import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
+import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IRolService;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
 import com.grupo9.digitalBooking.music.model.service.RolService;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    IUser userRepostory;
     @Autowired
     RolService rolService;
 
@@ -62,7 +66,18 @@ public class UserController {
     public ResponseEntity<?> modifyUser(@RequestBody UserDTO userDTO){
         ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Message: The user "+ userDTO.getId() +" does not exist");
-        UserDTO isModified = userService.modifyUser(userDTO);
+        Boolean existRol = rolService.existById(userDTO.getRol().getId());
+        UserDTO isModified = null;
+
+        if(existRol) {
+            isModified = userService.modifyUser(userDTO);
+            response = ResponseEntity.status(HttpStatus.OK)
+                    .body(isModified);
+        } else {
+        response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: The rol does not exist");
+        }
+
         if(isModified != null) {
             response = ResponseEntity.status(HttpStatus.OK)
                     .body(isModified);
