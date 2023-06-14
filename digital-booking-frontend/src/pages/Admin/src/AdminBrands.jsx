@@ -87,10 +87,7 @@ const AdminBrands = ({ className }) => {
     }
 
     const brand = { ...form };
-    console.log("BRAND ---> ", brand);
-    const response =
-      action === "edit" ? updateBrand(brand) : createBrand(brand);
-
+    const response = action === "edit" ? updateBrand(brand) : createBrand(brand);
     response
       .then((resp) => {
         setModalVisibility(false);
@@ -114,7 +111,7 @@ const AdminBrands = ({ className }) => {
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"
           } la marca.`,
-          text: error.response.data.message,
+          text: error.response.data || error.response.data.message,
           icon: "error",
         });
       });
@@ -173,7 +170,7 @@ const AdminBrands = ({ className }) => {
           .catch((error) => {
             Swal.fire({
               title: "Ocurrió un error al eliminar la marca.",
-              text: error.response.data.message,
+              text: error.response.data || error.response.data.message,
               icon: "error",
             });
           });
@@ -232,7 +229,7 @@ const AdminBrands = ({ className }) => {
                     <TableHeading alignment="center">#</TableHeading>
                     <TableHeading>Imagen</TableHeading>
                     <TableHeading>Nombre</TableHeading>
-                    <TableHeading>Acciones</TableHeading>
+                    <TableHeading alignment="center">Acciones</TableHeading>
                   </TableRow>
                 </TableHead>
                 <TableBody>

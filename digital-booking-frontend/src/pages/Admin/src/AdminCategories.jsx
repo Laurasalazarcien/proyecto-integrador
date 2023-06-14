@@ -94,9 +94,7 @@ const AdminCategories = ({ className }) => {
     }
 
     const category = { ...form };
-    const response =
-      action === "edit" ? updateCategory(category) : createCategory(category);
-
+    const response = action === "edit" ? updateCategory(category) : createCategory(category);
     response
       .then((resp) => {
         setModalVisibility(false);
@@ -121,7 +119,7 @@ const AdminCategories = ({ className }) => {
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"
           } la categoría.`,
-          text: error.response.data.message,
+          text: error.response.data || error.response.data.message,
           icon: "error",
         });
       });
@@ -182,7 +180,7 @@ const AdminCategories = ({ className }) => {
           .catch((error) => {
             Swal.fire({
               title: "Ocurrió un error al eliminar la categoría.",
-              text: error.response.data.message,
+              text: error.response.data || error.response.data.message,
               icon: "error",
             });
           });
@@ -242,8 +240,7 @@ const AdminCategories = ({ className }) => {
                     <TableHeading>Imagen</TableHeading>
                     <TableHeading>Nombre</TableHeading>
                     <TableHeading>Descripción</TableHeading>
-                    {/* <TableHeading>Stock</TableHeading> */}
-                    <TableHeading>Acciones</TableHeading>
+                    <TableHeading alignment="center">Acciones</TableHeading>
                   </TableRow>
                 </TableHead>
                 <TableBody>

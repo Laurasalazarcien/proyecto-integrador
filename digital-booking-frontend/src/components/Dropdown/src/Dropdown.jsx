@@ -13,6 +13,7 @@ const VariantsDropdown = ({
   label,
   modifier,
   fullWidth,
+  showSearchBox,
   helperMessage,
   searchPlaceholder,
   className,
@@ -36,7 +37,12 @@ const VariantsDropdown = ({
         fullWidth={fullWidth}
         helperMessage={helperMessage}
       />
-      {isOpen && <DropdownContent searchPlaceholder={searchPlaceholder} />}
+      {isOpen && (
+        <DropdownContent
+          searchPlaceholder={searchPlaceholder}
+          showSearchBox={showSearchBox}
+        />
+      )}
       {isOpen && (
         <div
           role="button"
@@ -56,6 +62,7 @@ VariantsDropdown.propTypes = {
   label: PropTypes.string,
   modifier: PropTypes.string,
   fullWidth: PropTypes.bool,
+  showSearchBox: PropTypes.bool,
   helperMessage: PropTypes.string,
   searchPlaceholder: PropTypes.string,
   className: PropTypes.string,
@@ -63,6 +70,7 @@ VariantsDropdown.propTypes = {
 
 VariantsDropdown.defaultProps = {
   fullWidth: false,
+  showSearchBox: true,
   className: "",
 };
 

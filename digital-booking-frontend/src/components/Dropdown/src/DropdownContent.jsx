@@ -5,13 +5,17 @@ import { useDropdown } from "./context/DropdownContext";
 
 const namespace = "dropdown";
 
-const DropdownContent = ({ searchPlaceholder }) => {
+const DropdownContent = ({ 
+  showSearchBox,  
+  searchPlaceholder
+}) => {
   const { dropdownOptions, dropdownValue } = useDropdown();
 
   return (
     <div className={`${namespace}__content`}>
-      {/* {dropdownOptions.lenght >= 10 && <DropdownSearchBox />} */}
-      <DropdownSearchBox searchPlaceholder={searchPlaceholder} />
+      {showSearchBox && (
+        <DropdownSearchBox searchPlaceholder={searchPlaceholder} />
+      )}
       <div className={`${namespace}__list-container`}>
         {dropdownOptions && dropdownOptions.length > 0 ? (
           <ul className={`${namespace}__list`}>
@@ -33,6 +37,11 @@ const DropdownContent = ({ searchPlaceholder }) => {
 
 DropdownContent.propTypes = {
   searchPlaceholder: PropTypes.string,
+  showSearchBox: PropTypes.bool,
+};
+
+DropdownContent.defaultProps = {
+  showSearchBox: true,
 };
 
 export default DropdownContent;

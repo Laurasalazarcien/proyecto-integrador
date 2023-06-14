@@ -112,7 +112,6 @@ const AdminProducts = ({ className }) => {
     description,
     category,
     brand,
-    images,
     errors,
     handleChange,
     handleBlur,
@@ -163,9 +162,7 @@ const AdminProducts = ({ className }) => {
       bookings: null,
     };
 
-    const response =
-      action === "edit" ? updateProduct(product) : createProduct(product);
-
+    const response = action === "edit" ? updateProduct(product) : createProduct(product);
     response
       .then((resp) => {
         console.log({ resp });
@@ -191,7 +188,7 @@ const AdminProducts = ({ className }) => {
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"
           } el producto.`,
-          text: error.response.data.message,
+          text: error.response.data || error.response.data.message,
           icon: "error",
         });
       });
@@ -281,7 +278,7 @@ const AdminProducts = ({ className }) => {
             console.log("error ---> ", error);
             Swal.fire({
               title: "Ocurrió un error al eliminar el producto.",
-              text: error.response.data.message,
+              text: error.response.data || error.response.data.message,
               icon: "error",
             });
           });

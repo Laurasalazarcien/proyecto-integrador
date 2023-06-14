@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CloudinaryService from "../services/cloudinary";
 
 const useFiles = () => {

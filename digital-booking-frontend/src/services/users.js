@@ -23,7 +23,7 @@ class UsersService {
     });
   }
 
-  static async editUser(user) {
+  static async updateUser(user) {
     return axios.put(`users`, user, config).then((resp) => {
       const { data } = resp;
       return data;

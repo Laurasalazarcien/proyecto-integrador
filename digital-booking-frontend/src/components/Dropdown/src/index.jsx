@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import VariantDropdown from "./Dropdown";
 import { DropdownProvider } from "./context/DropdownContext";
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const DropdownContainer = ({
   id,
@@ -12,6 +12,7 @@ const DropdownContainer = ({
   modifier,
   fullWidth,
   disabled,
+  showSearchBox,
   helperMessage,
   searchPlaceholder,
   selectedOption,
@@ -26,13 +27,12 @@ const DropdownContainer = ({
     },
     isOpen: false,
     isLoading: false,
-    disabled
+    disabled,
   };
 
   // useEffect(() => {
   //   console.log('Change selected: ', selectedOption);
   // }, [selectedOption])
-  
 
   return (
     <DropdownProvider
@@ -45,6 +45,7 @@ const DropdownContainer = ({
         label={label}
         modifier={modifier}
         fullWidth={fullWidth}
+        showSearchBox={showSearchBox}
         helperMessage={helperMessage}
         searchPlaceholder={searchPlaceholder}
         className={className}
@@ -66,6 +67,7 @@ DropdownContainer.propTypes = {
   modifier: PropTypes.string,
   fullWidth: PropTypes.bool,
   disabled: PropTypes.bool,
+  showSearchBox: PropTypes.bool,
   helperMessage: PropTypes.string,
   searchPlaceholder: PropTypes.string,
   selectedOption: PropTypes.shape({
@@ -82,6 +84,7 @@ DropdownContainer.defaultProps = {
   helperMessage: "",
   fullWidth: false,
   disabled: false,
+  showSearchBox: true,
   className: "",
 };
 
