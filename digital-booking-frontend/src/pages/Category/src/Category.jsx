@@ -1,46 +1,34 @@
-/* eslint-disable no-unused-vars */
+
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate, useParams } from "react-router-dom";
-import { Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import Container from "../../../components/Container";
 import Image from "../../../components/Image";
-import Button from "../../../components/Button";
+import Container from "../../../components/Container";
+import Message from "../../../components/Message";
 import Skeleton from "../../../components/Skeleton";
 import SearchBox from "../../../components/SearchBox";
 import { Title, Text } from "../../../components/Typography";
-import { Text as TextInput } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 import BreadCrumb, { BreadCrumbLevel } from "../../../components/BreadCrumb";
-
 import { useMobile } from "../../../hooks/useMobile";
 import { generateArray } from "../../../helpers";
 import useProducts from "../../../hooks/useProducts";
 import useCategories from "../../../hooks/useCategories";
 
-import { productsListMock, categoriesMock } from "../../../mocks/mocks";
-import {
-  removeHyphens,
-  convertFirstLetterToUpperCase,
-} from "../../../helpers/parseStrings";
-
 const namespace = "category-page";
 
-const Category = ({ title, className }) => {
+const Category = ({ className }) => {
   const navigate = useNavigate();
   const isMobile = useMobile();
-  const { category } = useParams();
-  const categoryName = convertFirstLetterToUpperCase(removeHyphens(category));
+  const { category: categoryId } = useParams();
 
   const {
     products,
     loading: loadingProducts,
     error: errorProducts,
-  } = useProducts("smartphones");
+  } = useProducts({ category: categoryId });
 
-  console.log("products ---> ", products.length);
+  const { categories: category } = useCategories({ id: categoryId });
 
   const handleClick = (id) => {
     console.log("id: ", id);
@@ -63,7 +51,7 @@ const Category = ({ title, className }) => {
         <Container element="section" marginTop="16" marginBottom="20">
           <BreadCrumb>
             <BreadCrumbLevel text="Home" redirectTo="/home" />
-            <BreadCrumbLevel text={categoryName} />
+            <BreadCrumbLevel text={category.name} />
           </BreadCrumb>
         </Container>
         <Container element="section" className="finder" marginBottom="0">
@@ -82,8 +70,23 @@ const Category = ({ title, className }) => {
             alignment="center"
             size="xl"
           >
-            {categoryName}
+            {category.name}
           </Title>
+          {!loadingProducts && errorProducts && (
+            <Message
+              type="error"
+              hierarchy="quiet"
+              marginTop="0"
+              marginBottom="8"
+            >
+              No fue posible cargar los productos.
+            </Message>
+          )}
+          {!loadingProducts && products.length === 0 && (
+            <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+              No se encontraron productos.
+            </Message>
+          )}
           <Container
             display="grid"
             spaceBetweenItems="20"
@@ -116,7 +119,7 @@ const Category = ({ title, className }) => {
                 >
                   <CardHeader>
                     <Image
-                      source={product.images[0]}
+                      source={product.images[0].url}
                       alternativeText={product.title}
                       containerHeight={isMobile ? "150px" : "200px"}
                       maxHeight={isMobile ? "150px" : "200px"}
@@ -133,7 +136,7 @@ const Category = ({ title, className }) => {
                       transform="uppercase"
                       marginBottom="4"
                     >
-                      {product.title}
+                      {product.name}
                     </Title>
                     <Text size="s" weight="light" alignment="left">
                       $ {product.price}
@@ -149,12 +152,10 @@ const Category = ({ title, className }) => {
 };
 
 Category.propTypes = {
-  title: PropTypes.string,
   className: PropTypes.string,
 };
 
 Category.defaultProps = {
-  title: "",
   className: "",
 };
 

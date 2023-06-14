@@ -18,7 +18,7 @@ class ProductsService {
 
   static async getProductsByCategory(category) {
     return axios
-      .get(`${config.apiUrl}/products/category/${category}`)
+      .get(`instruments/category/${category}`, config)
       .then((resp) => {
         const { data } = resp;
         return data;
