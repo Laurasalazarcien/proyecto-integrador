@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
+
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate, useParams } from "react-router-dom";
-import Container from "../../../components/Container";
 import Image from "../../../components/Image";
+import Container from "../../../components/Container";
 import Message from "../../../components/Message";
 import Skeleton from "../../../components/Skeleton";
 import SearchBox from "../../../components/SearchBox";
