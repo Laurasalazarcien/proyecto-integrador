@@ -41,7 +41,6 @@ const Home = ({ title, className }) => {
   } = useCategories();
 
   const handleClick = (id) => {
-    console.log("id: ", id);
     navigate(`/detail/${id}`);
   };
 
@@ -118,7 +117,7 @@ const Home = ({ title, className }) => {
                 <SwiperSlide key={category.id}>
                   <Card
                     borderRadius="8"
-                    onClick={() => handleClickCategory(category.urlLabel)}
+                    onClick={() => handleClickCategory(category.id)}
                     clickeable
                   >
                     <CardHeader paddingSize="0">

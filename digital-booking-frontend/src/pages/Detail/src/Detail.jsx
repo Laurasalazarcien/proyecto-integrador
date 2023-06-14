@@ -46,7 +46,7 @@ const Detail = ({ className }) => {
             <BreadCrumbLevel text="Home" redirectTo="/home" />
             <BreadCrumbLevel
               text="Instrumentos de viento"
-              redirectTo="/categories/instrumentos-de-viento"
+              redirectTo={`/categories/${product?.category?.id}`}
             />
             <BreadCrumbLevel text={product.name} />
           </BreadCrumb>
