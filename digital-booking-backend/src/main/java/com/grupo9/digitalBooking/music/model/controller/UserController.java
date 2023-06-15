@@ -1,3 +1,4 @@
+
 package com.grupo9.digitalBooking.music.model.controller;
 
 
@@ -7,7 +8,8 @@ import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IRolService;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
 import com.grupo9.digitalBooking.music.model.service.RolService;
-import com.grupo9.digitalBooking.music.model.service.UserService;
+
+import com.grupo9.digitalBooking.music.model.service.UserServiceApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceApi userService;
 
     @Autowired
     IUser userRepostory;

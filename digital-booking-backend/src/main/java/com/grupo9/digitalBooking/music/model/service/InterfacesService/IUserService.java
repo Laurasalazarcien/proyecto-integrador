@@ -5,6 +5,7 @@ import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
 import java.util.Set;
 
 public interface IUserService {
+
     UserDTO createUser(UserDTO userDTO);
     UserDTO readUser(Long id);
     UserDTO modifyUser(UserDTO userDTO);
