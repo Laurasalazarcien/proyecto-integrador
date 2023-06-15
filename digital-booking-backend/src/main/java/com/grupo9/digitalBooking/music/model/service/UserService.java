@@ -2,6 +2,7 @@ package com.grupo9.digitalBooking.music.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
+import com.grupo9.digitalBooking.music.model.entities.Login;
 import com.grupo9.digitalBooking.music.model.repository.IRol;
 import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
@@ -38,6 +39,19 @@ public class UserService implements IUserService {
 
     private Boolean existById(Long id) {
         return userRepository.findById(id).isPresent();
+    }
+
+    public Boolean existByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    public UserDTO userByEmail(String email) {
+        UserDTO response = null;
+        if(existByEmail(email)) {
+            response = mapper.convertValue(userRepository.findByEmail(email), UserDTO.class);
+        }
+
+        return response;
     }
 
     @Override
@@ -99,5 +113,11 @@ public class UserService implements IUserService {
 
         return userDTOS;
 
+    }
+
+    @Override
+    public UserDTO loginUser(Login login) {
+
+        return userByEmail(login.getEmail());
     }
 }
