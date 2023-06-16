@@ -18,12 +18,14 @@ import BreadCrumb, { BreadCrumbLevel } from "../../../components/BreadCrumb";
 import { useMobile } from "../../../hooks/useMobile";
 import icons from "../../../components/icons";
 import useProducts from "../../../hooks/useProducts";
+import { useApp } from "../../../context/AppContext";
 
 const namespace = "detail-page";
 
 const Detail = ({ className }) => {
   const isMobile = useMobile();
   const navigate = useNavigate();
+  const { user } = useApp();
   const { id } = useParams();
   const { ArrowLeftShort } = icons;
 
@@ -144,14 +146,16 @@ const Detail = ({ className }) => {
                       {product.stock > 0 ? "En stock" : "No disponible"}
                     </Text>
                   </CardBody>
-                  <CardFooter>
-                    <Layput columns="2">
-                      <LayputColumns start="1" end="2"></LayputColumns>
-                      <LayputColumns start="3" end="4">
-                        <Button fullWidth>Agregar al carrito</Button>
-                      </LayputColumns>
-                    </Layput>
-                  </CardFooter>
+                  {user && user.rol.name.toLowerCase() === "user" && (
+                    <CardFooter>
+                      <Layput columns="2">
+                        <LayputColumns start="1" end="2"></LayputColumns>
+                        <LayputColumns start="3" end="4">
+                          <Button fullWidth>Reservar</Button>
+                        </LayputColumns>
+                      </Layput>
+                    </CardFooter>
+                  )}
                 </Card>
               )}
             </Container>
