@@ -146,7 +146,7 @@ const Detail = ({ className }) => {
                       {product.stock > 0 ? "En stock" : "No disponible"}
                     </Text>
                   </CardBody>
-                  {user && user.rol.name.toLowerCase() === "user" && (
+                  {user && user?.rol?.name.toLowerCase() === "user" && (
                     <CardFooter>
                       <Layput columns="2">
                         <LayputColumns start="1" end="2"></LayputColumns>

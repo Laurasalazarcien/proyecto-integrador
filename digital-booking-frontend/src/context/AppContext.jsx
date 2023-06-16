@@ -7,7 +7,7 @@ export const initialState = {
   theme: "light",
   loading: false,
   errors: null,
-  user: JSON.parse(localStorage.getItem("user")) || [],
+  user: JSON.parse(localStorage.getItem("user")) || null,
 };
 
 export const AppContext = createContext();
