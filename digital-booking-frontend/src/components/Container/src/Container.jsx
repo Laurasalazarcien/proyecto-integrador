@@ -14,12 +14,12 @@ const Container = ({
   spaceBetweenItems,
   element,
   margin,
+  padding,
+  columns,
   marginTop,
   marginLeft,
   marginRight,
   marginBottom,
-  padding,
-  columns,
   columnsInExtraSmallDevices,
   columnsInSmallDevices,
   columnsInMediumDevices,
@@ -30,34 +30,55 @@ const Container = ({
 }) => {
   const componentClassNames = classNames(namespace, className, {
     [`${namespace}--margin-${margin}`]: margin,
+    [`${namespace}--padding-${padding}`]: padding,
     [`${namespace}--margin-top-${marginTop}`]: marginTop,
     [`${namespace}--margin-left-${marginLeft}`]: marginLeft,
     [`${namespace}--margin-right-${marginRight}`]: marginRight,
     [`${namespace}--margin-bottom-${marginBottom}`]: marginBottom,
-    [`${namespace}--padding-${padding}`]: padding,
-    [`${namespace}--columns-${columns}`]: columns,
     [`${namespace}--display-${display}`]: display,
-    [`${namespace}--columns-xs-${columnsInExtraSmallDevices}`]:columnsInExtraSmallDevices,
-    [`${namespace}--columns-sm-${columnsInSmallDevices}`]: columnsInSmallDevices,
-    [`${namespace}--columns-md-${columnsInMediumDevices}`]: columnsInMediumDevices,
-    [`${namespace}--columns-lg-${columnsInLargeDevices}`]: columnsInLargeDevices,
-    [`${namespace}--columns-xl-${columnsInExtraLargeDevices}`]: columnsInExtraLargeDevices,
-    [`${namespace}--gap-${spaceBetweenItems}`]: spaceBetweenItems,
     [`${namespace}--align-items-${alignItems}`]: alignItems,
     [`${namespace}--justify-content-${justifyContent}`]: justifyContent,
     [`${namespace}--flex-direction-${flexDirection}`]: flexDirection,
+    [`${namespace}--columns-${columns}`]: columns,
+    [`${namespace}--gap-${spaceBetweenItems}`]: spaceBetweenItems,
+    [`${namespace}--columns-xs-${columnsInExtraSmallDevices}`]:
+      columnsInExtraSmallDevices,
+    [`${namespace}--columns-sm-${columnsInSmallDevices}`]:
+      columnsInSmallDevices,
+    [`${namespace}--columns-md-${columnsInMediumDevices}`]:
+      columnsInMediumDevices,
+    [`${namespace}--columns-lg-${columnsInLargeDevices}`]:
+      columnsInLargeDevices,
+    [`${namespace}--columns-xl-${columnsInExtraLargeDevices}`]:
+      columnsInExtraLargeDevices,
   });
 
   const getContainerElement = (element) => {
     switch (element) {
       case "section":
-        return <section className={componentClassNames}>{children}</section>;
+        return (
+          <section style={{ width, height }} className={componentClassNames}>
+            {children}
+          </section>
+        );
       case "div":
-        return <div className={componentClassNames}>{children}</div>;
+        return (
+          <div style={{ width, height }} className={componentClassNames}>
+            {children}
+          </div>
+        );
       case "nav":
-        return <nav className={componentClassNames}>{children}</nav>;
+        return (
+          <nav style={{ width, height }} className={componentClassNames}>
+            {children}
+          </nav>
+        );
       default:
-        return <div className={componentClassNames}>{children}</div>;
+        return (
+          <div style={{ width, height }} className={componentClassNames}>
+            {children}
+          </div>
+        );
     }
   };
 
@@ -65,8 +86,6 @@ const Container = ({
 };
 
 Container.propTypes = {
-  width: PropTypes.string,
-  height: PropTypes.string,
   display: PropTypes.string,
   alignItems: PropTypes.string,
   justifyContent: PropTypes.string,

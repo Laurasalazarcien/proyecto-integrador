@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useEffect, useContext, useReducer } from "react";
 import { appReducer } from "../reducer/appReducer";
 import { actionTypes } from "../reducer/actionTypes";
 
@@ -7,13 +7,27 @@ export const initialState = {
   theme: "light",
   loading: false,
   errors: null,
-  data: []
+  user: JSON.parse(localStorage.getItem("user")) || null,
 };
 
 export const AppContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [appState, dispatch] = useReducer(appReducer, initialState);
+
+  const login = (userInfo) => {
+    dispatch({
+      type: actionTypes.LOGIN,
+      payload: userInfo,
+    });
+  };
+
+  const logout = () => {
+    dispatch({
+      type: actionTypes.LOGOUT,
+    });
+    localStorage.removeItem("user");
+  };
 
   const setAppTheme = (theme) => {
     dispatch({
@@ -43,19 +57,21 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(appState.user));
+  }, [appState.user]);
+
   const value = {
     ...appState,
+    login,
+    logout,
     setAppTheme,
     setLoading,
     setErrors,
-    setData
+    setData,
   };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useApp = () => {

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Swal from "sweetalert2";
@@ -17,6 +18,7 @@ import { Title, Text } from "../../../components/Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
 import useUsers from "../../../hooks/useUsers";
+import useRoles from "../../../hooks/useRoles";
 import logo from "../../../assets/icons/logo-no-background-inverted.svg";
 
 const namespace = "register-page";
@@ -52,9 +54,12 @@ const valideteForm = (form) => {
   return errors;
 };
 
-const Register = ({ title, className }) => {
+const Register = ({ className }) => {
   const isMobile = useMobile();
   const navigate = useNavigate();
+  const [registered, setRegistered] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const {
     form,
     dni,
@@ -63,6 +68,7 @@ const Register = ({ title, className }) => {
     email,
     address,
     password,
+    role,
     errors,
     handleChange,
     handleBlur,
@@ -75,10 +81,12 @@ const Register = ({ title, className }) => {
       email: "",
       address: "",
       password: "",
+      role: 1,
     },
     valideteForm
   );
   const { createUser } = useUsers();
+  const { roles, loading: loadingRoles, error: errorRoles } = useRoles();
 
   const handleSubmit = () => {
     const errors = valideteForm(form);
@@ -86,19 +94,26 @@ const Register = ({ title, className }) => {
       setErrors(errors);
       return;
     }
+
     const user = {
       ...form,
-      rol: {
-        id: "2",
-        name: "user",
-      },
+      rol: roles.find((role) => role.name.toLowerCase() === "user"),
     };
+
+    setLoading(true);
     createUser(user)
       .then((resp) => {
-        console.log("Resp ---> ", resp);
+        setRegistered(true);
+        setLoading(false);
       })
       .catch((error) => {
-        console.log("Error --> ", error);
+        Swal.fire({
+          title: "Ocurrió un error",
+          text: error.response.data || error.response.data.message,
+          icon: "error",
+        });
+        setRegistered(false);
+        setLoading(false);
       });
   };
 
@@ -127,16 +142,18 @@ const Register = ({ title, className }) => {
           >
             Crear cuenta
           </Title>
-          {/* <Message
-            type="success"
-            hierarchy="quiet"
-            marginTop="8"
-            marginBottom="0"
-            closable
-          >
-            Se ha creado tu cuenta de manera exitosa. Por favor revisa tu correo
-            electrónico para validarla.
-          </Message> */}
+          {registered && (
+            <Message
+              type="success"
+              hierarchy="quiet"
+              marginTop="8"
+              marginBottom="0"
+              closable
+            >
+              Se ha creado tu cuenta de manera exitosa. Por favor revisa tu
+              correo electrónico para validarla.
+            </Message>
+          )}
         </CardHeader>
         <CardBody paddingSize="20">
           <Form
@@ -208,7 +225,8 @@ const Register = ({ title, className }) => {
             <Container marginTop="20">
               <Button
                 type="submit"
-                disabled={Object.entries(errors).length > 0}
+                disabled={loading || Object.entries(errors).length > 0}
+                loading={loading}
                 fullWidth
               >
                 Registrarme
@@ -248,12 +266,10 @@ const Register = ({ title, className }) => {
 };
 
 Register.propTypes = {
-  title: PropTypes.string,
   className: PropTypes.string,
 };
 
 Register.defaultProps = {
-  title: "Register page",
   className: "",
 };
 

@@ -132,7 +132,6 @@ const AdminUsers = ({ className }) => {
         });
       })
       .catch((error) => {
-        console.log({ error });
         Swal.fire({
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"

@@ -4,7 +4,10 @@ import classNames from "classnames";
 const namespace = "card";
 
 const Card = ({
+  width, 
+  height,
   shadow,
+  orientation,
   marginSize,
   marginTop,
   marginLeft,
@@ -21,6 +24,7 @@ const Card = ({
 }) => {
   const componentClassnames = classNames(namespace, className, {
     [`${namespace}--shadow-${shadow}`]: shadow,
+    [`${namespace}--orientation-${orientation}`]: orientation,
     [`${namespace}--margin-${marginSize}`]: marginSize,
     [`${namespace}--margin-top-${marginTop}`]: marginTop,
     [`${namespace}--margin-left-${marginLeft}`]: marginLeft,
@@ -39,13 +43,16 @@ const Card = ({
   };
 
   return (
-    <article className={componentClassnames} onClick={handleClick}>
+    <article style={{ width, height }} className={componentClassnames} onClick={handleClick}>
       {children}
     </article>
   );
 };
 
 Card.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  orientation: PropTypes.oneOf(["vertical", "horizontal"]),
   shadow: PropTypes.oneOf(["none", "flat", "outline", "elevated"]),
   marginSize: PropTypes.oneOf(["0", "4", "8", "12", "16", "20", "24", "32"]),
   marginTop: PropTypes.oneOf(["2", "4", "8", "12", "16", "20", "24", "32"]),
@@ -73,6 +80,7 @@ Card.defaultProps = {
   marginSize: "0",
   paddingSize: "default",
   borderColor: "default",
+  orientation: "vertical",
   borderRadius: "6",
   animated: false,
   clickeable: false,
