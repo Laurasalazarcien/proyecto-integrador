@@ -26,8 +26,8 @@ const NavBar = ({
 }) => {
   const { BurguerMenu, Close, BoxArrowLeft } = icons;
   const isMobile = useMobile();
+  const { PeopleCircle } = icons;
   const { user, logout } = useApp();
-  console.log({ user });
 
   const [openMenu, setOpenMenu] = useState(false);
   const componentClassNames = classNames(namespace, className, {
@@ -110,8 +110,9 @@ const NavBar = ({
             </>
           )}
           {user && user?.isAuthenticated && (
-            <ListItem>
+            <ListItem className={`${namespace}__user`}>
               <Container height="100%" display="flex" alignItems="center">
+                <PeopleCircle />
                 <Text size="s" element="span" color="white" weight="bold">
                   {`${convertFirstLetterToUpperCase(
                     user.name

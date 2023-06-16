@@ -50,6 +50,16 @@
       }
     }
   }
+
+  &__user {
+    display: flex;
+    align-items: center;
+
+    .bi-person-circle {
+      color: $db-white;
+      margin-right: $db-spacing-4;
+    }
+  }
 }
 
 // Media Queies
@@ -145,7 +155,7 @@
         padding: 0;
       }
     }
-    
+
     &.navbar--open-menu {
       .navbar__options {
         left: 0;

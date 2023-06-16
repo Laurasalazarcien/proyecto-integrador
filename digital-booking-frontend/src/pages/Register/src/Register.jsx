@@ -97,7 +97,7 @@ const Register = ({ className }) => {
 
     const user = {
       ...form,
-      rol: roles.find((role) => role.id === form.role),
+      rol: roles.find((role) => role.name.toLowerCase() === "user"),
     };
 
     setLoading(true);
