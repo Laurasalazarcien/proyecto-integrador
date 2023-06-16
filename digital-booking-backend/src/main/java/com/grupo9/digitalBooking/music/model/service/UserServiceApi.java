@@ -2,7 +2,6 @@ package com.grupo9.digitalBooking.music.model.service;
 
 
  import com.fasterxml.jackson.databind.ObjectMapper;
- import com.grupo9.digitalBooking.music.model.entities.Login;
  import com.grupo9.digitalBooking.music.model.entities.UserApp;
  import com.grupo9.digitalBooking.music.model.repository.IUser;
  import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
@@ -117,19 +116,15 @@ public class UserServiceApi implements IUserService{
           List<UserApp> userApps = userRepository.findAll();
           Set<UserDTO> userDTOS = new HashSet<>();
 
-     for (UserApp userApp : userApps) {
-         userDTOS.add(mapper.convertValue(userApp, UserDTO.class));
+          for (UserApp userApp : userApps) {
+              userDTOS.add(mapper.convertValue(userApp, UserDTO.class));
+          }
+
+          return userDTOS;
+
      }
 
-     return userDTOS;
 
-     }
-
-     @Override
-    public UserDTO loginUser(Login login) {
-
-        return userByEmail(login.getEmail());
-    }
 
      
 }
