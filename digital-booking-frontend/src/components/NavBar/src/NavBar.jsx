@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import Image from "../../Image";
+import Button from "../../Button";
 import icons from "../../icons";
 import Container from "../../Container";
 import { Text } from "../../Typography";
 import { useMobile } from "../../../hooks/useMobile";
 import List, { ListItem } from "../../List";
-import Button, { DropdownButton } from "../../Button";
+import { useApp } from "../../../context/AppContext";
+import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 import logo from "../../../assets/icons/logo-no-background.svg";
 
 const namespace = "navbar";
@@ -24,6 +26,8 @@ const NavBar = ({
 }) => {
   const { BurguerMenu, Close, BoxArrowLeft } = icons;
   const isMobile = useMobile();
+  const { user, logout } = useApp();
+  console.log({ user });
 
   const [openMenu, setOpenMenu] = useState(false);
   const componentClassNames = classNames(namespace, className, {
@@ -80,38 +84,55 @@ const NavBar = ({
           itemsalignment="row"
           className={`${namespace}__menu`}
         >
-          <ListItem>
-            <Button
-              onClick={() => {
-                navigate("/register");
-                setOpenMenu(false);
-              }}
-            >
-              Crear cuenta
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button
-              hierarchy="white"
-              onClick={() => {
-                navigate("/login");
-                setOpenMenu(false);
-              }}
-            >
-              Iniciar sesión
-            </Button>
-          </ListItem>
-          {/* <ListItem>
-            <Button
-              icon={<BoxArrowLeft />}
-              onClick={() => {
-                navigate("/register");
-                setOpenMenu(false);
-              }}
-            >
-              Salir
-            </Button>
-          </ListItem> */}
+          {!user && !user?.isAuthenticated && (
+            <>
+              <ListItem>
+                <Button
+                  onClick={() => {
+                    navigate("/register");
+                    setOpenMenu(false);
+                  }}
+                >
+                  Crear cuenta
+                </Button>
+              </ListItem>
+              <ListItem>
+                <Button
+                  hierarchy="white"
+                  onClick={() => {
+                    navigate("/login");
+                    setOpenMenu(false);
+                  }}
+                >
+                  Iniciar sesión
+                </Button>
+              </ListItem>
+            </>
+          )}
+          {user && user?.isAuthenticated && (
+            <ListItem>
+              <Container height="100%" display="flex" alignItems="center">
+                <Text size="s" element="span" color="white" weight="bold">
+                  {`${convertFirstLetterToUpperCase(
+                    user.name
+                  )} ${convertFirstLetterToUpperCase(user.lastName)}`}
+                </Text>
+              </Container>
+            </ListItem>
+          )}
+          {user && user?.isAuthenticated && (
+            <ListItem>
+              <Button
+                icon={<BoxArrowLeft />}
+                onClick={() => {
+                  logout();
+                  navigate("/login");
+                }}
+              >
+                Salir
+              </Button>
+            </ListItem>
+          )}
         </List>
       </Container>
     </nav>

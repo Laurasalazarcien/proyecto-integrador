@@ -14,6 +14,8 @@ import {
 } from "../../../components/TextField";
 import Card, { CardHeader, CardBody } from "../../../components/Card";
 import { Title, Text } from "../../../components/Typography";
+import AuthService from "../../../services/auth";
+import { useApp } from "../../../context/AppContext";
 import { useMobile } from "../../../hooks/useMobile";
 import useForm from "../../../hooks/useForm";
 import logo from "../../../assets/icons/logo-no-background-inverted.svg";
@@ -28,17 +30,17 @@ const valideteForm = (form) => {
     errors.email = "El correo electrónico no tiene un formato válido.";
   }
 
-  if (form.password.trim().length < 8) {
-    errors.password = "La contraseña debe tener almenos 8 caracteres.";
+  if (form.password.trim().length < 4) {
+    errors.password = "La contraseña debe tener almenos 4 caracteres.";
   }
 
   return errors;
 };
 
-const Login = ({ title, className }) => {
+const Login = ({ className }) => {
   const isMobile = useMobile();
+  const { login } = useApp();
   const navigate = useNavigate();
-  const componentClassnames = classNames(namespace, className);
   const { form, email, password, errors, handleChange, handleBlur, setErrors } =
     useForm(
       {
@@ -58,11 +60,24 @@ const Login = ({ title, className }) => {
       setErrors(errors);
       return;
     }
-    console.log("submit", {
-      email,
-      password,
-    });
+    AuthService.loginWithEmailAndPassword({ email, password })
+      .then((resp) => {
+        login(resp);
+        navigate(
+          resp.rol.name.toLowerCase() === "admin" ? "/admin/products" : "/"
+        );
+      })
+      .catch((error) => {
+        console.log({ error });
+        Swal.fire({
+          title: "Ocurrió un arror al iniciar sesión",
+          text: error.response.data || error.response.data.message,
+          icon: "error",
+        });
+      });
   };
+
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>
@@ -163,12 +178,10 @@ const Login = ({ title, className }) => {
 };
 
 Login.propTypes = {
-  title: PropTypes.string,
   className: PropTypes.string,
 };
 
 Login.defaultProps = {
-  title: "Register page",
   className: "",
 };
 
