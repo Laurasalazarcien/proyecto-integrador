@@ -18,14 +18,14 @@
     color: $db-gray-550;
   }
 
-  &--orientation-vertical {
+  &--orientation-horizontal {
     .card__header,
     .card__body {
       width: 50%;
     }
   }
 
-  &--orientation-horizontal {
+  &--orientation-vertical {
     .card__header,
     .card__body {
       width: 100%;

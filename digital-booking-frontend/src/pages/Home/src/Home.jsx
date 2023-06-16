@@ -206,31 +206,36 @@ const Home = ({ title, className }) => {
                       display="flex"
                       flexDirection={isMobile ? "column" : "row"}
                     >
-                      <CardHeader>
+                      <CardHeader paddingSize="4">
                         <Image
                           paddingSize="0"
                           source={product.images[0].url}
                           alternativeText={product.name}
                           containerHeight={isMobile ? "150px" : "200px"}
+                          // containerWidth={isMobile ? "150px" : "50%"}
                           maxHeight={isMobile ? "150px" : "200px"}
-                          maxWidth={isMobile ? "150px" : "200px"}
+                          maxWidth={isMobile ? "150px" : "100%"}
                           onClick={() => console.log("img click")}
                         />
                       </CardHeader>
                       <CardBody>
-                        <Title
-                          size="s"
-                          element="h2"
-                          weight="semibold"
-                          alignment="left"
-                          transform="uppercase"
-                          marginBottom="4"
-                        >
-                          {product.name}
-                        </Title>
-                        <Text size="s" weight="light" alignment="left">
-                          $ {product.price}
-                        </Text>
+                        <Container height="100%" display="flex" alignItems="center">
+                          <Container>
+                            <Title
+                              size="xs"
+                              element="h2"
+                              weight="semibold"
+                              alignment="left"
+                              transform="uppercase"
+                              marginBottom="4"
+                            >
+                              {product.name}
+                            </Title>
+                            <Text size="s" weight="light" alignment="left">
+                              $ {product.price}
+                            </Text>
+                          </Container>
+                        </Container>
                       </CardBody>
                     </Container>
                   </Card>
