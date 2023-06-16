@@ -21,13 +21,11 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    public
     UserService userService;
 
     @Autowired
     IUser userRepostory;
     @Autowired
-    public
     RolService rolService;
 
     @CrossOrigin(origins = "http://127.0.0.1:5173")
