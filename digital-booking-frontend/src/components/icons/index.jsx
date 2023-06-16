@@ -26,6 +26,7 @@ import BoomBox from "./src/BoomBoxFill";
 import BoomBoxFill from "./src/BoomBox copy";
 import Upload from "./src/Upload";
 import BoxArrowLeft from "./src/BoxArrowLeft";
+import PeopleCircle from "./src/PeopleCircle";
 
 const icons = {
   Check,
@@ -55,7 +56,8 @@ const icons = {
   BoomBox,
   BoomBoxFill,
   Upload,
-  BoxArrowLeft
+  BoxArrowLeft,
+  PeopleCircle
 };
 
 export default icons;
