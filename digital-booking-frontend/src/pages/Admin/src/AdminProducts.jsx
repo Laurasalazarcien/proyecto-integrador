@@ -523,6 +523,7 @@ const AdminProducts = ({ className }) => {
                 name="stock"
                 label="Existencias"
                 value={stock}
+                maxValue="200"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 helperMessage={errors.stock}

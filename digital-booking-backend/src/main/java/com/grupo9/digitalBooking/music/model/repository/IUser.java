@@ -1,14 +1,15 @@
 package com.grupo9.digitalBooking.music.model.repository;
 
-import com.grupo9.digitalBooking.music.model.entities.User;
+import com.grupo9.digitalBooking.music.model.entities.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface IUser extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
-    Optional<User> findByDni(String dni);
+@Transactional
+public interface IUser extends JpaRepository<UserApp, Long> {
+    Optional<UserApp> findByEmail(String email);
+    Optional<UserApp> findByDni(String dni);
 }

@@ -1,13 +1,17 @@
 package com.grupo9.digitalBooking.music.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -20,17 +24,21 @@ public class Rol {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "rol")
-    @JsonIgnore
-    private Set<User> user;
+    //@OneToMany(mappedBy = "rol")
+    //@JsonIgnore
+    //private Set<UserApp> userApp;
 
+
+    public Rol(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
         return "Rol{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", user=" + user +
+                //", user=" + userApp +
                 '}';
     }
 }
