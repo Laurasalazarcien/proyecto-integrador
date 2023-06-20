@@ -101,4 +101,19 @@ public class UserApp implements UserDetails {
     //private Set<Booking> booking;
 
 
+    @Override
+    public String toString() {
+        return "UserApp{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", address='" + address + '\'' +
+                ", dni='" + dni + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", verify=" + verify +
+                ", rol=" + rol +
+                '}';
+    }
 }
