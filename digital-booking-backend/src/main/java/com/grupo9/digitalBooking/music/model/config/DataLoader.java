@@ -2,7 +2,6 @@ package com.grupo9.digitalBooking.music.model.config;
 
 import com.grupo9.digitalBooking.music.model.entities.Rol;
 import com.grupo9.digitalBooking.music.model.entities.UserApp;
-import com.grupo9.digitalBooking.music.model.entities.UserAppRol;
 import com.grupo9.digitalBooking.music.model.repository.IRol;
 import com.grupo9.digitalBooking.music.model.repository.IUser;
 import org.springframework.beans.factory.annotation.Autowired;

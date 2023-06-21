@@ -41,8 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/rols").permitAll()
-                .antMatchers(HttpMethod.GET, "/users").hasAnyAuthority("ADMIN")
+                .antMatchers("/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/instruments", "/instruments/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.PUT, "/users").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET,  "/rols", "/brands", "status", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/users", "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
