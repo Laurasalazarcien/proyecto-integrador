@@ -18,6 +18,4 @@ public class BookingDTO {
     private UserApp userApp;
     private Instrument instrument;
     private Status status;
-
-
 }

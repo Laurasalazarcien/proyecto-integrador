@@ -2,6 +2,7 @@ package com.grupo9.digitalBooking.music.model.controller;
 
 
 import com.grupo9.digitalBooking.music.model.DTO.BookingDTO;
+import com.grupo9.digitalBooking.music.model.entities.Booking;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,10 @@ public class BookingController {
     @Autowired
     IBookingService bookingService;
 
-
     @PostMapping
     public ResponseEntity<?> createBooking(@RequestBody BookingDTO bookingDTO){
-        bookingService.createBooking(bookingDTO);
-        return ResponseEntity.ok(HttpStatus.OK);
+        Booking newBooking = bookingService.createBooking(bookingDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(newBooking);
     }
 
     @GetMapping("/{id}")
