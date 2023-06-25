@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -54,6 +55,7 @@ public class InstrumentService implements IInstrumentService {
 
             Instrument request = mapper.convertValue(instrumentDTO, Instrument.class);
             request.setImages(null);
+            request.setAvailable(true);
             InstrumentDTO newInstrument = saveInstrument(mapper.convertValue(request, InstrumentDTO.class));
 
             //InstrumentDTO newInstrument = saveInstrument(instrumentDTO);
@@ -66,7 +68,14 @@ public class InstrumentService implements IInstrumentService {
                 imageRepository.save(image);
                 imageDTOList.add(mapper.convertValue(imageRepository.save(image), ImageDTO.class));
             });
+
+            /** TODO: Logica de producto para las reservas*/
+            LocalDate dateNow = LocalDate.now();
+            newInstrument.setStartReservationDate(dateNow);
+            newInstrument.setEndReservationDate(dateNow.plusDays(8));
+
             newInstrument.setImages(imageDTOList);
+
 
             response = newInstrument;
         }

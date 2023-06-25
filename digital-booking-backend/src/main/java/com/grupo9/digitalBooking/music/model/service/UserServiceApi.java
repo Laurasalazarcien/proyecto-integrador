@@ -2,6 +2,7 @@ package com.grupo9.digitalBooking.music.model.service;
 
 
  import com.fasterxml.jackson.databind.ObjectMapper;
+ import com.grupo9.digitalBooking.music.model.DTO.UserResponseDTO;
  import com.grupo9.digitalBooking.music.model.entities.UserApp;
  import com.grupo9.digitalBooking.music.model.repository.IUser;
  import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
@@ -61,7 +62,7 @@ public class UserServiceApi implements IUserService{
     }
 
      @Override
-     public UserDTO createUser(UserDTO userDTO) {
+     public UserResponseDTO createUser(UserDTO userDTO) {
           UserDTO response = null;
           Boolean existUser = userRepository.findByEmail(userDTO.getEmail()).isPresent();
           Boolean existDNI = userRepository.findByDni(userDTO.getDni()).isPresent();
@@ -69,9 +70,13 @@ public class UserServiceApi implements IUserService{
               String passwordEncrypt=passwordEncoder.encode(userDTO.getPassword());
               userDTO.setPassword(passwordEncrypt);
               response = saveUser(userDTO);
+
+
           }
+
+          UserResponseDTO userResponse = mapper.convertValue(response, UserResponseDTO.class);
           LOGGER.info("respuesta: " + response);
-          return response;
+          return userResponse;
      }
 
      @Override
@@ -81,6 +86,7 @@ public class UserServiceApi implements IUserService{
           if(user.isPresent()) {
               userDTO = mapper.convertValue(user, UserDTO.class);
           }
+         userDTO.setPassword(null);
 
           return userDTO;
      }
@@ -92,7 +98,18 @@ public class UserServiceApi implements IUserService{
           Boolean validateUser = existById(userDTO.getId());
 
           if(validateUser) {
+              UserApp userDB = userRepository.findUserById(userDTO.getId());
+              Boolean isEqual = passwordEncoder.matches(userDTO.getPassword(), userDB.getPassword());
+
+              if(!isEqual) {
+                  String newPassword = passwordEncoder.encode(userDTO.getPassword());
+                  userDTO.setPassword(newPassword);
+              } else {
+                  userDTO.setPassword(userDB.getPassword());
+              }
+              userDTO.setPassword(null);
               response = saveUser(userDTO);
+              LOGGER.info("passwords Equals: " + isEqual);
           }
 
           LOGGER.info("response: " + response);
@@ -117,6 +134,7 @@ public class UserServiceApi implements IUserService{
           Set<UserDTO> userDTOS = new HashSet<>();
 
           for (UserApp userApp : userApps) {
+              userApp.setPassword(null);
               userDTOS.add(mapper.convertValue(userApp, UserDTO.class));
           }
 
