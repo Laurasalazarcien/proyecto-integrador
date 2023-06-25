@@ -1,6 +1,8 @@
 package com.grupo9.digitalBooking.music.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,9 +47,7 @@ public class UserApp implements UserDetails {
     @JoinColumn(name = "rol_id")
     private Rol rol;
 
-    public UserApp(String name, String lastName, String username,
-                   String address, String dni, String email,
-                   String password, Rol rol) {
+    public UserApp(String name, String lastName, String username, String address, String dni, String email, String password, Rol rol) {
         this.name = name;
         this.lastName = lastName;
         this.username = username;

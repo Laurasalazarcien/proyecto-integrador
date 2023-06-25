@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface IUser extends JpaRepository<UserApp, Long> {
     Optional<UserApp> findByEmail(String email);
     Optional<UserApp> findByDni(String dni);
+    UserApp findUserById(Long id);
 }

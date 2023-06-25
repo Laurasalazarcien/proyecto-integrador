@@ -1,5 +1,6 @@
 package com.grupo9.digitalBooking.music.model.config;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.grupo9.digitalBooking.music.model.entities.Rol;
 import com.grupo9.digitalBooking.music.model.entities.UserApp;
 import com.grupo9.digitalBooking.music.model.repository.IRol;
@@ -10,6 +11,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import sendinblue.Json;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -35,7 +37,7 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(new UserApp("Charly",
                 "charly", "charly", "address",
                 "1234asd", "charly@pruebas.com"
-                ,password, rolAdmin));
+                ,password,  rolAdmin));
     }
 
 

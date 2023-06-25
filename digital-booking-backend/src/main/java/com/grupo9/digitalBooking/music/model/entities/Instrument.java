@@ -22,12 +22,10 @@ public class Instrument {
     private String name;
     private Double price;
     private String description;
+    private Boolean available;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     private String characteristics;
-
-    private Integer stock;
-
 
     @ManyToOne
     @JoinColumn(name = "category_id")

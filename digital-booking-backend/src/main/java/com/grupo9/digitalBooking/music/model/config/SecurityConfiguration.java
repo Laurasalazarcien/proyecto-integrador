@@ -44,8 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/instruments", "/instruments/{id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.PUT, "/users").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET,  "/rols", "/brands", "status", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
+
+                .antMatchers(HttpMethod.GET, "/bookings", "/bookings/{id}").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/bookings").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/users", "/bookings").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/bookings/{id}").hasAnyAuthority("USER", "ADMIN")
+
+                .antMatchers(HttpMethod.GET,  "/users", "/rols", "/brands", "status", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/users", "/rols", "/categories", "/instruments", "/status", "/brands", "/instrumentDetails", "/images").hasAnyAuthority("ADMIN")

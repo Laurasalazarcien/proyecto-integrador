@@ -14,4 +14,5 @@ public interface IStatus extends JpaRepository<Status, Long> {
 
     Optional<Status> findByName(String name);
 
+    Status findStatusById(Long id);
 }

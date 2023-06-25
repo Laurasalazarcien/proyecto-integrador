@@ -4,6 +4,7 @@ package com.grupo9.digitalBooking.music.model.controller;
 
 import com.grupo9.digitalBooking.music.model.DTO.RolDTO;
 import com.grupo9.digitalBooking.music.model.DTO.UserDTO;
+import com.grupo9.digitalBooking.music.model.DTO.UserResponseDTO;
 import com.grupo9.digitalBooking.music.model.repository.IUser;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IRolService;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IUserService;
@@ -36,7 +37,7 @@ public class UserController {
         ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("Message: The user already exists");
         Boolean existRol = rolService.existById(userDTO.getRol().getId());
-        UserDTO createUser = null;
+        UserResponseDTO createUser = null;
         if(existRol) {
             createUser = userService.createUser(userDTO);
         } else {
@@ -76,7 +77,7 @@ public class UserController {
             response = ResponseEntity.status(HttpStatus.OK)
                     .body(isModified);
         } else {
-        response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body("Message: The rol does not exist");
         }
 

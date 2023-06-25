@@ -16,4 +16,6 @@ public interface IInstrument extends JpaRepository<Instrument, Long> {
 
     Optional<Instrument> findByName(String name);
     List<Instrument> findByCategoryId(Long categoryId);
+
+    Instrument findInstrumentById(Long id);
 }
