@@ -25,7 +25,7 @@ import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "home-page";
 
-const Home = ({ title, className }) => {
+const Home = ({ className }) => {
   const navigate = useNavigate();
   const isMobile = useMobile();
   const componentClassnames = classNames(namespace, className);
@@ -269,7 +269,6 @@ Home.propTypes = {
 };
 
 Home.defaultProps = {
-  title: "",
   className: "",
 };
 

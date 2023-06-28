@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "../pages/Home";
 import DetailPage from "../pages/Detail";
+import BookingPage from "../pages/Booking";
 import CategoryPage from "../pages/Category";
 import RegisterPage from "../pages/Register";
 import AdminPage, {
@@ -17,6 +18,7 @@ const AppRouter = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/detail/:id" element={<DetailPage />} />
+      <Route path="/booking/:id" element={<BookingPage />} />
       <Route path="/categories/:category" element={<CategoryPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />

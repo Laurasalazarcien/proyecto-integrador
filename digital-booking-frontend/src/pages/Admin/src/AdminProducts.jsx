@@ -163,6 +163,7 @@ const AdminProducts = ({ className }) => {
     };
 
     const response = action === "edit" ? updateProduct(product) : createProduct(product);
+    console.log({ product });
     response
       .then((resp) => {
         console.log({ resp });
@@ -184,6 +185,7 @@ const AdminProducts = ({ className }) => {
         });
       })
       .catch((error) => {
+        console.log("ERROR ----> ", error);
         Swal.fire({
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"

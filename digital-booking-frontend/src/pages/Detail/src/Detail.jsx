@@ -39,6 +39,10 @@ const Detail = ({ className }) => {
     navigate(-1);
   };
 
+  const handleReserveProduct = (productId) => {
+    navigate(`/booking/${productId}`);
+  };
+
   const componentClassnames = classNames(namespace, className);
 
   return (
@@ -65,7 +69,7 @@ const Detail = ({ className }) => {
               <BreadCrumb>
                 <BreadCrumbLevel text="Home" redirectTo="/home" />
                 <BreadCrumbLevel
-                  text="Instrumentos de viento"
+                  text={product.category.name}
                   redirectTo={`/categories/${product?.category?.id}`}
                 />
                 <BreadCrumbLevel text={product.name} />
@@ -136,7 +140,7 @@ const Detail = ({ className }) => {
                     >
                       {product.description}
                     </Text>
-                    <Text
+                    {/* <Text
                       size="s"
                       weight="light"
                       color="seconday"
@@ -144,14 +148,19 @@ const Detail = ({ className }) => {
                     >
                       Disponibilidad:{" "}
                       {product.stock > 0 ? "En stock" : "No disponible"}
-                    </Text>
+                    </Text> */}
                   </CardBody>
-                  {user && user?.rol?.name.toLowerCase() === "user" && (
+                  {user && (
                     <CardFooter>
                       <Layput columns="2">
                         <LayputColumns start="1" end="2"></LayputColumns>
                         <LayputColumns start="3" end="4">
-                          <Button fullWidth>Reservar</Button>
+                          <Button
+                            onClick={() => handleReserveProduct(product.id)}
+                            fullWidth
+                          >
+                            Reservar
+                          </Button>
                         </LayputColumns>
                       </Layput>
                     </CardFooter>

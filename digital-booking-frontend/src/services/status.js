@@ -1,37 +1,42 @@
 import axios from "axios";
-import config from "./config";
+import { getAuthorizationConfig } from "./config";
 
 class StatusService {
-  static async getAllStatus() {
-    return axios.get("status", config).then((resp) => {
+  static async getAllStatus({ token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.get("status", newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async getStatusById(statusId) {
-    return axios.get(`status/${statusId}`, config).then((resp) => {
+  static async getStatusById(statusId, { token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.get(`status/${statusId}`, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async createStatus(status) {
-    return axios.post(`status`, status, config).then((resp) => {
+  static async createStatus(status, { token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.post(`status`, status, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async updateStatus(status) {
-    return axios.put(`status`, status, config).then((resp) => {
+  static async updateStatus(status, { token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.put(`status`, status, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async deleteStatus(statusId) {
-    return axios.delete(`status/${statusId}`, config).then((resp) => {
+  static async deleteStatus(statusId, { token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.delete(`status/${statusId}`, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });

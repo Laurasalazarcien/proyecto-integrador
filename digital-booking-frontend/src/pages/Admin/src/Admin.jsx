@@ -18,10 +18,6 @@ const Admin = ({ className }) => {
   const navigate = useNavigate();
   const { pathname: pathName } = useLocation();
 
-  // useEffect(() => {
-  //   navigate("/admin/products");
-  // }, []);
-
   return (
     <Container className={componentClassnames}>
       <Container className={`${namespace}__menu`}>
