@@ -68,6 +68,7 @@ public class BookingService implements IBookingService {
             newBooking.setUserApp(user);
 
             instrument.setStatus(notAvailable);
+            instrument.setAvailable(false);
             instrumentRepository.save(instrument);
             newBooking = saveBooking(newBooking);
 
