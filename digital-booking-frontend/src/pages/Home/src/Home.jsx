@@ -174,9 +174,9 @@ const Home = ({ className }) => {
             display="grid"
             spaceBetweenItems="20"
             columnsInSmallDevices="1"
-            columnsInMediumDevices="2"
-            columnsInLargeDevices="3"
-            columnsInExtraLargeDevices="4"
+            columnsInMediumDevices="1"
+            columnsInLargeDevices="2"
+            columnsInExtraLargeDevices="2"
           >
             {loadingProducts &&
               generateArray(10).map((index, item) => (
