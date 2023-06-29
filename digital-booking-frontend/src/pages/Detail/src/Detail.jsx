@@ -141,22 +141,22 @@ const Detail = ({ className }) => {
                     >
                       {product.description}
                     </Text>
-                    {/* <Text
-                      size="s"
-                      weight="light"
-                      color="seconday"
-                      marginBottom="8"
-                    >
-                      Disponibilidad:{" "}
-                      {product.stock > 0 ? "En stock" : "No disponible"}
-                    </Text> */}
                     {product.available ? (
                       <Badge>{product.status.name}</Badge>
                     ) : (
                       <Badge type="error">{product.status.name}</Badge>
                     )}
+                    {!user && product.available && (
+                      <Message
+                        hierarchy="quiet"
+                        marginTop="12"
+                        marginBottom="8"
+                      >
+                        Para poder reservar el producto debes iniciar sesión.
+                      </Message>
+                    )}
                   </CardBody>
-                  {user &&  (
+                  {user && (
                     <CardFooter>
                       <Layput columns="2">
                         <LayputColumns start="1" end="2"></LayputColumns>

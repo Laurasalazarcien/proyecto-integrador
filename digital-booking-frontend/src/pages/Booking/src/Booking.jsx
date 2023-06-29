@@ -362,14 +362,16 @@ const Booking = ({ className }) => {
                         id="product"
                         name="product"
                         searchPlaceholder="Buscar producto"
-                        options={products.map((product) => ({
-                          label: convertFirstLetterToUpperCase(product.name),
-                          value: product.id,
-                          image: product.images[0].url,
-                        }))}
+                        options={products
+                          .filter((product) => product.available)
+                          .map((product) => ({
+                            label: convertFirstLetterToUpperCase(product.name),
+                            value: product.id.toString(),
+                            image: product.images[0].url,
+                          }))}
                         modifier=""
                         helperMessage=""
-                        selectedOption={1}
+                        selectedOption={id}
                         onSelectOption={(option) => {
                           setBooking({
                             ...booking,

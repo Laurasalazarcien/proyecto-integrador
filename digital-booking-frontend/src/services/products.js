@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import config, { getAuthorizationConfig } from "./config";
 
@@ -17,9 +18,9 @@ class ProductsService {
   }
 
   static async getProductsByCategory(category, { token }) {
-    const newConfig = getAuthorizationConfig(token)
+    // const newConfig = getAuthorizationConfig(token)
     return axios
-      .get(`instruments/category/${category}`, newConfig)
+      .get(`instruments/category/${category}`, config)
       .then((resp) => {
         const { data } = resp;
         return data;
