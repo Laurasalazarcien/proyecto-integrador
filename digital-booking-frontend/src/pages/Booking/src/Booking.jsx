@@ -85,15 +85,6 @@ const Booking = ({ className }) => {
     });
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setBooking({
-  //       ...booking,
-  //       user: user,
-  //     });
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     if (product) {
       setBooking({
@@ -111,10 +102,6 @@ const Booking = ({ className }) => {
       )}-${new Date().getDate()}`,
     });
   }, []);
-
-  useEffect(() => {
-    console.log("booking ---> ", booking);
-  }, [booking]);
 
   const componentClassnames = classNames(namespace, className);
 
@@ -177,13 +164,11 @@ const Booking = ({ className }) => {
                     id="product"
                     name="product"
                     searchPlaceholder="Buscar producto"
-                    options={products
-                      .filter((product) => product.id !== id)
-                      .map((product) => ({
-                        label: convertFirstLetterToUpperCase(product.name),
-                        value: product.id,
-                        image: product.images[0].url,
-                      }))}
+                    options={products.map((product) => ({
+                      label: convertFirstLetterToUpperCase(product.name),
+                      value: product.id,
+                      image: product.images[0].url,
+                    }))}
                     modifier=""
                     helperMessage=""
                     selectedOption={1}
