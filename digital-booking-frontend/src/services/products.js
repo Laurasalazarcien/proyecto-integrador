@@ -17,7 +17,7 @@ class ProductsService {
     });
   }
 
-  static async getProductsByCategory(category, { token }) {
+  static async getProductsByCategory(category) {
     // const newConfig = getAuthorizationConfig(token)
     return axios
       .get(`instruments/category/${category}`, config)
