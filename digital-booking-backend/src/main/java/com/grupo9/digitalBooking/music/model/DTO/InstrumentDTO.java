@@ -27,9 +27,11 @@ public class InstrumentDTO {
     private Status status;
     private Set<Booking> bookings;
     private List<ImageDTO> images;
+    private Branch branch;
 
     private LocalDate startReservationDate;
     private LocalDate endReservationDate;
+
 
 
 }
