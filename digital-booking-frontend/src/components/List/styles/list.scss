@@ -2,7 +2,7 @@
   display: flex;
 
   &__item {
-    width: max-content;
+    // width: max-content;
   }
 
   &--unordered {
@@ -69,7 +69,11 @@
 
   &--border {
     .list__item {
-      border: 1px solid $db-gray-100;
+      border-bottom: 1px solid $db-gray-100;
+
+      &:last-child {
+        border: none;
+      }
     }
   }
 

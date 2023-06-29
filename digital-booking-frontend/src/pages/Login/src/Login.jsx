@@ -60,11 +60,16 @@ const Login = ({ className }) => {
       setErrors(errors);
       return;
     }
-    AuthService.loginWithEmailAndPassword({ email, password })
+    AuthService.loginWithEmailAndPassword({ username: email, password })
       .then((resp) => {
-        login(resp);
+        login({
+          ...resp.user,
+          token: resp.token
+        });
         navigate(
-          resp.rol.name.toLowerCase() === "admin" ? "/admin/products" : "/"
+          resp.user.rol.name.toLowerCase() === "admin"
+            ? "/admin/products"
+            : "/"
         );
       })
       .catch((error) => {
@@ -98,15 +103,6 @@ const Login = ({ className }) => {
           >
             Iniciar sesión
           </Title>
-          {/* <Message
-            type="error"
-            hierarchy="quiet"
-            marginTop="8"
-            marginBottom="0"
-            closable
-          >
-            Usuario o contraseña incorrectos.
-          </Message> */}
         </CardHeader>
         <CardBody paddingSize="20">
           <Form

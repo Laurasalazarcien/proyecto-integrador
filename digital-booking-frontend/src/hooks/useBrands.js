@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import BrandsService from "../services/brands";
+import { useApp } from "../context/AppContext";
 
 const useBrands = ({ id } = {}) => {
+  const { user } = useApp();
+  const { token } = user;
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -11,9 +14,9 @@ const useBrands = ({ id } = {}) => {
     try {
       let data = [];
       if (id) {
-        data = await BrandsService.getBrandById(id);
+        data = await BrandsService.getBrandById(id, { token });
       } else {
-        data = await BrandsService.getAllBrands();
+        data = await BrandsService.getAllBrands({ token });
       }
       setBrands(data);
       setLoading(false);
@@ -28,15 +31,15 @@ const useBrands = ({ id } = {}) => {
   }, []);
 
   const createBrand = (brand) => {
-    return BrandsService.createBrand(brand);
+    return BrandsService.createBrand(brand, { token });
   };
 
   const updateBrand = (brand) => {
-    return BrandsService.updateBrand(brand);
+    return BrandsService.updateBrand(brand, { token });
   };
 
   const deleteBrand = (brandtId) => {
-    return BrandsService.deleteBrand(brandtId);
+    return BrandsService.deleteBrand(brandtId, { token });
   };
 
   return {

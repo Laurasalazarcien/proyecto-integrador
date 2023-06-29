@@ -72,7 +72,7 @@ public class InstrumentService implements IInstrumentService {
             /** TODO: Logica de producto para las reservas*/
             LocalDate dateNow = LocalDate.now();
             newInstrument.setStartReservationDate(dateNow);
-            newInstrument.setEndReservationDate(dateNow.plusDays(8));
+            newInstrument.setEndReservationDate(dateNow.plusDays(15));
 
             newInstrument.setImages(imageDTOList);
 
@@ -87,8 +87,15 @@ public class InstrumentService implements IInstrumentService {
     public InstrumentDTO readInstrument(Long id) {
         Optional<Instrument> instrument = instrumentRepository.findById(id);
         InstrumentDTO instrumentDTO = null;
-        if(instrument.isPresent())
+        if(instrument.isPresent()) {
             instrumentDTO = mapper.convertValue(instrument, InstrumentDTO.class);
+            /** TODO: Logica de producto para las reservas*/
+            LocalDate dateNow = LocalDate.now();
+            instrumentDTO.setStartReservationDate(dateNow);
+            instrumentDTO.setEndReservationDate(dateNow.plusDays(15));
+
+        }
+
         return instrumentDTO;
     }
 
@@ -133,7 +140,16 @@ public class InstrumentService implements IInstrumentService {
         List<InstrumentDTO> instrumentDTOS = new ArrayList<>();
 
         for (Instrument instrument1 : instruments) {
-            instrumentDTOS.add(mapper.convertValue(instrument1, InstrumentDTO.class));
+
+            InstrumentDTO instrumentDTO = mapper.convertValue(instrument1, InstrumentDTO.class);
+
+            /** TODO: Logica de producto para las reservas*/
+            LocalDate dateNow = LocalDate.now();
+            instrumentDTO.setStartReservationDate(dateNow);
+            instrumentDTO.setEndReservationDate(dateNow.plusDays(15));
+
+            instrumentDTOS.add(instrumentDTO);
+
         }
         return instrumentDTOS;
     }
@@ -144,8 +160,16 @@ public class InstrumentService implements IInstrumentService {
         // LOGGER.info("categoryId2: " + category);
         List<Instrument> instruments = instrumentRepository.findByCategoryId(id);
         List<InstrumentDTO> instrumentDTOList = new ArrayList<>();
-        instruments.forEach(instrument -> instrumentDTOList
-                .add(mapper.convertValue(instrument, InstrumentDTO.class)));
+        instruments.forEach(instrument -> {
+            InstrumentDTO instrumentDTO = mapper.convertValue(instrument, InstrumentDTO.class);
+
+            /** TODO: Logica de producto para las reservas*/
+            LocalDate dateNow = LocalDate.now();
+            instrumentDTO.setStartReservationDate(dateNow);
+            instrumentDTO.setEndReservationDate(dateNow.plusDays(8));
+
+            instrumentDTOList.add(mapper.convertValue(instrument, InstrumentDTO.class));
+        });
 
         System.out.println("===== Categorys =====");
         instrumentDTOList.forEach((instrument) -> LOGGER.info("Instrument: " + instrument));

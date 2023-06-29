@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Image from "../../../components/Image";
 import ImageViewer from "../../../components/ImageViewer";
 import Button from "../../../components/Button";
+import Badge from "../../../components/Badge";
 import Message from "../../../components/Message";
 import Container from "../../../components/Container";
 import Card, {
@@ -39,6 +40,10 @@ const Detail = ({ className }) => {
     navigate(-1);
   };
 
+  const handleReserveProduct = (productId) => {
+    navigate(`/booking/${productId}`);
+  };
+
   const componentClassnames = classNames(namespace, className);
 
   return (
@@ -65,7 +70,7 @@ const Detail = ({ className }) => {
               <BreadCrumb>
                 <BreadCrumbLevel text="Home" redirectTo="/home" />
                 <BreadCrumbLevel
-                  text="Instrumentos de viento"
+                  text={product.category.name}
                   redirectTo={`/categories/${product?.category?.id}`}
                 />
                 <BreadCrumbLevel text={product.name} />
@@ -136,22 +141,33 @@ const Detail = ({ className }) => {
                     >
                       {product.description}
                     </Text>
-                    <Text
-                      size="s"
-                      weight="light"
-                      color="seconday"
-                      marginBottom="8"
-                    >
-                      Disponibilidad:{" "}
-                      {product.stock > 0 ? "En stock" : "No disponible"}
-                    </Text>
+                    {product.available ? (
+                      <Badge>{product.status.name}</Badge>
+                    ) : (
+                      <Badge type="error">{product.status.name}</Badge>
+                    )}
+                    {!user && product.available && (
+                      <Message
+                        hierarchy="quiet"
+                        marginTop="12"
+                        marginBottom="8"
+                      >
+                        Para poder reservar el producto debes iniciar sesión.
+                      </Message>
+                    )}
                   </CardBody>
-                  {user && user?.rol?.name.toLowerCase() === "user" && (
+                  {user && (
                     <CardFooter>
                       <Layput columns="2">
                         <LayputColumns start="1" end="2"></LayputColumns>
                         <LayputColumns start="3" end="4">
-                          <Button fullWidth>Reservar</Button>
+                          <Button
+                            onClick={() => handleReserveProduct(product.id)}
+                            disabled={!product.available}
+                            fullWidth
+                          >
+                            Reservar
+                          </Button>
                         </LayputColumns>
                       </Layput>
                     </CardFooter>

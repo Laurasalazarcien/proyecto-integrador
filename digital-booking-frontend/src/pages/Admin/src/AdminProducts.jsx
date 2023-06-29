@@ -36,7 +36,6 @@ import useCategories from "../../../hooks/useCategories";
 import useBrands from "../../../hooks/useBrands";
 import useStatus from "../../../hooks/useStatus";
 import useFiles from "../../../hooks/useFiles";
-import ProductsService from "../../../services/products";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "admin-page-products";
@@ -163,6 +162,7 @@ const AdminProducts = ({ className }) => {
     };
 
     const response = action === "edit" ? updateProduct(product) : createProduct(product);
+    console.log({ product });
     response
       .then((resp) => {
         console.log({ resp });
@@ -184,6 +184,7 @@ const AdminProducts = ({ className }) => {
         });
       })
       .catch((error) => {
+        console.log("ERROR ----> ", error);
         Swal.fire({
           title: `Ocurrió un error al ${
             action === "edit" ? "actualizar" : "crear"

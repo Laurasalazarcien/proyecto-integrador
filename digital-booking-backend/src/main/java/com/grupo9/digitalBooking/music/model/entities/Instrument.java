@@ -49,5 +49,7 @@ public class Instrument {
     @JoinColumn(name = "instrument_id")
     private List<Image> images;
 
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
 }

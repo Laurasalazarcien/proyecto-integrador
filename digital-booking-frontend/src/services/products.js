@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
-import config from "./config";
+import config, { getAuthorizationConfig } from "./config";
 
 class ProductsService {
   static async getAllProducts() {
@@ -17,6 +18,7 @@ class ProductsService {
   }
 
   static async getProductsByCategory(category) {
+    // const newConfig = getAuthorizationConfig(token)
     return axios
       .get(`instruments/category/${category}`, config)
       .then((resp) => {
@@ -25,22 +27,25 @@ class ProductsService {
       });
   }
 
-  static async createProduct(product) {
-    return axios.post(`instruments`, product, config).then((resp) => {
+  static async createProduct(product, { token }) {
+    const newConfig = getAuthorizationConfig(token)
+    return axios.post(`instruments`, product, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async updateProduct(product) {
-    return axios.put(`instruments`, product, config).then((resp) => {
+  static async updateProduct(product, { token }) {
+    const newConfig = getAuthorizationConfig(token)
+    return axios.put(`instruments`, product, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });
   }
 
-  static async deleteProduct(productId) {
-    return axios.delete(`instruments/${productId}`, config).then((resp) => {
+  static async deleteProduct(productId, { token }) {
+    const newConfig = getAuthorizationConfig(token)
+    return axios.delete(`instruments/${productId}`, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });

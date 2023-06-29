@@ -25,7 +25,7 @@ import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "home-page";
 
-const Home = ({ title, className }) => {
+const Home = ({ className }) => {
   const navigate = useNavigate();
   const isMobile = useMobile();
   const componentClassnames = classNames(namespace, className);
@@ -174,9 +174,9 @@ const Home = ({ title, className }) => {
             display="grid"
             spaceBetweenItems="20"
             columnsInSmallDevices="1"
-            columnsInMediumDevices="2"
-            columnsInLargeDevices="3"
-            columnsInExtraLargeDevices="4"
+            columnsInMediumDevices="1"
+            columnsInLargeDevices="2"
+            columnsInExtraLargeDevices="2"
           >
             {loadingProducts &&
               generateArray(10).map((index, item) => (
@@ -269,7 +269,6 @@ Home.propTypes = {
 };
 
 Home.defaultProps = {
-  title: "",
   className: "",
 };
 

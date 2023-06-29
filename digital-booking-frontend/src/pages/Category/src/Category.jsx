@@ -28,10 +28,11 @@ const Category = ({ className }) => {
     error: errorProducts,
   } = useProducts({ category: categoryId });
 
+  console.log({ products });
+
   const { categories: category } = useCategories({ id: categoryId });
 
   const handleClick = (id) => {
-    console.log("id: ", id);
     navigate(`/detail/${id}`);
   };
 

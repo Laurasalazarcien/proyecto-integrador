@@ -2,17 +2,12 @@
 
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import Image from '../../Image';
+import Image from "../../Image";
 import { useDropdown } from "./context/DropdownContext";
 
 const namespace = "dropdown-list";
 
-const DropdownItem = ({
-  image,
-  label,
-  selected,
-  value,
-}) => {
+const DropdownItem = ({ image, label, selected, value }) => {
   const { changeDropdownValue } = useDropdown();
   const componentClassNames = classNames(`${namespace}__item`, {
     [`${namespace}__item--selected`]: selected,
@@ -32,13 +27,15 @@ const DropdownItem = ({
         onClick={handleSelectOption}
       >
         <div className={`${namespace}__item-image-container`}>
-          {/* <Thumbnail modifier="square" size="48">
-            <img
-              src={image}
-              alt="item"
-              className={`${namespace}-group__item-image`}
+          {image && (
+            <Image
+              source={image}
+              containerWidth="60px"
+              containerHeight="60px"
+              width="100%"
+              paddingSize="0"
             />
-          </Thumbnail> */}
+          )}
         </div>
         <div className={`${namespace}__item-label`}>
           <span>{label}</span>

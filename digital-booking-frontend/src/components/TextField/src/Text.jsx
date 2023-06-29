@@ -11,6 +11,7 @@ const Text = ({
   name,
   value,
   label,
+  disabled,
   placeholder,
   modifier,
   helperMessage,
@@ -25,6 +26,7 @@ const Text = ({
     {
       [`${namespace}--${modifier}`]: modifier,
       [`${namespace}--${type}`]: type,
+      [`${namespace}--${disabled}`]: disabled,
     }
   );
 
@@ -40,6 +42,7 @@ const Text = ({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
+        disabled={disabled}
       />
       {helperMessage && (
         <HelperMessage modifier={modifier} message={helperMessage} />
@@ -56,6 +59,7 @@ Text.propTypes = {
   placeholder: PropTypes.string,
   modifier: PropTypes.string,
   label: PropTypes.string,
+  disabled: PropTypes.bool,
   helperMessage: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
@@ -68,6 +72,7 @@ Text.defaultProps = {
   placeholder: "",
   helperMessage: "",
   className: "",
+  disabled: false,
 };
 
 export default Text;

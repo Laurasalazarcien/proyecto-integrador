@@ -30,10 +30,6 @@ const DropdownContainer = ({
     disabled,
   };
 
-  // useEffect(() => {
-  //   console.log('Change selected: ', selectedOption);
-  // }, [selectedOption])
-
   return (
     <DropdownProvider
       initialState={initialState}
@@ -62,6 +58,7 @@ DropdownContainer.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.string,
+      image: PropTypes.string,
     })
   ),
   modifier: PropTypes.string,

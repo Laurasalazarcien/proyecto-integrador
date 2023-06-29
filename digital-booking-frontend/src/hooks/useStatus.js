@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import StatusService from "../services/status";
+import { useApp } from "../context/AppContext";
 
 const useStatus = ({ id } = {}) => {
+  const { user } = useApp();
+  const { token } = user;
   const [status, setStatus] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -11,9 +14,9 @@ const useStatus = ({ id } = {}) => {
     try {
       let data = [];
       if (id) {
-        data = await StatusService.getStatusById(id);
+        data = await StatusService.getStatusById(id, { token });
       } else {
-        data = await StatusService.getAllStatus();
+        data = await StatusService.getAllStatus({ token });
       }
       setStatus(data);
       setLoading(false);

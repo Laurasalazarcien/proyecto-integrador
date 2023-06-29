@@ -1,11 +1,14 @@
 const config = {
   baseURL: "http://localhost:8080",
-  headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
-    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-  },
+};
+
+export const getAuthorizationConfig = (token) => {
+  return {
+    ...config,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
 export default config;

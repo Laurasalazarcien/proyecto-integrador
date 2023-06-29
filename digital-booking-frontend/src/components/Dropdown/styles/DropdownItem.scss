@@ -3,6 +3,10 @@
     padding: 0;
     position: relative;
 
+    &-image-container {
+      margin-right: $db-spacing-12;
+    }
+
     &-button {
       width: 100%;
       margin: 0;
@@ -11,6 +15,8 @@
       background-color: transparent;
       text-align: left;
       cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
     &--selected::before {
