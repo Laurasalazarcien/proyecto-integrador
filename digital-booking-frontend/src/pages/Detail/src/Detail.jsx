@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Image from "../../../components/Image";
 import ImageViewer from "../../../components/ImageViewer";
 import Button from "../../../components/Button";
+import Badge from "../../../components/Badge";
 import Message from "../../../components/Message";
 import Container from "../../../components/Container";
 import Card, {
@@ -149,14 +150,20 @@ const Detail = ({ className }) => {
                       Disponibilidad:{" "}
                       {product.stock > 0 ? "En stock" : "No disponible"}
                     </Text> */}
+                    {product.available ? (
+                      <Badge>{product.status.name}</Badge>
+                    ) : (
+                      <Badge type="error">{product.status.name}</Badge>
+                    )}
                   </CardBody>
-                  {user && (
+                  {user &&  (
                     <CardFooter>
                       <Layput columns="2">
                         <LayputColumns start="1" end="2"></LayputColumns>
                         <LayputColumns start="3" end="4">
                           <Button
                             onClick={() => handleReserveProduct(product.id)}
+                            disabled={!product.available}
                             fullWidth
                           >
                             Reservar

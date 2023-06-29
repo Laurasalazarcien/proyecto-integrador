@@ -10,26 +10,13 @@
     margin-right: auto;
   }
 
-  .product-detail__back-button {
-    position: absolute;
-    top: 0;
-    left: 0;
+  &__confirmation-message {
+    margin: 0 auto;
 
-    &.button--medium {
-      padding: $db-spacing-6 $db-spacing-12;
-
-      .bi-arrow-left-short {
-        width: $db-spacing-32;
-        height: $db-spacing-32;
-        color: $db-gray-450;
-      }
-    }
-  }
-
-  .product-characteristics {
-    &__card {
-      display: flex;
-      align-items: center;
+    .bi-check-circle-fill {
+      width: 50px;
+      height: 50px;
+      color: $db-color-positive;
     }
   }
 }

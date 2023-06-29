@@ -36,7 +36,6 @@ import useCategories from "../../../hooks/useCategories";
 import useBrands from "../../../hooks/useBrands";
 import useStatus from "../../../hooks/useStatus";
 import useFiles from "../../../hooks/useFiles";
-import ProductsService from "../../../services/products";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
 
 const namespace = "admin-page-products";

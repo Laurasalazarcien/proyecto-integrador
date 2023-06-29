@@ -14,7 +14,7 @@ const useProducts = ({ id, category } = {}) => {
     try {
       let data = [];
       if (category) {
-        data = await ProductsService.getProductsByCategory(category);
+        data = await ProductsService.getProductsByCategory(category, { token });
       } else if (id) {
         data = await ProductsService.getProductById(id);
       } else {

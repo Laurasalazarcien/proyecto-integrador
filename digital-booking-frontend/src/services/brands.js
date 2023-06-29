@@ -6,7 +6,6 @@ class BrandsService {
     const newConfig = getAuthorizationConfig(token);
     return axios.get("brands", newConfig).then((resp) => {
       const { data } = resp;
-      console.log("RESP ---> ", resp);
       return data;
     });
   }

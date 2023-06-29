@@ -16,4 +16,30 @@ const getMonthNumber = (monthIndex) => {
   return monthsNumbers[monthIndex];
 };
 
-export { getMonthNumber};
+const getDateFormat = (date, separator) => {
+  return `${date.getFullYear()}${separator}${getMonthNumber(
+    date.getMonth()
+  )}${separator}${date.getDate()}`;
+};
+
+const getDateArrayFormat = (date, separator) => {
+  return `${date[0]}${separator}${date[1]}${separator}${date[2]}`;
+};
+
+const addDays = (date, days) => {
+  date.setDate(date.getDate() + days);
+  return date;
+};
+
+const subtractDays = (date, days) => {
+  date.setDate(date.getDate() - days);
+  return date;
+};
+
+export {
+  getMonthNumber,
+  getDateFormat,
+  getDateArrayFormat,
+  addDays,
+  subtractDays,
+};
