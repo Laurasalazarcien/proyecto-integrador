@@ -3,8 +3,10 @@ package com.grupo9.digitalBooking.music.model.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo9.digitalBooking.music.model.DTO.CategoryDTO;
 import com.grupo9.digitalBooking.music.model.DTO.ImageDTO;
+import com.grupo9.digitalBooking.music.model.entities.Branch;
 import com.grupo9.digitalBooking.music.model.entities.Category;
 import com.grupo9.digitalBooking.music.model.entities.Image;
+import com.grupo9.digitalBooking.music.model.repository.IBranch;
 import com.grupo9.digitalBooking.music.model.repository.IImage;
 import com.grupo9.digitalBooking.music.model.repository.IInstrument;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentService;
@@ -30,6 +32,9 @@ public class InstrumentService implements IInstrumentService {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private IBranch branchRepository;
     @Autowired
     ObjectMapper mapper;
 
@@ -173,6 +178,18 @@ public class InstrumentService implements IInstrumentService {
 
         System.out.println("===== Categorys =====");
         instrumentDTOList.forEach((instrument) -> LOGGER.info("Instrument: " + instrument));
+        return instrumentDTOList;
+    }
+
+    public List<InstrumentDTO> getInstrumentByCity(String city) {
+        Branch branch = mapper.convertValue(branchRepository.findByCity(city), Branch.class);
+
+        List<Instrument> instrumentList = instrumentRepository.findByBranchId(branch.getId());
+        //List<Instrument> instrumentList = instrumentRepository.findInstrumentsByBranch(branch.getId());
+
+        List<InstrumentDTO> instrumentDTOList = new ArrayList<>();
+        instrumentList.forEach(instrument -> instrumentDTOList.add(mapper.convertValue(instrument, InstrumentDTO.class)));
+
         return instrumentDTOList;
     }
 }
