@@ -4,6 +4,7 @@ import com.grupo9.digitalBooking.music.model.DTO.InstrumentDTO;
 import com.grupo9.digitalBooking.music.model.service.*;
 import com.grupo9.digitalBooking.music.model.service.InterfacesService.IInstrumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -122,5 +123,18 @@ public class InstrumentController {
     public List<InstrumentDTO> getInstrumentsByCategory(@PathVariable Long categoryId) {
         LOGGER.info("categoryId: " + categoryId);
         return instrumentService.getInstrumentsByCategory(categoryId);
+    }
+
+    @CrossOrigin(origins = "http://127.0.0.1:5173")
+    @GetMapping("/city/{city}")
+    public ResponseEntity<?> getInstrumentByCity(@PathVariable String city) {
+        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Message: There are not information");
+
+        List<InstrumentDTO> instrumentDTOS = instrumentService.getInstrumentByCity(city);
+        if(instrumentDTOS.size() > 0) {
+            response = ResponseEntity.status(HttpStatus.OK).body(instrumentDTOS);
+        }
+        return response;
     }
 }
