@@ -14,6 +14,7 @@ import Card, {
   CardFooter,
 } from "../../../components/Card";
 import { Title, Text } from "../../../components/Typography";
+import List, { ListItem } from "../../../components/List";
 import { Layput, LayputColumns, LayputRows } from "../../../components/Layout";
 import BreadCrumb, { BreadCrumbLevel } from "../../../components/BreadCrumb";
 import { useMobile } from "../../../hooks/useMobile";
@@ -26,6 +27,7 @@ const namespace = "detail-page";
 const Detail = ({ className }) => {
   const isMobile = useMobile();
   const navigate = useNavigate();
+  const { GeoAltFill } = icons;
   const { user } = useApp();
   const { id } = useParams();
   const { ArrowLeftShort } = icons;
@@ -75,6 +77,17 @@ const Detail = ({ className }) => {
                 />
                 <BreadCrumbLevel text={product.name} />
               </BreadCrumb>
+            </Container>
+            <Container
+              display="flex"
+              alignItems="center"
+              marginTop="12"
+              marginBottom="12"
+            >
+              <GeoAltFill />
+              <Text size="s" weight="light" marginLeft="8">
+                {`${product?.branch?.direction}, ${product?.branch?.city}`}
+              </Text>
             </Container>
             <Container element="section" className="product-detail">
               <Button
@@ -219,6 +232,99 @@ const Detail = ({ className }) => {
                     )}
                   </>
                 )}
+              </Container>
+            </Container>
+            <Container element="section" marginTop="20">
+              <Title
+                element="h2"
+                weight="regular"
+                marginTop="24"
+                marginBottom="12"
+                size="l"
+              >
+                Lo que debes saber
+              </Title>
+              <Container
+                display="grid"
+                columnsInSmallDevices="1"
+                columnsInMediumDevices="1"
+                columnsInLargeDevices="2"
+                columnsInExtraLargeDevices="3"
+                spaceBetweenItems="8"
+                className="product-characteristics"
+              >
+                <Card>
+                  <CardHeader>
+                    <Title weight="light">Politicas de uso</Title>
+                  </CardHeader>
+                  <CardBody>
+                    <List>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          El instrumento debe ser devuelto en optimas
+                          condiciones.
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          En caso de que el instrumento tenga algun daño al
+                          momento de la devolución, se generarán cargos
+                          adicionales.
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          Ten en cuenta el manual de uso y mantenimiento del
+                          instrumento para hacer un buen uso del mismo.
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          Procura limpiar el instrumento periódicamente teniendo
+                          en cuenta el manual de uso.
+                        </Text>
+                      </ListItem>
+                    </List>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <Title weight="light">Politicas de cancelacion</Title>
+                  </CardHeader>
+                  <CardBody>
+                    <List>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          Tienes un aplazo maximo de 48h para realizar la
+                          cancelacion de la reserva.
+                        </Text>
+                      </ListItem>
+                    </List>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <Title weight="light">Politicas de devolución</Title>
+                  </CardHeader>
+                  <CardBody>
+                    <List>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          En caso de que el instrumento sea devuelvo pasada la
+                          fecha maxima de reserva, se generarán cargos
+                          adicionales
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text size="s" weight="light" color="secondary">
+                          En caso de que quieras devolver el instrumento antes
+                          de la fecha maxima de devolución, debes notificarlo
+                          con anticipación.
+                        </Text>
+                      </ListItem>
+                    </List>
+                  </CardBody>
+                </Card>
               </Container>
             </Container>
           </>

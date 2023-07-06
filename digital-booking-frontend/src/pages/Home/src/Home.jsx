@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Container from "../../../components/Container";
 import Image from "../../../components/Image";
 import Button from "../../../components/Button";
+import Message from "../../../components/Message";
 import Skeleton from "../../../components/Skeleton";
 import SearchBox from "../../../components/SearchBox";
 import Pagination from "../../../components/Pagination";
@@ -19,26 +21,38 @@ import { useMobile } from "../../../hooks/useMobile";
 import { generateArray } from "../../../helpers";
 import useProducts from "../../../hooks/useProducts";
 import useCategories from "../../../hooks/useCategories";
+import useBranches from "../../../hooks/useBranches";
 
-import { productsListMock, categoriesMock } from "../../../mocks/mocks";
 import { convertFirstLetterToUpperCase } from "../../../helpers/parseStrings";
+import icons from "../../../components/icons";
 
 const namespace = "home-page";
 
 const Home = ({ className }) => {
   const navigate = useNavigate();
   const isMobile = useMobile();
-  const componentClassnames = classNames(namespace, className);
+  const [filters, setFilters] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { GeoAltFill } = icons;
+
   const {
     products,
+    setProducts,
     loading: loadingProducts,
     error: errorProducts,
   } = useProducts();
+
   const {
     categories,
     loading: loadingCategories,
     error: errorCategories,
   } = useCategories();
+
+  const {
+    branches,
+    loading: loadingBranches,
+    error: errorBranches,
+  } = useBranches();
 
   const handleClick = (id) => {
     navigate(`/detail/${id}`);
@@ -52,21 +66,63 @@ const Home = ({ className }) => {
     console.log("Search ---> ", searchTerm);
   };
 
-  const handleClickSearch = (searchTerm) => {
-    console.log("Search ---> ", searchTerm);
+  const handleChangeBranch = (branchId) => {
+    setFilters({
+      ...filters,
+      branch: branches.find((branch) => branch.id === branchId),
+    });
   };
+
+  const handleClickSearch = () => {
+    setFilteredProducts(
+      products.filter((product) => product.branch.id === filters.branch.id)
+    );
+  };
+
+  useEffect(() => {
+    if (products) {
+      setFilteredProducts(products);
+    }
+  }, [products]);
+
+  const componentClassnames = classNames(namespace, className);
 
   return (
     <Container className={componentClassnames}>
       <Container className={`${namespace}__container`}>
         <Container element="section" className="finder" marginBottom="20">
-          <SearchBox
-            searchPlaceholder="¿Qué estás buscando?"
-            onChange={handleSearch}
-            onClick={handleClickSearch}
-          />
+          {products && products.length > 0 && (
+            <SearchBox
+              searchPlaceholder="¿Qué estás buscando?"
+              onChange={handleSearch}
+              onClick={handleClickSearch}
+              onSelectDropdown={handleChangeBranch}
+              dropdown={{
+                label: "",
+                options: branches.map((branch) => ({
+                  label: branch?.city,
+                  value: branch?.id,
+                })),
+              }}
+            />
+          )}
         </Container>
         <Container element="section" className="categories">
+          {!loadingCategories && errorCategories && (
+            <Message
+              type="error"
+              hierarchy="quiet"
+              marginTop="0"
+              marginBottom="8"
+            >
+              No fue posible cargar las categorías.
+            </Message>
+          )}
+          {!loadingCategories && categories.length === 0 && (
+            <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+              No se encontraron categorías.
+            </Message>
+          )}
           {loadingCategories && (
             <Container
               display="grid"
@@ -142,9 +198,6 @@ const Home = ({ className }) => {
                       >
                         {convertFirstLetterToUpperCase(category.name)}
                       </Title>
-                      {/* <Text size="s" weight="light">
-                        {category.stock} productos
-                      </Text> */}
                     </CardBody>
                   </Card>
                 </SwiperSlide>
@@ -170,6 +223,21 @@ const Home = ({ className }) => {
           >
             Te listamos algunos productos que te pueden interesar
           </Text>
+          {!loadingProducts && errorProducts && (
+            <Message
+              type="error"
+              hierarchy="quiet"
+              marginTop="0"
+              marginBottom="8"
+            >
+              No fue posible cargar los productos.
+            </Message>
+          )}
+          {!loadingProducts && products.length === 0 && (
+            <Message hierarchy="quiet" marginTop="0" marginBottom="8">
+              No se encontraron productos.
+            </Message>
+          )}
           <Container
             display="grid"
             spaceBetweenItems="20"
@@ -190,8 +258,8 @@ const Home = ({ className }) => {
                   </CardBody>
                 </Card>
               ))}
-            {products &&
-              products.map((product) => {
+            {filteredProducts &&
+              filteredProducts.map((product) => {
                 return (
                   <Card
                     key={product.id}
@@ -219,7 +287,11 @@ const Home = ({ className }) => {
                         />
                       </CardHeader>
                       <CardBody>
-                        <Container height="100%" display="flex" alignItems="center">
+                        <Container
+                          height="100%"
+                          display="flex"
+                          alignItems="center"
+                        >
                           <Container>
                             <Title
                               size="xs"
@@ -227,11 +299,31 @@ const Home = ({ className }) => {
                               weight="semibold"
                               alignment="left"
                               transform="uppercase"
-                              marginBottom="4"
                             >
                               {product.name}
                             </Title>
-                            <Text size="s" weight="light" alignment="left">
+                            <Text size="s" weight="light" marginBottom="8">
+                              {product.description}
+                            </Text>
+                            <Container
+                              display="flex"
+                              alignItems="center"
+                              marginBottom="12"
+                            >
+                              <GeoAltFill />
+                              <Text size="s" weight="light" marginLeft="4">
+                                {`${product?.branch?.city}`}
+                              </Text>
+                            </Container>
+                            <Text size="s" weight="light" color="secondary">
+                              {`${product?.branch?.name}`}
+                            </Text>
+                            <Text
+                              size="s"
+                              weight="light"
+                              alignment="left"
+                              color="positive"
+                            >
                               $ {product.price}
                             </Text>
                           </Container>
@@ -243,21 +335,23 @@ const Home = ({ className }) => {
               })}
           </Container>
         </Container>
-        {!loadingProducts && !loadingCategories && products.length > 10 && (
-          <Container
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            element="section"
-            className="pagination"
-          >
-            <Pagination
-              prevButtonLabel="Anterior"
-              nextButtonLabel="Siguiente"
-              nummerOfPages={5}
-            />
-          </Container>
-        )}
+        {/* {!loadingProducts &&
+          !loadingCategories &&
+          filteredProducts.length > 10 && (
+            <Container
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              element="section"
+              className="pagination"
+            >
+              <Pagination
+                prevButtonLabel="Anterior"
+                nextButtonLabel="Siguiente"
+                nummerOfPages={5}
+              />
+            </Container>
+          )} */}
       </Container>
     </Container>
   );

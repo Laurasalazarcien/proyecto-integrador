@@ -13,7 +13,8 @@ import icons from "../../../components/icons";
 const namespace = "admin-page";
 
 const Admin = ({ className }) => {
-  const { MusicNote, PeopleFill, TagsFill, CalendarFill, BoomBoxFill } = icons;
+  const { MusicNote, PeopleFill, TagsFill, CalendarFill, BoomBoxFill, Shop } =
+    icons;
   const componentClassnames = classNames(namespace, className);
   const navigate = useNavigate();
   const { pathname: pathName } = useLocation();
@@ -69,6 +70,13 @@ const Admin = ({ className }) => {
             <ListItem>
               <CalendarFill />
               <Text>Reservas</Text>
+            </ListItem>
+            <ListItem
+              selected={pathName === "/admin/branches"}
+              onClick={() => navigate("/admin/branches")}
+            >
+              <Shop />
+              <Text>Sucursales</Text>
             </ListItem>
           </List>
         </Container>

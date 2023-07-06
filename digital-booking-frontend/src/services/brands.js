@@ -34,8 +34,9 @@ class BrandsService {
     });
   }
 
-  static async deleteBrand(brandId) {
-    return axios.delete(`brands/${brandId}`, config).then((resp) => {
+  static async deleteBrand(brandId, { token }) {
+    const newConfig = getAuthorizationConfig(token);
+    return axios.delete(`brands/${brandId}`, newConfig).then((resp) => {
       const { data } = resp;
       return data;
     });

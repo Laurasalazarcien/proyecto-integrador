@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/instruments", "/instruments/{id}", "/instruments/category/{id}", "/instruments/city/{city}").permitAll()
+                .antMatchers(HttpMethod.GET, "/categories", "/categories/{id}", "/instruments", "/instruments/{id}", "/instruments/category/{id}", "/instruments/city/{city}", "/branches", "/branches/${id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
 
                 .antMatchers(HttpMethod.GET, "/bookings", "/bookings/{id}").hasAnyAuthority("USER", "ADMIN")
