@@ -27,6 +27,9 @@ import BoomBoxFill from "./src/BoomBox copy";
 import Upload from "./src/Upload";
 import BoxArrowLeft from "./src/BoxArrowLeft";
 import PeopleCircle from "./src/PeopleCircle";
+import GeoAlt from "./src/GeoAlt";
+import GeoAltFill from "./src/GeoAltFill";
+import Shop from "./src/Shop";
 
 const icons = {
   Check,
@@ -57,7 +60,10 @@ const icons = {
   BoomBoxFill,
   Upload,
   BoxArrowLeft,
-  PeopleCircle
+  PeopleCircle,
+  GeoAlt,
+  GeoAltFill,
+  Shop
 };
 
 export default icons;

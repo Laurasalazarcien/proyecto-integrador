@@ -9,6 +9,7 @@ import AdminPage, {
   AdminProducts,
   AdminUsers,
   AdminBrands,
+  AdminBranches,
 } from "../pages/Admin";
 import LoginPage from "../pages/Login";
 import { useApp } from "../context/AppContext";
@@ -33,6 +34,7 @@ const AppRouter = () => {
           <Route path="categories" element={<AdminCategories />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="brands" element={<AdminBrands />} />
+          <Route path="branches" element={<AdminBranches />} />
         </Route>
       ) : (
         <Route path="/*" element={<Navigate to="/login" />} />
